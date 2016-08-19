@@ -5,25 +5,38 @@
 include_files
 
 if [[ $CONTAINER_ID_STARTED ]]; then
+
   echo "$CONTAINER_ID_STARTED seems already started"
+
 else
 
   echo "starting container"
 
+  #Set container-side start script as entrypoint
   rm "$(dirname "$0")"/../docker_container/dockerhut/entrypoint
   ln -s start "$(dirname "$0")"/../docker_container/dockerhut/entrypoint
 
-
+  #Docker start
   OUT=$(docker start $CONTAINER_ID_INITIALIZED 2>&1)
+  
   if [[ $OUT =~ ^[0-9a-f]+$ ]]; then
+
     echo "container $OUT started"
+
+    # Persist CONTAINER_ID_STARTED variable 
     echo "CONTAINER_ID_STARTED=\"$OUT\"" > "$(dirname "$0")/runtime/CONTAINER_ID_STARTED.var.sh"
   
-    #Start services by running the container script
-    echo "starting services : "
+    # Start services by running the start_services container-side script
+    echo "starting services ..."
     docker exec -it $CONTAINER_ID_INITIALIZED /home/$PROJECT_NAME/dockerhut/start_services
+    printf "starting services done\n"
+    
+    printf "open the web page : http://$CONTAINER_IP/$PROJECT_NAME"
+
   else
+
     echo "someting went wrong:"
     echo "$OUT"
+
   fi
 fi
