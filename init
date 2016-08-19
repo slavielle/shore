@@ -10,12 +10,12 @@ else
 
   echo "initializing container"
 
-  rm "$(dirname "$0")"/../docker_container/dockerhut/entrypoint 2> /dev/null
-  ln -s void "$(dirname "$0")"/../docker_container/dockerhut/entrypoint
+  rm "$(dirname "$0")"/../container_workspace/dockerhut/entrypoint 2> /dev/null
+  ln -s void "$(dirname "$0")"/../container_workspace/dockerhut/entrypoint
 
   PROJECT_DIR="$( cd "$( dirname "$0" )"/.. && pwd )"
 
-  OUT=$(docker run -it -v $PROJECT_DIR/docker_container:/home/$PROJECT_NAME --cidfile="$(dirname "$0")"/tmp/cid --net $CONTAINER_NETWORK --ip $CONTAINER_IP $IMAGE_ID /home/$PROJECT_NAME/dockerhut/entrypoint 2>&1)
+  OUT=$(docker run -it -v $PROJECT_DIR/container_workspace:/home/$PROJECT_NAME --cidfile="$(dirname "$0")"/tmp/cid --net $CONTAINER_NETWORK --ip $CONTAINER_IP $IMAGE_ID /home/$PROJECT_NAME/dockerhut/entrypoint 2>&1)
   CIDOUT=$(cat "$(dirname "$0")/tmp/cid")
   rm "$(dirname "$0")/tmp/cid"
   if [[ $CIDOUT =~ ^[0-9a-f]+$ ]]; then
@@ -23,7 +23,7 @@ else
     echo "CONTAINER_ID_INITIALIZED=\"$CIDOUT\"" > "$(dirname "$0")/runtime/CONTAINER_ID_INITIALIZED.var.sh"
 
     echo "getting git project"
-    cd "$(dirname "$0")"/../docker_container
+    cd "$(dirname "$0")"/../container_workspace
     git init
     git remote add origin "$GIT_URL"
     git pull origin master

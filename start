@@ -13,8 +13,8 @@ else
   printf "starting container\n\n"
 
   #Set container-side start script as entrypoint
-  rm "$(dirname "$0")"/../docker_container/dockerhut/entrypoint
-  ln -s start "$(dirname "$0")"/../docker_container/dockerhut/entrypoint
+  rm "$(dirname "$0")"/../container_workspace/dockerhut/entrypoint
+  ln -s start "$(dirname "$0")"/../container_workspace/dockerhut/entrypoint
 
   #Docker start
   OUT=$(docker start $CONTAINER_ID_INITIALIZED 2>&1)

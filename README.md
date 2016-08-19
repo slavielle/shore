@@ -42,10 +42,10 @@ and installation is over
 
 look into your <project> directory ...
 
-a very basic Dockerfile appeared and a docker_container directory.
+a very basic Dockerfile appeared and a container_workspace directory.
 
 The Dockerfile will help you to create your project image if you wish
 
-The docker_container directory is a directory that will ve shared with your container. It contains a www directory that will contain the part of your project exposed to your web server.
+The container_workspace directory is a directory that will ve shared with your container. It contains a www directory that will contain the part of your project exposed to your web server.
 
 

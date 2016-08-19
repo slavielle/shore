@@ -5,7 +5,7 @@
 include_files
 
 echo "getting git project"
-cd "$(dirname "$0")"/../docker_container
+cd "$(dirname "$0")"/../container_workspace
 git init
 git remote add origin "$GIT_URL"
 git pull origin master

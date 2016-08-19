@@ -11,15 +11,15 @@ if [[ $DOCKERHUT_INSTALLED ]]; then
 else
     mkdir "$(dirname "$0")"/runtime
     mkdir "$(dirname "$0")"/tmp
-    mkdir "$(dirname "$0")"/../docker_container
-    mkdir "$(dirname "$0")"/../docker_container/dockerhut
-    cp "$(dirname "$0")"/container_ressources/start "$(dirname "$0")"/../docker_container/dockerhut/.
-    cp "$(dirname "$0")"/container_ressources/start_services "$(dirname "$0")"/../docker_container/dockerhut/.
-    cp "$(dirname "$0")"/container_ressources/stop_services "$(dirname "$0")"/../docker_container/dockerhut/.
-    cp "$(dirname "$0")"/container_ressources/void "$(dirname "$0")"/../docker_container/dockerhut/.
-    cp -a "$(dirname "$0")"/container_ressources/settings.example.sh "$(dirname "$0")"/../docker_container/dockerhut/settings.sh
+    mkdir "$(dirname "$0")"/../container_workspace
+    mkdir "$(dirname "$0")"/../container_workspace/dockerhut
+    cp "$(dirname "$0")"/container_ressources/start "$(dirname "$0")"/../container_workspace/dockerhut/.
+    cp "$(dirname "$0")"/container_ressources/start_services "$(dirname "$0")"/../container_workspace/dockerhut/.
+    cp "$(dirname "$0")"/container_ressources/stop_services "$(dirname "$0")"/../container_workspace/dockerhut/.
+    cp "$(dirname "$0")"/container_ressources/void "$(dirname "$0")"/../container_workspace/dockerhut/.
+    cp -a "$(dirname "$0")"/container_ressources/settings.example.sh "$(dirname "$0")"/../container_workspace/dockerhut/settings.sh
     cp -a "$(dirname "$0")"/settings/settings.example.sh "$(dirname "$0")"/settings/settings.sh
-    ln -s ../../docker_container/dockerhut/settings.sh "$(dirname "$0")"/settings/shared_settings.sh
+    ln -s ../../container_workspace/dockerhut/settings.sh "$(dirname "$0")"/settings/shared_settings.sh
     cp -a "$(dirname "$0")"/resources/Dockerfile.example "$(dirname "$0")"/../Dockerfile
 
 
