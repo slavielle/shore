@@ -10,7 +10,7 @@ if [[ $CONTAINER_ID_STARTED ]]; then
 
 else
 
-  echo "starting container"
+  printf "starting container\n\n"
 
   #Set container-side start script as entrypoint
   rm "$(dirname "$0")"/../docker_container/dockerhut/entrypoint
@@ -21,22 +21,26 @@ else
   
   if [[ $OUT =~ ^[0-9a-f]+$ ]]; then
 
-    echo "container $OUT started"
+    printf "container $OUT started\n\n"
 
     # Persist CONTAINER_ID_STARTED variable 
     echo "CONTAINER_ID_STARTED=\"$OUT\"" > "$(dirname "$0")/runtime/CONTAINER_ID_STARTED.var.sh"
   
     # Start services by running the start_services container-side script
-    echo "starting services ..."
+    printf "starting services ...\n\n"
     docker exec -it $CONTAINER_ID_INITIALIZED /home/$PROJECT_NAME/dockerhut/start_services
-    printf "starting services done\n"
+    printf "\nstarting services done\n\n"
     
-    printf "open the web page : http://$CONTAINER_IP/$PROJECT_NAME"
+    printf "open the web page : http://$CONTAINER_IP/$PROJECT_NAME\n\n"
+
+    if which xdg-open > /dev/null; then
+      xdg-open "http://$CONTAINER_IP/$PROJECT_NAME"
+    fi
 
   else
 
-    echo "someting went wrong:"
-    echo "$OUT"
+    printf "someting went wrong:\n"
+    printf "$OUT\n"
 
   fi
 fi
