@@ -1,7 +1,7 @@
 # dockerhut
 
 ## What is it ?
-As a web developper developping website mainly in Drupal, I"m interested in Docker as a web developpement environment (in substitution to VM). 
+As a web developper developping websites mainly in Drupal, I"m interested in Docker as a web developpement environment (in substitution to VM). 
 
 Dockerhut is an attempt to make an easy to use development environment on top of Docker for people who, like me works on litte or middle size websites development.
 
@@ -15,5 +15,27 @@ So far I tested it on my Ubuntu Xenial Xerus so bare with me if it chashes on ot
 Docker version I used is : Docker version 1.12.0, build 8eab29e. Let's consider it as a minimal version. If you experiencing a problem with higher Docker version or if it works fine with lower Docker please let me know.
 
 and Whatever, feel free to collaborate and pull request me :)
+
+## Requirments
+
+Install docker 1.12.0 or higher (https://get.docker.com/)
+
+## Installing Dockerhut
+
+Create a docker custom network bridge if you hadn't already created one
+```
+docker network create --subnet=172.18.0.0/16 dockerhut_net
+```
+dockerhut_net is the name of the network you can change it if you want
+
+Create your <project> directory
+
+git clone docker hut inside in order to have <project>/dockerhut.
+
+form your project root execute command
+```
+dockerhut/install
+```
+and installation is over
 
 
