@@ -12,7 +12,7 @@ I'm not a experimented developper on bash script development. My code could cert
 
 So far I tested it on my Ubuntu Xenial Xerus so bare with me if it chashes on other linux systems.
 
-Docker version I used is : Docker version 1.12.0, build 8eab29e. Let's consider it as a minimal version. If you experiencing a problem with higher Docker version or if it works fine with lower Docker please let me know.
+Docker version I used is : Docker version 1.12.0, build 8eab29e. Let's consider it as a minimal version. If you experiencing a problem with higher Docker versions or if it works fine with lower Docker versions please let me know.
 
 and Whatever, feel free to collaborate and pull request me :)
 
@@ -28,9 +28,9 @@ docker network create --subnet=172.18.0.0/16 dockerhut_net
 ```
 dockerhut_net is the name of the network you can change it if you want
 
-Create your <project> directory
+Create your project directory
 
-git clone docker hut inside in order to have <project>/dockerhut.
+git clone docker hut inside in order to have project/dockerhut.
 
 form your project root execute command
 ```
@@ -38,14 +38,67 @@ dockerhut/install
 ```
 and installation is over
 
-## What I got ?
+## What we got ?
 
-look into your <project> directory ...
+look into your project directory ...
 
-a very basic Dockerfile appeared and a container_workspace directory.
+* The (very basic) Dockerfile will help you to create your project image if you wish
 
-The Dockerfile will help you to create your project image if you wish
+* The container_workspace directory is a directory that will be shared with your container. Its your working directory where your git project will be extracted.
 
-The container_workspace directory is a directory that will ve shared with your container. It contains a www directory that will contain the part of your project exposed to your web server.
+## Preparing or getting a Docker image
+
+build the docker image corresponding to the docker file
+
+On your project directory, execute command : 
+```
+docker build .
+```
+dont forget the "."(dot) at the end of the command
+
+You should get finally a ...
+```
+Successfully built c531b08d1f3e
+```
+The image ID (c531b08d1f3e) will be different 
+
+## Change settings
+
+project/dockerhut/settings/settings.sh
+
+```
+CONTAINER_IP="172.18.0.2"
+CONTAINER_NETWORK="dockerhut_net"
+IMAGE_ID="c531b08d1f3e"
+GIT_URL="https://github.com/slavielle/dockerhut_sample_workspace.git"
+```
+Set your image ID
+Set your Git repository URL
+
+project/dockerhut/settings/shared_settings.sh
+
+```
+ROJECT_NAME="dockerhut_test"
+PROJECT_HTDOCS="www"
+```
+Set your project name and your project htdocs
+
+## Initialise your container and get you sources from git
+
+from your project directory execute command
+
+dockerhut/init
+
+## Add your assets
+
+## Copy your database tgz
+
+TO be continued ...
+
+
+
+
+
+
 
 
