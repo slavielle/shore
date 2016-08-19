@@ -38,4 +38,14 @@ dockerhut/install
 ```
 and installation is over
 
+## What I got ?
+
+look into your <project> directory ...
+
+a very basic Dockerfile appeared and a docker_container directory.
+
+The Dockerfile will help you to create your project image if you wish
+
+The docker_container directory is a directory that will ve shared with your container. It contains a www directory that will contain the part of your project exposed to your web server.
+
 
