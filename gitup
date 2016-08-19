@@ -1,0 +1,16 @@
+#!/bin/bash
+
+. "$(dirname "$0")/settings/settings.sh"
+. "$(dirname "$0")/settings/shared_settings.sh"
+
+if test "$(ls -A "$(dirname "$0")/runtime")"; then
+  for F in "$(dirname "$0")"/runtime/*.sh; do
+     . $F
+  done
+fi
+
+echo "getting git project"
+cd "$(dirname "$0")"/../docker_container
+git init
+git remote add origin "$GIT_URL"
+git pull origin master
