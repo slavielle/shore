@@ -1,0 +1,3 @@
+CONTAINER_IP="172.18.0.3"
+CONTAINER_NETWORK="docker-custom-nw"
+IMAGE_ID="9debb3555932"

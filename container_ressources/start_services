@@ -1,0 +1,9 @@
+#!/bin/bash
+
+# start Apache and MySql
+/etc/init.d/apache2 start
+/etc/init.d/mysql start
+
+# Switch to bash
+#/bin/bash
+

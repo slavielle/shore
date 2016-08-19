@@ -1,0 +1,32 @@
+#!/bin/bash
+
+if test "$(ls -A "$(dirname "$0")/runtime" 2> /dev/null)"; then
+  for F in "$(dirname "$0")"/runtime/*.sh; do
+     . $F
+  done
+fi
+
+if [[ $DOCKERHUT_INSTALLED ]]; then
+  echo "Dockerhut seems already installed"
+else
+    mkdir "$(dirname "$0")"/runtime
+    mkdir "$(dirname "$0")"/tmp
+    mkdir "$(dirname "$0")"/../docker_container
+    mkdir "$(dirname "$0")"/../docker_container/www
+    mkdir "$(dirname "$0")"/../docker_container/dockerhut
+    cp "$(dirname "$0")"/container_ressources/start "$(dirname "$0")"/../docker_container/dockerhut/.
+    cp "$(dirname "$0")"/container_ressources/start_services "$(dirname "$0")"/../docker_container/dockerhut/.
+    cp "$(dirname "$0")"/container_ressources/stop_services "$(dirname "$0")"/../docker_container/dockerhut/.
+    cp "$(dirname "$0")"/container_ressources/void "$(dirname "$0")"/../docker_container/dockerhut/.
+    cp -a "$(dirname "$0")"/container_ressources/settings.example.sh "$(dirname "$0")"/../docker_container/dockerhut/settings.sh
+    cp -a "$(dirname "$0")"/settings/settings.example.sh "$(dirname "$0")"/settings/settings.sh
+    ln -s ../../docker_container/dockerhut/settings.sh "$(dirname "$0")"/settings/shared_settings.sh
+    cp -a "$(dirname "$0")"/resources/Dockerfile.example "$(dirname "$0")"/../Dockerfile
+
+
+    echo "DOCKERHUT_INSTALLED=1" > "$(dirname "$0")/runtime/DOCKERHUT_INSTALLED.var.sh"
+
+    echo "dockerhut installed"
+    echo "Please update settings files located in dockerhut/settings directory then run the dockerhut/init command from your project root"
+
+fi
