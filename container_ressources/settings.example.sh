@@ -1,1 +1,2 @@
-PROJECT_NAME="test_docker_2"
+PROJECT_NAME="dockerhut_test"
+PROJECT_HTDOCS = "www"

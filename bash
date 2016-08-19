@@ -1,12 +1,7 @@
 #!/bin/bash
 
-. "$(dirname "$0")/settings/settings.sh"
-. "$(dirname "$0")/settings/shared_settings.sh"
+. "$(dirname "$0")/resources/fn.sh"
 
-if test "$(ls -A "$(dirname "$0")/runtime")"; then
-  for F in "$(dirname "$0")"/runtime/*.sh; do
-     . $F
-  done
-fi
+include_files
 
 docker exec -it $CONTAINER_ID_INITIALIZED /bin/bash

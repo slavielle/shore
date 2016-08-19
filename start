@@ -1,13 +1,8 @@
 #!/bin/bash
 
-. "$(dirname "$0")/settings/settings.sh"
-. "$(dirname "$0")/settings/shared_settings.sh"
+. "$(dirname "$0")/resources/fn.sh"
 
-if test "$(ls -A "$(dirname "$0")/runtime")"; then
-  for F in "$(dirname "$0")"/runtime/*.sh; do
-     . $F
-  done
-fi
+include_files
 
 if [[ $CONTAINER_ID_STARTED ]]; then
   echo "$CONTAINER_ID_STARTED seems already started"
