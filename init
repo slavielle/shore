@@ -15,7 +15,7 @@ else
 
   PROJECT_DIR="$( cd "$( dirname "$0" )"/.. && pwd )"
 
-  OUT=$(docker run -it -v $PROJECT_DIR/container_workspace:/home/$PROJECT_NAME --cidfile="$(dirname "$0")"/tmp/cid --net $CONTAINER_NETWORK --ip $CONTAINER_IP $IMAGE_ID /home/$PROJECT_NAME/dockerhut/entrypoint 2>&1)
+  OUT=$(docker run -it -e MYSQL_ROOT_PASSWORD="$MYSQL_ROOT_PW" -v $PROJECT_DIR/container_workspace:/home/$PROJECT_NAME --cidfile="$(dirname "$0")"/tmp/cid --net $CONTAINER_NETWORK --ip $CONTAINER_IP $IMAGE_ID /home/$PROJECT_NAME/dockerhut/entrypoint 2>&1)
   CIDOUT=$(cat "$(dirname "$0")/tmp/cid" 2> /dev/null)
   rm "$(dirname "$0")/tmp/cid" 2> /dev/null
   if [[ $CIDOUT =~ ^[0-9a-f]+$ ]]; then
