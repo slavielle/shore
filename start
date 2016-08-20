@@ -18,29 +18,27 @@ else
 
   #Docker start
   OUT=$(docker start $CONTAINER_ID_INITIALIZED 2>&1)
-  
+
   if [[ $OUT =~ ^[0-9a-f]+$ ]]; then
 
     printf "container $OUT started\n\n"
 
-    # Persist CONTAINER_ID_STARTED variable 
+    # Persist CONTAINER_ID_STARTED variable
     echo "CONTAINER_ID_STARTED=\"$OUT\"" > "$(dirname "$0")/runtime/CONTAINER_ID_STARTED.var.sh"
-  
+
     # Start services by running the start_services container-side script
     printf "starting services ...\n\n"
     docker exec -it $CONTAINER_ID_INITIALIZED /home/$PROJECT_NAME/dockerhut/start_services
     printf "\nstarting services done\n\n"
-    
-    printf "open the web page : http://$CONTAINER_IP/$PROJECT_NAME\n\n"
 
-    if which xdg-open > /dev/null; then
+    # Display web page URL and open browser
+    printf "open the web page : http://$CONTAINER_IP/$PROJECT_NAME\n\n"
+    if which xdg-open > /dev/null && [ "$OPEN_BROWSER_ON_START" = true ]; then
       xdg-open "http://$CONTAINER_IP/$PROJECT_NAME"
     fi
 
   else
-
     printf "someting went wrong:\n"
     printf "$OUT\n"
-
   fi
 fi
