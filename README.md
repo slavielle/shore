@@ -8,17 +8,17 @@ Dockerhut is an attempt to make an easy to use development environment on top of
 Dockerhut is mainly a bunch of bash scripts an a fiew tricks around docker. it use only one container aiming to host runtime environment tools (such as Apache, php, MySQL) and buidling tools (such as gulp, sass, ect) of a project. This way you can easily achive and restore or share your docker image with colleague working on the same projet
 
 ## Disclaimer
-I'm not a experimented developper on bash script development. My code could certainly be improved. 
+* I'm not a experimented developper on bash script development. My code could certainly be improved. 
 
-So far I tested it on my Ubuntu Xenial Xerus so bare with me if it chashes on other linux systems.
+* So far I tested it on my Ubuntu Xenial Xerus so bare with me if it chashes on other linux systems.
 
-Docker version I used is : Docker version 1.12.0, build 8eab29e. Let's consider it as a minimal version. If you experiencing a problem with higher Docker versions or if it works fine with lower Docker versions please let me know.
+* Docker version I used is : Docker version 1.12.0, build 8eab29e. Let's consider it as a minimal version. If you experiencing a problem with higher Docker versions or if it works fine with lower Docker versions please let me know.
 
 and Whatever, feel free to collaborate and pull request me :)
 
 ## Requirments
-
-Install docker 1.12.0 or higher (https://get.docker.com/)
+* Linux system (I didn't test using boot2Docker on others plathform, let me now if it works well), 
+* Docker 1.12.0 or higher installed (https://get.docker.com/)
 
 ## Installing Dockerhut
 
@@ -28,54 +28,55 @@ docker network create --subnet=172.18.0.0/16 dockerhut_net
 ```
 dockerhut_net is the name of the network you can change it if you want
 
-Create your project directory
+get dockerhut from git and put the dockerhut directory into /usr/lib
 
-git clone docker hut inside in order to have project/dockerhut.
-
-form your project root execute command
+Create a symlink in /usr/bin
 ```
-dockerhut/install
+cd /usr/bin
+sudo ln -s ../lib/dockerhut/dockerhut doh
 ```
-and installation is over
+On my computer, the command to run dockerhut is the short for dockerhut ... "doh" and yes i like donuts :)
 
-## What we got ?
-
-look into your project directory ...
-
-* The (very basic) Dockerfile will help you to create your project image if you wish
-
-* The container_workspace directory is a directory that will be shared with your container. Its your working directory where your git project will be extracted.
-
-## Preparing or getting a Docker image
-
-build the docker image corresponding to the docker file
-
-On your project directory, execute command : 
+You can now run the command "doh" everywhere
 ```
-docker build .
+$ doh 
+dockerhut: no command provided
 ```
-dont forget the "."(dot) at the end of the command
+# Use it for a projet
 
-You should get finally a ...
+Go into your projet directory. It's must be your git root containing your website's runtime and build scripts and assets. in your project root you must have a directory (genrally called www or htdocs containing a directory exposed to your web server)
+
+form your projet directory execute command : 
+
 ```
-Successfully built c531b08d1f3e
+$ doh install
+dockerhut installed
+Please edit files in .dockerhut/settings to set setting values
 ```
-The image ID (c531b08d1f3e) will be different 
+
+Now, look into your project directory using a ls -a command : Among your project's files and directories you have now a .dockerhut directory ... you might want to add it to your .gitignore file and it's a good moment to ;)  
+
+## Yes and what now.
+
+Now comes the tricky part ... we need a docker image to run our project container. Making a docker image for our project will not be discussed here. let's get a simple one.
+
+## Getting docker image
+
+[part still to write]
 
 ## Change settings
 
-project/dockerhut/settings/settings.sh
+[project root]/.dockerhut/settings/host_settings.sh
 
 ```
 CONTAINER_IP="172.18.0.2"
 CONTAINER_NETWORK="dockerhut_net"
 IMAGE_ID="c531b08d1f3e"
-GIT_URL="https://github.com/slavielle/dockerhut_sample_workspace.git"
 ```
 Set your image ID
 Set your Git repository URL
 
-project/dockerhut/settings/shared_settings.sh
+[project root]/.dockerhut/settings/container_settings.sh
 
 ```
 ROJECT_NAME="dockerhut_test"
@@ -83,21 +84,7 @@ PROJECT_HTDOCS="www"
 ```
 Set your project name and your project htdocs
 
-## Initialise your container and get you sources from git
-
-from your project directory execute command
-
-dockerhut/init
-
-## Add your assets
-
-## Copy your database tgz
-
-TO be continued ...
-
-
-
-
+[to be continued]
 
 
 
