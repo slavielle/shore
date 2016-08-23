@@ -62,7 +62,10 @@ Now comes the tricky part ... we need a docker image to run our project containe
 
 ## Getting docker image
 
-[part still to write]
+```
+docker pull netelios/dockerhut_starter
+```
+This image is a really simple image based on a debian jessie + Apache, PHP, MySQL
 
 ## Change settings
 
