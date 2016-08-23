@@ -1,0 +1,20 @@
+#!/bin/bash
+
+#remove first argument
+COMMAND=$1
+shift
+if [ -f ".dockerhut/host_scripts/$COMMAND" ]; then
+
+  echo "$COMMAND"
+  ".dockerhut/host_scripts/$COMMAND" $@
+else
+  if [ -n "$COMMAND" ]; then
+    if [ "$COMMAND" == "install" ]; then
+      "$(dirname "$(readlink -f "$0")")/$COMMAND"
+    else    
+      echo "dockerhut: command \"$COMMAND\" not available"
+    fi
+  else
+    echo "dockerhut: no command provided"
+  fi
+fi

@@ -1,31 +1,26 @@
 #!/bin/bash
 
-if test "$(ls -A "$(dirname "$0")/runtime" 2> /dev/null)"; then
-  for F in "$(dirname "$0")"/runtime/*.sh; do
-     . $F
-  done
-fi
 
-if [[ $DOCKERHUT_INSTALLED ]]; then
-  echo "Dockerhut seems already installed"
+if [ -d .dockerhut ]; then
+  echo "dockerhut seems already installed: .dockerhut directory exists"
 else
-    mkdir "$(dirname "$0")"/runtime
-    mkdir "$(dirname "$0")"/tmp
-    mkdir "$(dirname "$0")"/../container_workspace
-    mkdir "$(dirname "$0")"/../container_workspace/dockerhut
-    cp "$(dirname "$0")"/container_ressources/start "$(dirname "$0")"/../container_workspace/dockerhut/.
-    cp "$(dirname "$0")"/container_ressources/start_services "$(dirname "$0")"/../container_workspace/dockerhut/.
-    cp "$(dirname "$0")"/container_ressources/stop_services "$(dirname "$0")"/../container_workspace/dockerhut/.
-    cp "$(dirname "$0")"/container_ressources/void "$(dirname "$0")"/../container_workspace/dockerhut/.
-    cp -a "$(dirname "$0")"/container_ressources/settings.example.sh "$(dirname "$0")"/../container_workspace/dockerhut/settings.sh
-    cp -a "$(dirname "$0")"/settings/settings.example.sh "$(dirname "$0")"/settings/settings.sh
-    ln -s ../../container_workspace/dockerhut/settings.sh "$(dirname "$0")"/settings/shared_settings.sh
-    cp -a "$(dirname "$0")"/resources/Dockerfile.example "$(dirname "$0")"/../Dockerfile
+  mkdir .dockerhut
+  cp -r "$(dirname "$0")/installable/." .dockerhut/.
 
+  if test "$(ls -A .dockerhut/runtime 2> /dev/null)"; then
+    for F in .dockerhut/runtime/*.sh; do
+       . $F
+    done
+  fi
 
-    echo "DOCKERHUT_INSTALLED=1" > "$(dirname "$0")/runtime/DOCKERHUT_INSTALLED.var.sh"
+  if [[ $DOCKERHUT_INSTALLED ]]; then
+    echo "Dockerhut seems already installed"
+  else
+    mkdir .dockerhut/runtime
+    mkdir .dockerhut/tmp
+    mv .dockerhut/settings/container_settings.example.sh .dockerhut/settings/container_settings.sh
+    mv .dockerhut/settings/host_settings.example.sh .dockerhut/settings/host_settings.sh
+  fi
 
-    echo "dockerhut installed"
-    echo "Please update settings files located in dockerhut/settings directory then run the dockerhut/init command from your project root"
-
+  echo "dockerhut installed"  
 fi

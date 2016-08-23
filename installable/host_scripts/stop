@@ -1,6 +1,6 @@
 #!/bin/bash
 
-. "$(dirname "$0")/resources/fn.sh"
+. .dockerhut/host_scripts/fn.sh
 
 include_files
 
@@ -8,12 +8,12 @@ if [[ $CONTAINER_ID_STARTED ]]; then
 
   #Stop services by running the container script
   echo "stopping services : "
-  docker exec -it $CONTAINER_ID_STARTED /home/$PROJECT_NAME/dockerhut/stop_services
+  docker exec -it $CONTAINER_ID_STARTED /home/$PROJECT_NAME/.dockerhut/container_scripts/stop_services
 
   echo "stopping container"
   docker stop $CONTAINER_ID_STARTED
   echo "$CONTAINER_ID_STARTED stopped"
-  rm "$(dirname "$0")/runtime/CONTAINER_ID_STARTED.var.sh"
+  rm .dockerhut/runtime/CONTAINER_ID_STARTED.var.sh
 else
   echo "$CONTAINER_ID_INITIALIZED seems not to be started or hadn't been stopped properly"
 fi

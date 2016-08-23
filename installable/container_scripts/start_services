@@ -1,6 +1,6 @@
 #!/bin/bash
 
-. "$(dirname "$0")/settings.sh"
+. "$(dirname "$0")/../settings/container_settings.sh"
 
 # Start Apache and MySql
 /etc/init.d/apache2 start

@@ -1,0 +1,54 @@
+#!/bin/bash
+
+. .dockerhut/host_scripts/fn.sh
+
+include_files
+
+if [[ $CONTAINER_ID_INITIALIZED ]]; then
+  echo "container already initialized : $CONTAINER_ID_INITIALIZED"
+else
+
+  echo "initializing container using following settings:"
+
+  # Remove the entrypoint (symlink to a real entrypoint script)
+  rm ".dockerhut/container_scripts/entrypoint" 2> /dev/null
+  
+  # Set the entrypoint symlink pointing to "void" script
+  ln -s void ".dockerhut/container_scripts/entrypoint"
+
+  # Set the PROJECT_DIR : project root that will be sared with container
+  PROJECT_DIR="$( pwd )"
+
+  printf "* project directory: "; if [ "$PROJECT_DIR" ]; then printf "$PROJECT_DIR\n"; else printf "<not-set>\n"; fi
+  printf "* network: "; if [ "$CONTAINER_NETWORK" ]; then printf "$CONTAINER_NETWORK\n"; else printf "<not-set>\n"; fi
+  printf "* project name: "; if [ "$PROJECT_NAME" ]; then printf "$PROJECT_NAME\n"; else printf "<not-set>\n"; fi
+  printf "* container IP: "; if [ "$CONTAINER_IP" ]; then printf "$CONTAINER_IP\n"; else printf "<not-set>\n"; fi
+  printf "* image ID: "; if [ "$IMAGE_ID" ]; then printf "$IMAGE_ID\n"; else printf "<not-set>\n"; fi
+  
+  if [ "$PROJECT_DIR" ] && [ "$CONTAINER_NETWORK" ] && [ "$PROJECT_NAME" ] && [ "$CONTAINER_IP" ] && [ "$IMAGE_ID" ]; then
+    # Call the docker run to create the container
+  OUT=$(docker run -it -e MYSQL_ROOT_PASSWORD="$MYSQL_ROOT_PW" -v $PROJECT_DIR:/home/$PROJECT_NAME --cidfile=".dockerhut/tmp/cid" --net $CONTAINER_NETWORK --ip $CONTAINER_IP $IMAGE_ID /home/$PROJECT_NAME/.dockerhut/container_scripts/entrypoint 2>&1)
+
+    # Get the run's container ID
+    CIDOUT=$(cat ".dockerhut/tmp/cid" 2> /dev/null)
+    rm ".dockerhut/tmp/cid" 2> /dev/null
+
+    if [[ $CIDOUT =~ ^[0-9a-f]+$ ]]; then
+    
+      #report message on success
+      echo "container $CIDOUT initialized"
+
+      # Store container ID in a runtime variable
+      echo "CONTAINER_ID_INITIALIZED=\"$CIDOUT\"" > ".dockerhut/runtime/CONTAINER_ID_INITIALIZED.var.sh"
+
+    else
+    
+      # Report message on error 
+      echo "Oops, someting went wrong:"
+      echo "$OUT"
+  
+    fi
+  else
+    echo "Some expected settings are not defined. Please edit files in .dockerhut/settings to set setting values"
+  fi
+fi

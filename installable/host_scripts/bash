@@ -1,6 +1,6 @@
 #!/bin/bash
 
-. "$(dirname "$0")/resources/fn.sh"
+. .dockerhut/host_scripts/fn.sh
 
 include_files
 
