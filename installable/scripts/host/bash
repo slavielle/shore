@@ -1,6 +1,6 @@
 #!/bin/bash
 
-. .dockerhut/host_scripts/fn.sh
+. .dockerhut/scripts/host/fn.sh
 
 include_files
 

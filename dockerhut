@@ -3,10 +3,10 @@
 #remove first argument
 COMMAND=$1
 shift
-if [ -f ".dockerhut/host_scripts/$COMMAND" ]; then
+if [ -f ".dockerhut/scripts/host/$COMMAND" ]; then
 
   echo "$COMMAND"
-  ".dockerhut/host_scripts/$COMMAND" $@
+  ".dockerhut/scripts/host/$COMMAND" $@
 else
   if [ -n "$COMMAND" ]; then
     if [ "$COMMAND" == "install" ]; then

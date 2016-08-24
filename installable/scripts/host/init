@@ -1,6 +1,6 @@
 #!/bin/bash
 
-. .dockerhut/host_scripts/fn.sh
+. .dockerhut/scripts/host/fn.sh
 
 include_files
 
@@ -11,10 +11,10 @@ else
   echo "initializing container using following settings:"
 
   # Remove the entrypoint (symlink to a real entrypoint script)
-  rm ".dockerhut/container_scripts/entrypoint" 2> /dev/null
+  rm ".dockerhut/scripts/container/entrypoint" 2> /dev/null
   
   # Set the entrypoint symlink pointing to "void" script
-  ln -s void ".dockerhut/container_scripts/entrypoint"
+  ln -s void ".dockerhut/scripts/container/entrypoint"
 
   # Set the PROJECT_DIR : project root that will be sared with container
   PROJECT_DIR="$( pwd )"
@@ -27,7 +27,7 @@ else
   
   if [ "$PROJECT_DIR" ] && [ "$CONTAINER_NETWORK" ] && [ "$PROJECT_NAME" ] && [ "$CONTAINER_IP" ] && [ "$IMAGE_ID" ]; then
     # Call the docker run to create the container
-  OUT=$(docker run -it -e MYSQL_ROOT_PASSWORD="$MYSQL_ROOT_PW" -v $PROJECT_DIR:/home/$PROJECT_NAME --cidfile=".dockerhut/tmp/cid" --net $CONTAINER_NETWORK --ip $CONTAINER_IP $IMAGE_ID /home/$PROJECT_NAME/.dockerhut/container_scripts/entrypoint 2>&1)
+  OUT=$(docker run -it -e MYSQL_ROOT_PASSWORD="$MYSQL_ROOT_PW" -v $PROJECT_DIR:/home/$PROJECT_NAME --cidfile=".dockerhut/tmp/cid" --net $CONTAINER_NETWORK --ip $CONTAINER_IP $IMAGE_ID /home/$PROJECT_NAME/.dockerhut/scripts/container/entrypoint 2>&1)
 
     # Get the run's container ID
     CIDOUT=$(cat ".dockerhut/tmp/cid" 2> /dev/null)
