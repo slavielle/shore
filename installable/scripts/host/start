@@ -28,9 +28,9 @@ else
       # Persist CONTAINER_ID_STARTED variable
       echo "CONTAINER_ID_STARTED=\"$OUT\"" > .dockerhut/runtime/CONTAINER_ID_STARTED.var.sh
 
-      # Start services by running the start_services container-side script
+      # Start services by running the "start" container-side script
       printf "starting services ...\n\n"
-      docker exec -it $CONTAINER_ID_INITIALIZED /home/$PROJECT_NAME/.dockerhut/scripts/container/start_services
+      docker exec -it $CONTAINER_ID_INITIALIZED /home/$PROJECT_NAME/.dockerhut/scripts/container/start
       printf "\nstarting services done\n\n"
 
       # Display web page URL and open browser
