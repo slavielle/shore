@@ -14,7 +14,7 @@ else
 
   #Set container-side start script as entrypoint
   rm .dockerhut/scripts/container/entrypoint
-  ln -s start .dockerhut/scripts/container/entrypoint
+  ln -s _start .dockerhut/scripts/container/entrypoint
   
   if [ -d "$PROJECT_HTDOCS" ]; then 
   

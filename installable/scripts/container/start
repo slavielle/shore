@@ -1,5 +1,6 @@
 #!/bin/bash
 
+. "$(dirname "$0")/fn.sh"
 . "$(dirname "$0")/../../settings/container_settings.sh"
 
 # Start services
@@ -11,4 +12,7 @@ done
 if [ ! -e "/var/www/html/$PROJECT_NAME" ]; then
     ln -s "/home/$PROJECT_NAME/$PROJECT_HTDOCS" "/var/www/html/$PROJECT_NAME"
 fi
+
+run_hook "start"
+
 

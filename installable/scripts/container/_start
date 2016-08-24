@@ -1,0 +1,6 @@
+#!/bin/bash
+
+# Start Entrypoint script.
+# it allows container to keep running.
+
+/bin/bash

@@ -1,5 +1,6 @@
 #!/bin/bash
 
-# Void entrypoint script
+. "$(dirname "$0")/fn.sh"
+. "$(dirname "$0")/../../settings/container_settings.sh"
 
-exit
+run_hook "init"

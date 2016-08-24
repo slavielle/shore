@@ -14,7 +14,7 @@ else
   rm ".dockerhut/scripts/container/entrypoint" 2> /dev/null
   
   # Set the entrypoint symlink pointing to "init" script
-  ln -s init ".dockerhut/scripts/container/entrypoint"
+  ln -s _init ".dockerhut/scripts/container/entrypoint"
 
   # Set the PROJECT_DIR : project root that will be sared with container
   PROJECT_DIR="$( pwd )"
@@ -35,11 +35,24 @@ else
 
     if [[ $CIDOUT =~ ^[0-9a-f]+$ ]]; then
     
-      #report message on success
+      # Report message on success
       echo "container $CIDOUT initialized"
 
       # Store container ID in a runtime variable
       echo "CONTAINER_ID_INITIALIZED=\"$CIDOUT\"" > ".dockerhut/runtime/CONTAINER_ID_INITIALIZED.var.sh"
+
+      # Set container-side "_start" script as entrypoint
+      rm .dockerhut/scripts/container/entrypoint
+      ln -s _start .dockerhut/scripts/container/entrypoint
+
+      # Start the container
+      docker start $CIDOUT > /dev/null
+
+      # Execute the container "init" script
+      docker exec -it $CIDOUT /home/$PROJECT_NAME/.dockerhut/scripts/container/init
+      
+      # Stop the container
+      docker stop $CIDOUT > /dev/null
 
     else
     

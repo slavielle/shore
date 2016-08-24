@@ -4,6 +4,6 @@
 
 # Start services
 for SERVICE in ${SERVICES_TO_START[@]}; do
-  /etc/init.d/"$SERVICE" start
+  /etc/init.d/"$SERVICE" stop
 done
 
