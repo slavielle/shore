@@ -6,9 +6,9 @@ include_files
 
 if [[ $CONTAINER_ID_STARTED ]]; then
 
-  #Stop services by running the container script
+  #Stop services by running the "stop" container script
   echo "stopping services : "
-  docker exec -it $CONTAINER_ID_STARTED /home/$PROJECT_NAME/.dockerhut/scripts/container/stop_services
+  docker exec -it $CONTAINER_ID_STARTED /home/$PROJECT_NAME/.dockerhut/scripts/container/stop
 
   echo "stopping container"
   docker stop $CONTAINER_ID_STARTED
