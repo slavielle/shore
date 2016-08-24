@@ -13,8 +13,8 @@ else
   # Remove the entrypoint (symlink to a real entrypoint script)
   rm ".dockerhut/scripts/container/entrypoint" 2> /dev/null
   
-  # Set the entrypoint symlink pointing to "void" script
-  ln -s void ".dockerhut/scripts/container/entrypoint"
+  # Set the entrypoint symlink pointing to "init" script
+  ln -s init ".dockerhut/scripts/container/entrypoint"
 
   # Set the PROJECT_DIR : project root that will be sared with container
   PROJECT_DIR="$( pwd )"
