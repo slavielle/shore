@@ -2,9 +2,10 @@
 
 . "$(dirname "$0")/../settings/container_settings.sh"
 
-# Start Apache and MySql
-/etc/init.d/apache2 start
-/etc/init.d/mysql start
+# Start services
+for SERVICE in ${SERVICES_TO_START[@]}; do
+  /etc/init.d/"$SERVICE" start
+done
 
 # Create symbolic link in Apache web directory
 if [ ! -e "/var/www/html/$PROJECT_NAME" ]; then
