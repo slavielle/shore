@@ -1,6 +1,6 @@
 #!/bin/bash
 
-. "$(dirname "$0")/../settings/container_settings.sh"
+. "$(dirname "$0")/../../settings/container_settings.sh"
 
 # Start services
 for SERVICE in ${SERVICES_TO_START[@]}; do
