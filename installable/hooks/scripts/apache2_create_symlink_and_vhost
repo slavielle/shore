@@ -8,3 +8,16 @@ include_files
 if [ ! -e "/var/www/html/$PROJECT_NAME" ]; then
     ln -s "/home/$PROJECT_NAME/$PROJECT_HTDOCS" "/var/www/html/$PROJECT_NAME"
 fi
+
+# Create vhost in /etc/apache2/sites-available
+
+cat >/etc/apache2/sites-available/"$PROJECT_NAME".conf <<EOL
+ServerName ${PROJECT_DOMAIN_NAME}
+DocumentRoot /var/www/html/${PROJECT_NAME}
+ErrorLog \${APACHE_LOG_DIR}/error.log
+CustomLog \${APACHE_LOG_DIR}/access.log combined
+EOL
+
+# Create the symlink in /etc/apache2/sites-available
+
+ln -s /etc/apache2/sites-available/"$PROJECT_NAME".conf /etc/apache2/sites-enabled/"$PROJECT_NAME".conf
