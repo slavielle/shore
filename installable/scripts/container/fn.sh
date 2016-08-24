@@ -6,7 +6,7 @@ function run_hook() {
 
       # Run the hook script and display result
       printf "Triggering hook \"$HOOK\":\n\n"
-      "$(dirname "$0")/../../hooks/scripts/$HOOK.sh"
+      "$(dirname "$0")/../../hooks/scripts/$HOOK"
       printf "\nHook \"$HOOK\" triggered\n"
     fi
 

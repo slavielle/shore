@@ -1,0 +1,10 @@
+# Create the symlink and vhost for project
+
+. $(dirname "$0")/fn.sh
+
+include_files
+
+# Create symbolic link in Apache web directory
+if [ ! -e "/var/www/html/$PROJECT_NAME" ]; then
+    ln -s "/home/$PROJECT_NAME/$PROJECT_HTDOCS" "/var/www/html/$PROJECT_NAME"
+fi
