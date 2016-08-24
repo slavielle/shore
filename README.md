@@ -1,11 +1,18 @@
 # dockerhut
 
 ## What is it ?
+
+### A web development environment for little or middle sized projects
 As a web developper developping websites in Drupal and Symfony, I"m interested in Docker as a local web developpement environment (in substitution to VM). 
 
-Dockerhut is an attempt to make an easy to use web development environment on top of Docker for people who, like me works on litte or middle size websites development.
+Dockerhut is an attempt to make an easy to use web development environment on top of Docker for people who, like me work as a developper on litte or middle sized websites.
 
-Dockerhut is mainly a bunch of bash scripts and a fiew tricks around Docker. It use only one container aiming to host runtime environment tools (such as Apache, php, MySQL) and buidling tools (such as gulp, sass, ect) of a project. This way you can easily achive and restore or share your docker image with colleagues working on the same projet, not botherint too much about docker's convolutions 
+Dockerhut is mainly a bunch of bash scripts and a fiew tricks around Docker. It use basically only one container aiming to host runtime environment tools (such as Apache, php, MySQL) and buidling tools (such as gulp, sass, drush, etc) for a project. This way you can easily achive and restore or share your docker image with colleagues working on the same projet, not botherint too much about docker's convolutions.
+
+### My final Goals
+  - For a developper : install dockerhut and learn how to use it at a user level in 30 min tops (as a user ... if you have to design the projet it might take a little longer :) )
+  - Reinstall an existing project from scratch and be ready to crack on with in 10 min tops
+  - No more tools versions or compatibility problem : runtime and building tools in the container make your life easier 
 
 ## Disclaimer
 * I'm not a experimented developper on bash script development. My code could certainly be improved. 
@@ -17,7 +24,7 @@ Dockerhut is mainly a bunch of bash scripts and a fiew tricks around Docker. It 
 and Whatever, feel free to collaborate and pull request me :)
 
 ## Requirments
-* Linux system (I didn't test using boot2Docker on others plathform, let me now if it works well), 
+* Linux system (I didn't test it using boot2Docker on Mac OSX plathform to check if dockerhut host scripts could run. On Windows, you could run it using a VM with Ubuntu or Debian installed even if it's a poor solution), 
 * Docker 1.12.0 or higher installed (https://get.docker.com/)
 
 ## Installing Dockerhut
@@ -35,7 +42,7 @@ Create a symlink in /usr/bin
 cd /usr/bin
 sudo ln -s ../lib/dockerhut/dockerhut doh
 ```
-On my computer, the command to run dockerhut is the short for dockerhut ... "doh" and yes i like donuts :)
+On my computer, the command to run dockerhut is the short for dockerhut ... "doh". No my name isn't Ommer but yes i like donuts :)
 
 You can now run the command "doh" everywhere
 ```
