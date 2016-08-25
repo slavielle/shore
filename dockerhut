@@ -1,20 +1,54 @@
 #!/bin/bash
 
-#remove first argument
+
+# Init vars
+WORKING_DIR_PATH=$(pwd)
+ORIGIN_DIR_PATH=$(pwd)
+
+
+# Get the command and remove first argument (command)
 COMMAND=$1
 shift
-if [ -f ".dockerhut/scripts/host/$COMMAND" ]; then
 
-  echo "$COMMAND"
-  ".dockerhut/scripts/host/$COMMAND" $@
-else
-  if [ -n "$COMMAND" ]; then
-    if [ "$COMMAND" == "install" ]; then
-      "$(dirname "$(readlink -f "$0")")/$COMMAND"
-    else    
-      echo "dockerhut: command \"$COMMAND\" not available"
+
+# Walk up directory structure to find the .dockerhut directory
+# except for install command
+if [ "$COMMAND" != "install" ]; then
+  echo "$WORKING_DIR_PATH"
+  while [ "$WORKING_DIR_PATH" != "/" ] 
+  do
+    echo "test : $WORKING_DIR_PATH/.dockerhut"
+    if [ -d .dockerhut ]; then
+      break
     fi
-  else
-    echo "dockerhut: no command provided"
-  fi
+   cd ..
+   WORKING_DIR_PATH=$(pwd)
+ done
 fi
+
+
+# Invoke command
+if [ "$WORKING_DIR_PATH" != "/" ]; then
+  if [ -f ".dockerhut/scripts/host/$COMMAND" ]; then
+
+    echo "$COMMAND"
+    ".dockerhut/scripts/host/$COMMAND" $@
+  else
+    if [ -n "$COMMAND" ]; then
+      if [ "$COMMAND" == "install" ]; then
+        "$(dirname "$(readlink -f "$0")")/$COMMAND"
+      else    
+        echo "dockerhut: command \"$COMMAND\" not available"
+      fi
+    else
+      echo "dockerhut: no command provided"
+    fi
+  fi
+else
+  echo "no .dockerhut found on my way up !"
+fi
+
+
+
+cd "$ORIGIN_DIR_PATH"
+
