@@ -11,14 +11,14 @@ COMMAND=$1
 shift
 
 
-# Walk up directory structure to find the .dockerhut directory
+# Walk up directory structure to find the .shore directory
 # except for install command
 if [ "$COMMAND" != "install" ]; then
   echo "$WORKING_DIR_PATH"
   while [ "$WORKING_DIR_PATH" != "/" ] 
   do
-    echo "test : $WORKING_DIR_PATH/.dockerhut"
-    if [ -d .dockerhut ]; then
+    echo "test : $WORKING_DIR_PATH/.shore"
+    if [ -d .shore ]; then
       break
     fi
    cd ..
@@ -29,23 +29,23 @@ fi
 
 # Invoke command
 if [ "$WORKING_DIR_PATH" != "/" ]; then
-  if [ -f ".dockerhut/scripts/host/$COMMAND" ]; then
+  if [ -f ".shore/scripts/host/$COMMAND" ]; then
 
     echo "$COMMAND"
-    ".dockerhut/scripts/host/$COMMAND" $@
+    ".shore/scripts/host/$COMMAND" $@
   else
     if [ -n "$COMMAND" ]; then
       if [ "$COMMAND" == "install" ]; then
         "$(dirname "$(readlink -f "$0")")/$COMMAND"
       else    
-        echo "dockerhut: command \"$COMMAND\" not available"
+        echo "shore: command \"$COMMAND\" not available"
       fi
     else
-      echo "dockerhut: no command provided"
+      echo "shore: no command provided"
     fi
   fi
 else
-  echo "no .dockerhut found on my way up !"
+  echo "no .shore found on my way up !"
 fi
 
 

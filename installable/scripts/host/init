@@ -1,6 +1,6 @@
 #!/bin/bash
 
-. .dockerhut/scripts/host/fn.sh
+. .shore/scripts/host/fn.sh
 
 include_files
 
@@ -11,10 +11,10 @@ else
   echo "initializing container using following settings:"
 
   # Remove the entrypoint (symlink to a real entrypoint script)
-  rm ".dockerhut/scripts/container/entrypoint" 2> /dev/null
+  rm ".shore/scripts/container/entrypoint" 2> /dev/null
   
   # Set the entrypoint symlink pointing to "init" script
-  ln -s _init ".dockerhut/scripts/container/entrypoint"
+  ln -s _init ".shore/scripts/container/entrypoint"
 
   # Set the PROJECT_DIR : project root that will be sared with container
   PROJECT_DIR="$( pwd )"
@@ -27,11 +27,11 @@ else
   
   if [ "$PROJECT_DIR" ] && [ "$CONTAINER_NETWORK" ] && [ "$PROJECT_NAME" ] && [ "$CONTAINER_IP" ] && [ "$IMAGE_ID" ]; then
     # Call the docker run to create the container
-  OUT=$(docker run -it -e MYSQL_ROOT_PASSWORD="$MYSQL_ROOT_PW" -v $PROJECT_DIR:/home/$PROJECT_NAME --cidfile=".dockerhut/tmp/cid" --net $CONTAINER_NETWORK --ip $CONTAINER_IP $IMAGE_ID /home/$PROJECT_NAME/.dockerhut/scripts/container/entrypoint 2>&1)
+  OUT=$(docker run -it -e MYSQL_ROOT_PASSWORD="$MYSQL_ROOT_PW" -v $PROJECT_DIR:/home/$PROJECT_NAME --cidfile=".shore/tmp/cid" --net $CONTAINER_NETWORK --ip $CONTAINER_IP $IMAGE_ID /home/$PROJECT_NAME/.shore/scripts/container/entrypoint 2>&1)
 
     # Get the run's container ID
-    CIDOUT=$(cat ".dockerhut/tmp/cid" 2> /dev/null)
-    rm ".dockerhut/tmp/cid" 2> /dev/null
+    CIDOUT=$(cat ".shore/tmp/cid" 2> /dev/null)
+    rm ".shore/tmp/cid" 2> /dev/null
 
     if [[ $CIDOUT =~ ^[0-9a-f]+$ ]]; then
     
@@ -39,17 +39,17 @@ else
       echo "container $CIDOUT initialized"
 
       # Store container ID in a runtime variable
-      echo "CONTAINER_ID_INITIALIZED=\"$CIDOUT\"" > ".dockerhut/runtime/CONTAINER_ID_INITIALIZED.var.sh"
+      echo "CONTAINER_ID_INITIALIZED=\"$CIDOUT\"" > ".shore/runtime/CONTAINER_ID_INITIALIZED.var.sh"
 
       # Set container-side "_start" script as entrypoint
-      rm .dockerhut/scripts/container/entrypoint
-      ln -s _start .dockerhut/scripts/container/entrypoint
+      rm .shore/scripts/container/entrypoint
+      ln -s _start .shore/scripts/container/entrypoint
 
       # Start the container
       docker start $CIDOUT > /dev/null
 
       # Execute the container "init" script
-      docker exec -it $CIDOUT /home/$PROJECT_NAME/.dockerhut/scripts/container/init
+      docker exec -it $CIDOUT /home/$PROJECT_NAME/.shore/scripts/container/init
       
       # Stop the container
       docker stop $CIDOUT > /dev/null
@@ -62,6 +62,6 @@ else
   
     fi
   else
-    echo "Some expected settings are not defined. Please edit files in .dockerhut/settings to set setting values"
+    echo "Some expected settings are not defined. Please edit files in .shore/settings to set setting values"
   fi
 fi

@@ -1,26 +1,26 @@
 #!/bin/bash
 
 
-if [ -d .dockerhut ]; then
-  echo "dockerhut seems already installed: .dockerhut directory exists"
+if [ -d .shore ]; then
+  echo "shore seems already installed: .shore directory exists"
 else
-  mkdir .dockerhut
-  cp -r "$(dirname "$0")/installable/." .dockerhut/.
+  mkdir .shore
+  cp -r "$(dirname "$0")/installable/." .shore/.
 
-  if test "$(ls -A .dockerhut/runtime 2> /dev/null)"; then
-    for F in .dockerhut/runtime/*.sh; do
+  if test "$(ls -A .shore/runtime 2> /dev/null)"; then
+    for F in .shore/runtime/*.sh; do
        . $F
     done
   fi
 
   if [[ $DOCKERHUT_INSTALLED ]]; then
-    echo "Dockerhut seems already installed"
+    echo "Shore seems already installed"
   else
-    mkdir .dockerhut/runtime
-    mkdir .dockerhut/tmp
-    mv .dockerhut/settings/container_settings.example.sh .dockerhut/settings/container_settings.sh
-    mv .dockerhut/settings/host_settings.example.sh .dockerhut/settings/host_settings.sh
+    mkdir .shore/runtime
+    mkdir .shore/tmp
+    mv .shore/settings/container_settings.example.sh .shore/settings/container_settings.sh
+    mv .shore/settings/host_settings.example.sh .shore/settings/host_settings.sh
   fi
 
-  echo "dockerhut installed"  
+  echo "shore installed"  
 fi

@@ -1,9 +1,9 @@
 function include_files(){
-    . .dockerhut/settings/host_settings.sh
-    . .dockerhut/settings/container_settings.sh
+    . .shore/settings/host_settings.sh
+    . .shore/settings/container_settings.sh
 
-    if test "$(ls -A .dockerhut/runtime)"; then
-      for F in .dockerhut/runtime/*.sh; do
+    if test "$(ls -A .shore/runtime)"; then
+      for F in .shore/runtime/*.sh; do
          . $F
       done
     fi

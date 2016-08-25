@@ -1,6 +1,6 @@
 #!/bin/bash
 
-. .dockerhut/scripts/host/fn.sh
+. .shore/scripts/host/fn.sh
 
 include_files
 
@@ -13,8 +13,8 @@ else
   printf "starting container\n\n"
 
   #Set container-side start script as entrypoint
-  rm .dockerhut/scripts/container/entrypoint
-  ln -s _start .dockerhut/scripts/container/entrypoint
+  rm .shore/scripts/container/entrypoint
+  ln -s _start .shore/scripts/container/entrypoint
   
   if [ -d "$PROJECT_HTDOCS" ]; then 
   
@@ -26,11 +26,11 @@ else
       printf "container $OUT started\n\n"
 
       # Persist CONTAINER_ID_STARTED variable
-      echo "CONTAINER_ID_STARTED=\"$OUT\"" > .dockerhut/runtime/CONTAINER_ID_STARTED.var.sh
+      echo "CONTAINER_ID_STARTED=\"$OUT\"" > .shore/runtime/CONTAINER_ID_STARTED.var.sh
 
       # Start services by running the "start" container-side script
       printf "starting services ...\n\n"
-      docker exec -it $CONTAINER_ID_INITIALIZED /home/$PROJECT_NAME/.dockerhut/scripts/container/start
+      docker exec -it $CONTAINER_ID_INITIALIZED /home/$PROJECT_NAME/.shore/scripts/container/start
       printf "\nstarting services done\n\n"
 
       # Display web page URL and open browser
