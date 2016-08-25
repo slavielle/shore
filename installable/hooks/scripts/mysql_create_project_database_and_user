@@ -1,0 +1,22 @@
+# Set MySQL root pass
+
+. $(dirname "$0")/fn.sh
+
+include_files
+
+
+if [[ -z $(pgrep mysql) ]]; then
+  echo "MySQL have to be started to perform this hook ... starting"
+  service mysql start
+fi
+
+
+echo "--- DROP USER ---"
+QUERY="DROP USER $MYSQL_PROJECT_USER_NAME@localhost;"
+echo "$QUERY"
+mysql -u root -p"$MYSQL_ROOT_PASSWORD" -e "$QUERY"
+
+echo "--- DROP DATABASE AND CREATE NEW ONE ---"
+QUERY="DROP DATABASE IF EXISTS $MYSQL_PROJECT_DB_NAME; CREATE DATABASE $MYSQL_PROJECT_DB_NAME DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;GRANT ALL PRIVILEGES ON $MYSQL_PROJECT_USER_NAME.* TO '$MYSQL_PROJECT_DB_NAME'@'localhost' IDENTIFIED BY '$MYSQL_PROJECT_USER_PASSWORD'" # WITH GRANT OPTION;"
+echo "$QUERY"
+mysql -u root -p"$MYSQL_ROOT_PASSWORD" -e "$QUERY"
