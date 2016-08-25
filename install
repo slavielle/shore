@@ -18,8 +18,7 @@ else
   else
     mkdir .shore/runtime
     mkdir .shore/tmp
-    mv .shore/settings/container_settings.example.sh .shore/settings/container_settings.sh
-    mv .shore/settings/host_settings.example.sh .shore/settings/host_settings.sh
+    mv .shore/settings.example.sh .shore/settings.sh
   fi
 
   echo "shore installed"  

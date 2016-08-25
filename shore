@@ -14,10 +14,8 @@ shift
 # Walk up directory structure to find the .shore directory
 # except for install command
 if [ "$COMMAND" != "install" ]; then
-  echo "$WORKING_DIR_PATH"
   while [ "$WORKING_DIR_PATH" != "/" ] 
   do
-    echo "test : $WORKING_DIR_PATH/.shore"
     if [ -d .shore ]; then
       break
     fi
@@ -30,9 +28,9 @@ fi
 # Invoke command
 if [ "$WORKING_DIR_PATH" != "/" ]; then
   if [ -f ".shore/scripts/host/$COMMAND" ]; then
+    # ".shore/scripts/host/$COMMAND \"$ORIGIN_DIR_PATH\" $@"
 
-    echo "$COMMAND"
-    ".shore/scripts/host/$COMMAND" $@
+    ".shore/scripts/host/$COMMAND" "\"$ORIGIN_DIR_PATH\"" $@ 
   else
     if [ -n "$COMMAND" ]; then
       if [ "$COMMAND" == "install" ]; then
