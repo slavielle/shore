@@ -1,3 +1,32 @@
+function format_output() {
+
+  CODE_IN="\e[49m"
+  CODE_OUT="\033[1m\033[0m"
+
+  case "$2" in
+    hook)
+      CODE_IN="\e[44m"
+        ;;
+
+    error)
+      CODE_IN="\e[31m"
+        ;;
+
+    warning)
+      CODE_IN="\e[93m"
+        ;;
+
+    success)
+      CODE_IN="\e[92m"
+        ;;
+  esac
+
+  printf "\033[1m${CODE_IN}$1${CODE_OUT}$3"
+
+}
+
+
+
 function include_files(){
     . "$(dirname "$0")/../../settings.sh"
 
@@ -6,6 +35,8 @@ function include_files(){
     done
 
 }
+
+
 
 function run_hook() {
 
@@ -24,13 +55,15 @@ function run_hook() {
     # Test if $HOOK_SCRIPT is not blank (blank line in the .hook script)
     if [[ "${HOOK_SCRIPT// }" ]]; then
 
+      printf "\n"
+      format_output " > HOOK " "hook" " $HOOK_SCRIPT\n\n"
+
       # Run the hook script and display result
-      printf "Triggering hook \"$HOOK_SCRIPT\":\n\n"
-      echo "[DEBUG] Using parameters : $ORIGIN_CONTAINER_DIR_PATH $@"
-      
       "$(dirname "$0")/../../hooks/scripts/$HOOK_SCRIPT" $ORIGIN_CONTAINER_DIR_PATH $@
-      printf "\nHook \"$HOOK_SCRIPT\" triggered\n"
+
     fi
 
   done <"$(dirname "$0")/../../hooks/define/on_$HOOK_NAME.hook"
 }
+
+
