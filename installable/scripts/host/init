@@ -7,8 +7,9 @@ include_files
 if [[ $CONTAINER_ID_INITIALIZED ]]; then
   echo "container already initialized : $CONTAINER_ID_INITIALIZED"
 else
-
+  echo ""
   echo "initializing container using following settings:"
+  echo ""
 
   # Remove the entrypoint (symlink to a real entrypoint script)
   rm ".shore/scripts/container/entrypoint" 2> /dev/null
@@ -19,12 +20,13 @@ else
   # Set the PROJECT_DIR : project root that will be sared with container
   PROJECT_DIR="$( pwd )"
 
-  printf "* project directory: "; if [ "$PROJECT_DIR" ]; then printf "$PROJECT_DIR\n"; else printf "<not-set>\n"; fi
-  printf "* network: "; if [ "$CONTAINER_NETWORK" ]; then printf "$CONTAINER_NETWORK\n"; else printf "<not-set>\n"; fi
-  printf "* project name: "; if [ "$PROJECT_NAME" ]; then printf "$PROJECT_NAME\n"; else printf "<not-set>\n"; fi
-  printf "* container IP: "; if [ "$CONTAINER_IP" ]; then printf "$CONTAINER_IP\n"; else printf "<not-set>\n"; fi
-  printf "* image ID: "; if [ "$IMAGE_ID" ]; then printf "$IMAGE_ID\n"; else printf "<not-set>\n"; fi
-  
+  printf "  > project directory: "; if [ "$PROJECT_DIR" ]; then printf "$PROJECT_DIR\n"; else printf "<not-set>\n"; fi
+  printf "  > network: "; if [ "$CONTAINER_NETWORK" ]; then printf "$CONTAINER_NETWORK\n"; else printf "<not-set>\n"; fi
+  printf "  > project name: "; if [ "$PROJECT_NAME" ]; then printf "$PROJECT_NAME\n"; else printf "<not-set>\n"; fi
+  printf "  > container IP: "; if [ "$CONTAINER_IP" ]; then printf "$CONTAINER_IP\n"; else printf "<not-set>\n"; fi
+  printf "  > image ID: "; if [ "$IMAGE_ID" ]; then printf "$IMAGE_ID\n"; else printf "<not-set>\n"; fi
+  echo ""
+
   if [ "$PROJECT_DIR" ] && [ "$CONTAINER_NETWORK" ] && [ "$PROJECT_NAME" ] && [ "$CONTAINER_IP" ] && [ "$IMAGE_ID" ]; then
     # Call the docker run to create the container
   OUT=$(docker run -it -e MYSQL_ROOT_PASSWORD="$MYSQL_ROOT_PW" -v $PROJECT_DIR:/home/$PROJECT_NAME --cidfile=".shore/tmp/cid" --net $CONTAINER_NETWORK --ip $CONTAINER_IP $IMAGE_ID /home/$PROJECT_NAME/.shore/scripts/container/entrypoint 2>&1)

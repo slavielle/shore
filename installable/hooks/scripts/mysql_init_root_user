@@ -9,6 +9,9 @@ include_files
 if [ -z $(pgrep -l mysqld) ]; then
   echo "MySQL have to be started to perform this hook ... starting"
   service mysql start
+  echo ""
 fi
 
 mysqladmin -u root password "$MYSQL_ROOT_PASSWORD"
+
+echo "Done"

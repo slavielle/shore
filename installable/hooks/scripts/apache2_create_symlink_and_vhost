@@ -9,7 +9,7 @@ include_files
 
 # Create symlink in Apache web directory
 if [ ! -e "/var/www/html/$PROJECT_NAME" ]; then
-    ln -s "/home/$PROJECT_NAME/$PROJECT_HTDOCS" "/var/www/html/$PROJECT_NAME"
+  ln -s "/home/$PROJECT_NAME/$PROJECT_HTDOCS" "/var/www/html/$PROJECT_NAME"  
 fi
 
 
@@ -24,3 +24,5 @@ EOL
 
 # Create the symlink in /etc/apache2/sites-available
 ln -s /etc/apache2/sites-available/"$PROJECT_NAME".conf /etc/apache2/sites-enabled/"$PROJECT_NAME".conf
+
+echo "Done"
