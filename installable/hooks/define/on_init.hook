@@ -1,4 +1,3 @@
-test_init
 apache2_create_symlink_and_vhost
 mysql_init_root_user
 mysql_create_project_database_and_user
