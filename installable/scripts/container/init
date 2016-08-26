@@ -1,6 +1,7 @@
 #!/bin/bash
 
 . "$(dirname "$0")/fn.sh"
-. "$(dirname "$0")/../../settings.sh"
 
-run_hook "init"
+include_files
+
+run_hook "init" $@

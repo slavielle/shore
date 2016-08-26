@@ -1,0 +1,7 @@
+#!/bin/bash
+
+. .shore/scripts/host/fn.sh
+
+include_files
+
+docker exec -it $CONTAINER_ID_INITIALIZED mysql -u root -p"$MYSQL_ROOT_PASSWORD"

@@ -1,0 +1,10 @@
+#!/bin/bash
+
+. "$(dirname "$0")/fn.sh"
+
+include_files
+
+HOOK="$2"
+ORIGIN_DIR_PATH="$1"
+shift 2
+run_hook $HOOK $ORIGIN_DIR_PATH $@

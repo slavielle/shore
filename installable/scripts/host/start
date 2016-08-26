@@ -30,7 +30,7 @@ else
 
       # Start services by running the "start" container-side script
       printf "starting services ...\n\n"
-      docker exec -it $CONTAINER_ID_INITIALIZED /home/$PROJECT_NAME/.shore/scripts/container/start
+      docker exec -it $CONTAINER_ID_INITIALIZED /home/$PROJECT_NAME/.shore/scripts/container/start $@
       printf "\nstarting services done\n\n"
 
       # Display web page URL and open browser

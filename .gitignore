@@ -1,5 +1,2 @@
-runtime/
-settings/settings.sh
-settings/shared_settings.sh
-
+installable/settings.sh
 nbproject

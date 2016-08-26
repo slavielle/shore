@@ -1,13 +1,14 @@
 #!/bin/bash
 
 . "$(dirname "$0")/fn.sh"
-. "$(dirname "$0")/../../settings.sh"
+
+include_files
 
 # Start services
 for SERVICE in ${SERVICES_TO_START[@]}; do
   /etc/init.d/"$SERVICE" start
 done
 
-run_hook "start"
+run_hook "start" $@
 
 

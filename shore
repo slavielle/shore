@@ -6,7 +6,7 @@ WORKING_DIR_PATH=$(pwd)
 ORIGIN_DIR_PATH=$(pwd)
 
 
-# Get the command and remove first argument (command)
+# Get the command and remove first argument (command) from $@
 COMMAND=$1
 shift
 
@@ -27,19 +27,39 @@ fi
 
 # Invoke command
 if [ "$WORKING_DIR_PATH" != "/" ]; then
+  
   if [ -f ".shore/scripts/host/$COMMAND" ]; then
-    # ".shore/scripts/host/$COMMAND \"$ORIGIN_DIR_PATH\" $@"
+   
+    # Normal command handling
+    ".shore/scripts/host/$COMMAND" "$ORIGIN_DIR_PATH" $@
 
-    ".shore/scripts/host/$COMMAND" "\"$ORIGIN_DIR_PATH\"" $@ 
   else
     if [ -n "$COMMAND" ]; then
-      if [ "$COMMAND" == "install" ]; then
-        "$(dirname "$(readlink -f "$0")")/$COMMAND"
-      else    
-        echo "shore: command \"$COMMAND\" not available"
+      if [ ${COMMAND:0:1} != "_" ]; then
+        if [ "$COMMAND" == "install" ]; then
+
+          # "install" command handling
+          "$(dirname "$(readlink -f "$0")")/$COMMAND"
+
+        else    
+          if [ -f ".shore/hooks/define/on_$COMMAND.hook" ]; then
+
+	    # Direct hook handling
+	    echo "Triggering hooks"
+	    ".shore/scripts/host/_play_hook" "$ORIGIN_DIR_PATH" $COMMAND $@
+
+	  else
+	  
+	    # Command mismatch
+	    echo "Shore: command \"$COMMAND\" not available"
+
+          fi
+        fi
+      else
+        echo "Command can't start with underscore"
       fi
     else
-      echo "shore: no command provided"
+      echo "Shore: no command provided"
     fi
   fi
 else
