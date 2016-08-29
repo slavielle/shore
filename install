@@ -5,7 +5,7 @@ if [ -d .shore ]; then
   echo "shore seems already installed: .shore directory exists"
 else
   mkdir .shore
-  cp -r "$(dirname "$0")/installable/." .shore/.
+  cp -r "$(dirname "$0")/delivery/." .shore/.
 
   if test "$(ls -A .shore/runtime 2> /dev/null)"; then
     for F in .shore/runtime/*.sh; do
