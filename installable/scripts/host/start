@@ -34,9 +34,14 @@ else
       printf "\nstarting services done\n\n"
 
       # Display web page URL and open browser
-      printf "open the web page : http://$CONTAINER_IP/$PROJECT_NAME\n\n"
+      if [[ $PROJECT_DOMAIN_NAME ]]; then
+        WEB_URL="http://$PROJECT_DOMAIN_NAME"
+      else
+        WEB_URL="http://$CONTAINER_IP/$PROJECT_NAME"
+      fi
+      printf "open the web page : $WEB_URL\n\n"
       if which xdg-open > /dev/null && [ "$OPEN_BROWSER_ON_START" = true ]; then
-        xdg-open "http://$CONTAINER_IP/$PROJECT_NAME"
+        xdg-open "$WEB_URL"
       fi
 
     else
