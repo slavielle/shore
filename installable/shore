@@ -1,0 +1,25 @@
+#!/bin/bash
+
+ORIGIN_DIR_PATH=$1
+COMMAND=$2
+shift 2
+
+if [ -f ".shore/scripts/host/$COMMAND" ]; then
+
+    # Normal command handling
+    ".shore/scripts/host/$COMMAND" "$ORIGIN_DIR_PATH" $@
+
+else
+    if [ -f ".shore/hooks/define/on_$COMMAND.hook" ]; then
+
+            # Direct hook handling
+            echo "Triggering hooks"
+            ".shore/scripts/host/_play_hook" "$ORIGIN_DIR_PATH" $COMMAND $@
+
+    else
+
+        # Command mismatch
+        echo "Shore: command \"$COMMAND\" not available"
+
+    fi
+fi

@@ -11,8 +11,8 @@ COMMAND=$1
 shift
 
 
-# Walk up directory structure to find the .shore directory
-# except for install command
+# Walk up directory structure from  where the command had been called in order 
+# to find the .shore directory, except for install command that is a special one
 if [ "$COMMAND" != "install" ]; then
   while [ "$WORKING_DIR_PATH" != "/" ] 
   do
@@ -27,41 +27,42 @@ fi
 
 # Invoke command
 if [ "$WORKING_DIR_PATH" != "/" ]; then
-  
-  if [ -f ".shore/scripts/host/$COMMAND" ]; then
-   
-    # Normal command handling
-    ".shore/scripts/host/$COMMAND" "$ORIGIN_DIR_PATH" $@
 
-  else
+    #If command is specified
     if [ -n "$COMMAND" ]; then
-      if [ ${COMMAND:0:1} != "_" ]; then
-        if [ "$COMMAND" == "install" ]; then
 
-          # "install" command handling
-          "$(dirname "$(readlink -f "$0")")/$COMMAND"
+        # If command does not start with "_" char
+        if [ ${COMMAND:0:1} != "_" ]; then
 
-        else    
-          if [ -f ".shore/hooks/define/on_$COMMAND.hook" ]; then
+            # Handle the special install command
+            if [ "$COMMAND" == "install" ]; then
 
-	    # Direct hook handling
-	    echo "Triggering hooks"
-	    ".shore/scripts/host/_play_hook" "$ORIGIN_DIR_PATH" $COMMAND $@
+                # "install" command handling
+                "$(dirname "$(readlink -f "$0")")/$COMMAND"
 
-	  else
-	  
-	    # Command mismatch
-	    echo "Shore: command \"$COMMAND\" not available"
+            # Handle all commands but install
+            else
 
-          fi
+                # Command are processed by the "shore" command located in ".shore" 
+                # directory of the projet directory. Doing this way command 
+                # handling depend on the shore version in your project directory
+        
+                ".shore/shore" "$ORIGIN_DIR_PATH" $COMMAND $@
+            fi
+        else
+            echo "Command can't start with underscore"
         fi
-      else
-        echo "Command can't start with underscore"
-      fi
+
+    #No command specified
     else
-      echo "Shore: no command provided"
+        echo "Shore: no command provided"
     fi
-  fi
+  
+
+
+
+
+
 else
   echo "no .shore found on my way up !"
 fi
