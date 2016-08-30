@@ -1,0 +1,20 @@
+#!/bin/bash
+
+. $(dirname "$0")/_common.sh
+
+include_files
+
+echo "Install npm" 
+apt-get install -y npm &> /dev/null
+
+echo "Install n"
+npm cache clean -f &> /dev/null
+npm install -g n &> /dev/null
+
+echo "install node (version $CONF_NODE_VERSION)"
+n "$CONF_NODE_VERSION" &> /dev/null
+
+INSTALLED_VERSION=$(node -v)
+echo "node version $INSTALLED_VERSION installed"
+
+
