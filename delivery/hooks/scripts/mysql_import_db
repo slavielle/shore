@@ -1,7 +1,5 @@
 #!/bin/bash
 
-# Set MySQL root pass
-
 . $(dirname "$0")/_common.sh
 
 include_files

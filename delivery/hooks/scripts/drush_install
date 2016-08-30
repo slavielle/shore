@@ -1,0 +1,20 @@
+#!/bin/bash
+
+. $(dirname "$0")/_common.sh
+
+include_files
+
+which wget > /dev/null
+if [ "$?" == "1" ]; then
+    echo "Must install wget to fulfill this operation"
+    apt-get install -y wget &> /dev/null
+fi
+
+echo "Install drush version $DRUSH_VERSION" 
+cd /usr/local/bin
+wget -O drush "https://github.com/drush-ops/drush/releases/download/$DRUSH_VERSION/drush.phar" &> /dev/null
+chmod +x drush
+
+echo "execute drush init"
+#drush -y init
+

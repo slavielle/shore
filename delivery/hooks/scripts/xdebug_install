@@ -1,0 +1,19 @@
+#!/bin/bash
+
+. $(dirname "$0")/_common.sh
+
+include_files
+
+echo "Installing XDebug" 
+apt-get install -y php5-xdebug &> /dev/null
+
+echo "Setting up XDebug config"
+CONF=$(cat /etc/php5/apache2/conf.d/20-xdebug.ini)
+cat >/etc/php5/apache2/conf.d/20-xdebug.ini <<EOL
+$CONF
+xdebug.remote_enable=1
+xdebug.remote_handler=dbgp
+xdebug.remote_mode=req
+xdebug.remote_host=$HOST_IP
+xdebug.remote_port=9000
+EOL

@@ -4,7 +4,7 @@ MAINTAINER Sylvain LAVIELLE <sylvain-lavielle@netelios.fr>
 # Install packages
 ENV DEBIAN_FRONTEND noninteractive
 RUN apt-get update && \
-  apt-get -y install apache2 mysql-server php5 php-pear php5-mysql php5-xdebug
+  apt-get -y install apache2 mysql-server php5 php-pear php5-mysql php5-gd php5-xdebug
 
 RUN a2enmod rewrite
 
