@@ -14,6 +14,6 @@ $CONF
 xdebug.remote_enable=1
 xdebug.remote_handler=dbgp
 xdebug.remote_mode=req
-xdebug.remote_host=$HOST_IP
+xdebug.remote_host=$CONF_HOST_IP
 xdebug.remote_port=9000
 EOL

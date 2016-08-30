@@ -16,7 +16,7 @@ else
   rm .shore/scripts/container/entrypoint
   ln -s _start .shore/scripts/container/entrypoint
   
-  if [ -d "$PROJECT_HTDOCS" ]; then 
+  if [ -d "$CONF_PROJECT_HTDOCS" ]; then 
   
     #Docker start
     OUT=$(docker start $CONTAINER_ID_INITIALIZED 2>&1)
@@ -30,17 +30,17 @@ else
 
       # Start services by running the "start" container-side script
       printf "starting services ...\n\n"
-      docker exec -it $CONTAINER_ID_INITIALIZED /home/$PROJECT_NAME/.shore/scripts/container/start $@
+      docker exec -it $CONTAINER_ID_INITIALIZED /home/$CONF_PROJECT_NAME/.shore/scripts/container/start $@
       printf "\nstarting services done\n\n"
 
       # Display web page URL and open browser
-      if [[ $PROJECT_DOMAIN_NAME ]]; then
-        WEB_URL="http://$PROJECT_DOMAIN_NAME"
+      if [[ $CONF_PROJECT_DOMAIN_NAME ]]; then
+        WEB_URL="http://$CONF_PROJECT_DOMAIN_NAME"
       else
-        WEB_URL="http://$CONTAINER_IP/$PROJECT_NAME"
+        WEB_URL="http://$CONF_CONTAINER_IP/$CONF_PROJECT_NAME"
       fi
       printf "open the web page : $WEB_URL\n\n"
-      if which xdg-open > /dev/null && [ "$OPEN_BROWSER_ON_START" = true ]; then
+      if which xdg-open > /dev/null && [ "$CONF_OPEN_BROWSER_ON_START" = true ]; then
         xdg-open "$WEB_URL"
       fi
 
@@ -49,6 +49,6 @@ else
       printf "$OUT\n"
     fi
   else
-    echo "web directory \"$PROJECT_HTDOCS\" doesn't exist"
+    echo "web directory \"$CONF_PROJECT_HTDOCS\" doesn't exist"
   fi
 fi

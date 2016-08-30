@@ -21,15 +21,15 @@ else
   PROJECT_DIR="$( pwd )"
 
   printf "  > project directory: "; if [ "$PROJECT_DIR" ]; then printf "$PROJECT_DIR\n"; else printf "<not-set>\n"; fi
-  printf "  > network: "; if [ "$CONTAINER_NETWORK" ]; then printf "$CONTAINER_NETWORK\n"; else printf "<not-set>\n"; fi
-  printf "  > project name: "; if [ "$PROJECT_NAME" ]; then printf "$PROJECT_NAME\n"; else printf "<not-set>\n"; fi
-  printf "  > container IP: "; if [ "$CONTAINER_IP" ]; then printf "$CONTAINER_IP\n"; else printf "<not-set>\n"; fi
-  printf "  > image ID: "; if [ "$IMAGE_ID" ]; then printf "$IMAGE_ID\n"; else printf "<not-set>\n"; fi
+  printf "  > network: "; if [ "$CONF_CONTAINER_NETWORK" ]; then printf "$CONF_CONTAINER_NETWORK\n"; else printf "<not-set>\n"; fi
+  printf "  > project name: "; if [ "$CONF_PROJECT_NAME" ]; then printf "$CONF_PROJECT_NAME\n"; else printf "<not-set>\n"; fi
+  printf "  > container IP: "; if [ "$CONF_CONTAINER_IP" ]; then printf "$CONF_CONTAINER_IP\n"; else printf "<not-set>\n"; fi
+  printf "  > image ID: "; if [ "$CONF_IMAGE_ID" ]; then printf "$CONF_IMAGE_ID\n"; else printf "<not-set>\n"; fi
   echo ""
 
-  if [ "$PROJECT_DIR" ] && [ "$CONTAINER_NETWORK" ] && [ "$PROJECT_NAME" ] && [ "$CONTAINER_IP" ] && [ "$IMAGE_ID" ]; then
+  if [ "$PROJECT_DIR" ] && [ "$CONF_CONTAINER_NETWORK" ] && [ "$CONF_PROJECT_NAME" ] && [ "$CONF_CONTAINER_IP" ] && [ "$CONF_IMAGE_ID" ]; then
     # Call the docker run to create the container
-  OUT=$(docker run -it -e MYSQL_ROOT_PASSWORD="$MYSQL_ROOT_PW" -v $PROJECT_DIR:/home/$PROJECT_NAME --cidfile=".shore/tmp/cid" --net $CONTAINER_NETWORK --ip $CONTAINER_IP $IMAGE_ID /home/$PROJECT_NAME/.shore/scripts/container/entrypoint 2>&1)
+  OUT=$(docker run -it -e CONF_MYSQL_ROOT_PASSWORD="$MYSQL_ROOT_PW" -v $PROJECT_DIR:/home/$CONF_PROJECT_NAME --cidfile=".shore/tmp/cid" --net $CONF_CONTAINER_NETWORK --ip $CONF_CONTAINER_IP $CONF_IMAGE_ID /home/$CONF_PROJECT_NAME/.shore/scripts/container/entrypoint 2>&1)
 
     # Get the run's container ID
     CIDOUT=$(cat ".shore/tmp/cid" 2> /dev/null)
@@ -52,7 +52,7 @@ else
       docker start $CIDOUT > /dev/null
 
       # Execute the container "init" script
-      docker exec -it $CIDOUT /home/$PROJECT_NAME/.shore/scripts/container/init $@
+      docker exec -it $CIDOUT /home/$CONF_PROJECT_NAME/.shore/scripts/container/init $@
       
       # Stop the container
       docker stop $CIDOUT > /dev/null

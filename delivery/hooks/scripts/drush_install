@@ -10,9 +10,9 @@ if [ "$?" == "1" ]; then
     apt-get install -y wget &> /dev/null
 fi
 
-echo "Install drush version $DRUSH_VERSION" 
+echo "Install drush version $CONF_DRUSH_VERSION" 
 cd /usr/local/bin
-wget -O drush "https://github.com/drush-ops/drush/releases/download/$DRUSH_VERSION/drush.phar" &> /dev/null
+wget -O drush "https://github.com/drush-ops/drush/releases/download/$CONF_DRUSH_VERSION/drush.phar" &> /dev/null
 chmod +x drush
 
 echo "execute drush init"

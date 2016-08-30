@@ -90,11 +90,11 @@ This image is a really simple image based on a debian jessie + Apache, PHP, MySQ
 [project root]/.shore/settings.sh
 
 ```
-CONTAINER_IP="172.18.0.2"
-CONTAINER_NETWORK="shore_net"
-IMAGE_ID="c531b08d1f3e"
+CONF_CONTAINER_IP="172.18.0.2"
+CONF_CONTAINER_NETWORK="shore_net"
+CONF_IMAGE_ID="c531b08d1f3e"
 ROJECT_NAME="shore_test"
-PROJECT_HTDOCS="www"
+CONF_PROJECT_HTDOCS="www"
 ```
 Set your image ID
 Set your Git repository URL

@@ -9,7 +9,7 @@ if [[ $CONTAINER_ID_STARTED ]]; then
   #Stop services by running the "stop" container script
   echo "stopping services : "
 
-  docker exec -it $CONTAINER_ID_STARTED /home/$PROJECT_NAME/.shore/scripts/container/stop $@
+  docker exec -it $CONTAINER_ID_STARTED /home/$CONF_PROJECT_NAME/.shore/scripts/container/stop $@
 
   echo "stopping container"
   docker stop $CONTAINER_ID_STARTED

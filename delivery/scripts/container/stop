@@ -5,7 +5,7 @@
 include_files
 
 # Start services
-for SERVICE in ${SERVICES_TO_START[@]}; do
+for SERVICE in ${CONF_SERVICES_TO_START[@]}; do
   /etc/init.d/"$SERVICE" stop
 done
 

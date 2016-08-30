@@ -12,6 +12,6 @@ if [ -z $(pgrep -l mysqld) ]; then
   echo ""
 fi
 
-mysqladmin -u root password "$MYSQL_ROOT_PASSWORD"
+mysqladmin -u root password "$CONF_MYSQL_ROOT_PASSWORD"
 
 echo "Done"
