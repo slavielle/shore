@@ -4,4 +4,4 @@
 
 include_files
 
-docker exec -it $CONTAINER_ID_INITIALIZED mysql -u root -p"$CONF_MYSQL_ROOT_PASSWORD"
+docker exec -it $RT_CONTAINER_ID_INITIALIZED mysql -u root -p"$CONF_MYSQL_ROOT_PASSWORD"

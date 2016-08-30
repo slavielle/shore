@@ -1,6 +1,7 @@
 drush_install
 xdebug_install
 node_install
+ruby_sass_install
 apache2_create_symlink_and_vhost
 mysql_init_root_user
 mysql_create_project_database_and_user

@@ -11,7 +11,8 @@ if [ -f $IMPORT_FILE_PATH ]; then
   if [[ $IMPORT_FILE_PATH =~ \.sql$ ]]; then
     FILE_FORMAT_HANDLED=true
     mysql -u "$CONF_MYSQL_PROJECT_USER_NAME" -p"$CONF_MYSQL_PROJECT_USER_PASSWORD" "$CONF_MYSQL_PROJECT_DB_NAME" < "$IMPORT_FILE_PATH"
-  fi
+    echo "$1/$2 imported"
+fi
 
   if ! $FILE_FORMAT_HANDLED; then
     echo "Unknown file format: \"$IMPORT_FILE_PATH\". Import failed"
@@ -22,5 +23,5 @@ else
 
 fi
 
-echo "$1 $2"
+
 

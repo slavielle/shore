@@ -4,29 +4,30 @@
 
 include_files
 
-if [[ $CONTAINER_ID_STARTED ]]; then
+if [[ $RT_CONTAINER_ID_STARTED ]]; then
+    
+    # Test if container is running
+    TEST_CONTAINER_RUNNING=$(docker ps -q --filter ID="$RT_CONTAINER_ID_STARTED")
 
-    TEST_CONTAINER_RUNNING=$(docker ps -q --filter ID="$CONTAINER_ID_STARTED")
-echo ">$TEST_CONTAINER_RUNNING<"
-    if [ -n "$TEST_CONTAINER_RUNNING" ] && [[ $CONTAINER_ID_STARTED = $TEST_CONTAINER_RUNNING* ]]; then
+    if [ -n "$TEST_CONTAINER_RUNNING" ] && [[ $RT_CONTAINER_ID_STARTED = $TEST_CONTAINER_RUNNING* ]]; then
 
-        # Stop services by running the "stop" container script
+        # Stop services by running the "stop" container-side script
         echo "Stopping services : "
-        docker exec -it $CONTAINER_ID_STARTED /home/$CONF_PROJECT_NAME/.shore/scripts/container/stop $@
+        docker exec -it $RT_CONTAINER_ID_STARTED /home/$CONF_PROJECT_NAME/.shore/scripts/container/stop $@
 
-        # Stop container
+        # Stop container itself
         echo "Stopping container"
+        VOID=$(docker stop $RT_CONTAINER_ID_STARTED)
+        echo "$RT_CONTAINER_ID_STARTED stopped"
 
-        VOID=$(docker stop $CONTAINER_ID_STARTED)
-        echo "$CONTAINER_ID_STARTED stopped"
     else
         echo "Someting went wrong:"
         echo "Container wasn't running"
     fi
 
     #Drop runtime variable
-    rm .shore/runtime/CONTAINER_ID_STARTED.var.sh
+    rm .shore/runtime/RT_CONTAINER_ID_STARTED.var.sh
   
 else
-    echo "$CONTAINER_ID_INITIALIZED seems not to be started or hadn't been stopped properly"
+    echo "$RT_CONTAINER_ID_INITIALIZED seems not to be started or hadn't been stopped properly"
 fi

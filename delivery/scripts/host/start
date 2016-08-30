@@ -4,9 +4,9 @@
 
 include_files
 
-if [[ $CONTAINER_ID_STARTED ]]; then
+if [[ $RT_CONTAINER_ID_STARTED ]]; then
 
-  echo "$CONTAINER_ID_STARTED seems already started"
+  echo "$RT_CONTAINER_ID_STARTED seems already started"
 
 else
 
@@ -19,18 +19,18 @@ else
   if [ -d "$CONF_PROJECT_HTDOCS" ]; then 
   
     #Docker start
-    OUT=$(docker start $CONTAINER_ID_INITIALIZED 2>&1)
+    OUT=$(docker start $RT_CONTAINER_ID_INITIALIZED 2>&1)
 
     if [[ $OUT =~ ^[0-9a-f]+$ ]]; then
 
       printf "container $OUT started\n\n"
 
-      # Persist CONTAINER_ID_STARTED variable
-      echo "CONTAINER_ID_STARTED=\"$OUT\"" > .shore/runtime/CONTAINER_ID_STARTED.var.sh
+      # Persist RT_CONTAINER_ID_STARTED variable
+      echo "RT_CONTAINER_ID_STARTED=\"$OUT\"" > .shore/runtime/RT_CONTAINER_ID_STARTED.var.sh
 
       # Start services by running the "start" container-side script
       printf "starting services ...\n\n"
-      docker exec -it $CONTAINER_ID_INITIALIZED /home/$CONF_PROJECT_NAME/.shore/scripts/container/start $@
+      docker exec -it $RT_CONTAINER_ID_INITIALIZED /home/$CONF_PROJECT_NAME/.shore/scripts/container/start $@
       printf "\nstarting services done\n\n"
 
       # Display web page URL and open browser
