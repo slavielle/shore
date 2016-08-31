@@ -18,11 +18,16 @@ else
   else
     mkdir .shore/runtime
     mkdir .shore/tmp
+    mkdir .shore/project
+
     if [ -f .shore/settings.sh ]; then
       rm .shore/settings.example.sh	
     else
       mv .shore/settings.example.sh .shore/settings.sh
     fi
+    for BUNDLE_SETTING_FILES in .shore/bundles/*/settings.example.sh; do
+        mv "$BUNDLE_SETTING_FILES" "$(dirname "$BUNDLE_SETTING_FILES")/settings.sh"
+    done
   fi
 
   echo "shore installed"  

@@ -10,7 +10,7 @@ if [ -f ".shore/scripts/host/$COMMAND" ]; then
     ".shore/scripts/host/$COMMAND" "$ORIGIN_DIR_PATH" $@
 
 else
-    if [ -f ".shore/hooks/define/on_$COMMAND.hook" ]; then
+    if [ -f ".shore/profiles/$CONF_PROFILE/on_$COMMAND.hook" ]; then
 
             # Direct hook handling
             echo "Triggering hooks"

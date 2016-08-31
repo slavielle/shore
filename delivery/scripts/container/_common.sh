@@ -33,37 +33,37 @@ function include_files(){
     for F in "$(dirname "$0")"/../../runtime/*.sh; do
        . $F
     done
-
 }
 
 
 
 function run_hook() {
 
-  HOOK_NAME="$1"
-  ORIGIN_HOST_DIR_PATH="$2"
-  shift 2
+    HOOK_NAME="$1"
+    ORIGIN_HOST_DIR_PATH="$2"
+    shift 2
 
-  CONTAINER_PROJECT_DIR_PATH="/home/$CONF_PROJECT_NAME"
+    CONTAINER_PROJECT_DIR_PATH="/home/$CONF_PROJECT_NAME"
 
-  # Remap host path to container path
-  ORIGIN_CONTAINER_DIR_PATH=${ORIGIN_HOST_DIR_PATH/$RT_HOST_SHARED_DIR_PATH/$CONTAINER_PROJECT_DIR_PATH}
-  
-  # Loop on script list for the given hook
-  while read HOOK_SCRIPT; do
+    # Remap host path to container path
+    ORIGIN_CONTAINER_DIR_PATH=${ORIGIN_HOST_DIR_PATH/$RT_HOST_SHARED_DIR_PATH/$CONTAINER_PROJECT_DIR_PATH}
 
-    # Test if $HOOK_SCRIPT is not blank (blank line in the .hook script)
-    if [[ "${HOOK_SCRIPT// }" ]]; then
+    # Loop on script list for the given hook
+    while read HOOK_SCRIPT; do
 
-      printf "\n"
-      format_output " > HOOK " "hook" " $HOOK_SCRIPT\n\n"
+        # Test if $HOOK_SCRIPT match the regexp
+        if [[ $HOOK_SCRIPT =~ ^([0-9a-z_]+)\.([0-9a-z_]*)$ ]]; then
+            BUNDLE="${BASH_REMATCH[1]}"
+            FNC="${BASH_REMATCH[2]}"
+            format_output " > HOOK " "hook" " $BUNDLE/$FNC\n\n"
 
-      # Run the hook script and display result
-      "$(dirname "$0")/../../hooks/scripts/$HOOK_SCRIPT" $ORIGIN_CONTAINER_DIR_PATH $@
+            # Run the hook script and display result
+            "$(dirname "$0")/../../bundles/$BUNDLE/$FNC" $ORIGIN_CONTAINER_DIR_PATH $@
+        else
+            echo "not matching $HOOK_SCRIPT"
+        fi
 
-    fi
-
-  done <"$(dirname "$0")/../../hooks/define/on_$HOOK_NAME.hook"
+    done <"$(dirname "$0")/../../profiles/$CONF_PROFILE/on_$HOOK_NAME.hook"
 }
 
 
