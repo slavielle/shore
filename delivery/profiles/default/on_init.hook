@@ -5,3 +5,4 @@ drush.install
 xdebug.install
 node.install
 ruby.install
+project.install

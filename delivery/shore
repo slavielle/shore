@@ -1,20 +1,36 @@
 #!/bin/bash
 
+# include core settings
+. .shore/settings.sh
+
+# Get parameters
 ORIGIN_DIR_PATH=$1
 COMMAND=$2
-shift 2
+shift 2 
+
 
 if [ -f ".shore/scripts/host/$COMMAND" ]; then
 
     # Normal command handling
+    echo "run core command : .shore/scripts/host/$COMMAND"
     ".shore/scripts/host/$COMMAND" "$ORIGIN_DIR_PATH" $@
 
 else
+    
+    # Attempt handling command from bundles 
+    for BUNDLE_PATH in .shore/bundles/*;  do
+        if [ -f "$BUNDLE_PATH/host_scripts/$COMMAND" ]; then
+            echo "run bundle command : $BUNDLE_PATH/host_scripts/$COMMAND"
+            "$BUNDLE_PATH/host_scripts/$COMMAND" "$ORIGIN_DIR_PATH" $@
+            exit
+        fi
+    done
+    
     if [ -f ".shore/profiles/$CONF_PROFILE/on_$COMMAND.hook" ]; then
 
-            # Direct hook handling
-            echo "Triggering hooks"
-            ".shore/scripts/host/_play_hook" "$ORIGIN_DIR_PATH" $COMMAND $@
+        # Direct hook handling
+        echo "Triggering hooks from file .shore/profiles/$CONF_PROFILE/on_$COMMAND.hook"
+        ".shore/scripts/host/_play_hook" "$ORIGIN_DIR_PATH" $COMMAND $@
 
     else
 

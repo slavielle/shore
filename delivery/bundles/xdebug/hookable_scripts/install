@@ -1,6 +1,6 @@
 #!/bin/bash
 
-. $(dirname "$0")/../_common.sh
+. $(dirname "$0")/../../_common.sh
 
 include_files
 

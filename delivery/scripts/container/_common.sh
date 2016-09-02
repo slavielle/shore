@@ -53,12 +53,13 @@ function run_hook() {
 
         # Test if $HOOK_SCRIPT match the regexp
         if [[ $HOOK_SCRIPT =~ ^([0-9a-z_]+)\.([0-9a-z_]*)$ ]]; then
+            
+            # Run the hook script and display result
             BUNDLE="${BASH_REMATCH[1]}"
             FNC="${BASH_REMATCH[2]}"
-            format_output " > HOOK " "hook" " $BUNDLE/$FNC\n\n"
+            echo ""; format_output " > INVOKE $BUNDLE.$FNC" "hook" "\n\n"
+            "$(dirname "$0")/../../bundles/$BUNDLE/hookable_scripts/$FNC" $ORIGIN_CONTAINER_DIR_PATH $@
 
-            # Run the hook script and display result
-            "$(dirname "$0")/../../bundles/$BUNDLE/$FNC" $ORIGIN_CONTAINER_DIR_PATH $@
         else
             echo "not matching $HOOK_SCRIPT"
         fi

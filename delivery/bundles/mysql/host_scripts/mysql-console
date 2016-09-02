@@ -1,0 +1,12 @@
+#!/bin/bash
+
+. .shore/scripts/host/_common.sh
+
+include_files "mysql"
+
+#Checking before executing
+[ -z "$RT_CONTAINER_ID_INITIALIZED" ] && echo "Container seems not initialized" && exit
+[ -z "$CONF_MYSQL_ROOT_PASSWORD" ] && echo "CONF_MYSQL_ROOT_PASSWORD is not set" && exit
+
+
+docker exec -it $RT_CONTAINER_ID_INITIALIZED mysql -u root -p"$CONF_MYSQL_ROOT_PASSWORD"

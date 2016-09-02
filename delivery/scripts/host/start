@@ -41,7 +41,7 @@ else
       fi
       printf "open the web page : $WEB_URL\n\n"
       if which xdg-open > /dev/null && [ "$CONF_OPEN_BROWSER_ON_START" = true ]; then
-        xdg-open "$WEB_URL"
+        xdg-open "$WEB_URL" &> /dev/null
       fi
 
     else

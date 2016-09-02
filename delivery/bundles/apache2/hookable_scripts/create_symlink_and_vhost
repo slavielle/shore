@@ -2,7 +2,7 @@
 
 # Create the symlink and vhost for project
 
-. $(dirname "$0")/../_common.sh
+. $(dirname "$0")/../../_common.sh
 
 include_files
 

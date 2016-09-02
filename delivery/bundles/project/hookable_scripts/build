@@ -1,0 +1,8 @@
+#!/bin/bash
+
+. $(dirname "$0")/../../_common.sh
+
+include_files
+
+echo "Your project's build script is to be written by you at $(realpath $(dirname "$0"))"
+echo "It could be a good place to run a \"grunt\", \"gulp\", \"compass compile\" or whatever you use to build your project"
