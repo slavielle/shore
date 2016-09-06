@@ -16,14 +16,14 @@ fi
 # Create vhost in /etc/apache2/sites-available
 cat >/etc/apache2/sites-available/"$CONF_PROJECT_NAME".conf <<EOL
 <Directory /var/www/html/${CONF_PROJECT_NAME}>
-        Options Indexes FollowSymLinks
-        AllowOverride All
+    Options Indexes FollowSymLinks
+    AllowOverride All
 </Directory>
 <VirtualHost *:80>
-        ServerName ${CONF_PROJECT_DOMAIN_NAME}
-        DocumentRoot /var/www/html/${CONF_PROJECT_NAME}
-        ErrorLog \${APACHE_LOG_DIR}/error.log
-        CustomLog \${APACHE_LOG_DIR}/access.log combined
+    ServerName ${CONF_PROJECT_DOMAIN_NAME}
+    DocumentRoot /var/www/html/${CONF_PROJECT_NAME}
+    ErrorLog \${APACHE_LOG_DIR}/error.log
+    CustomLog \${APACHE_LOG_DIR}/access.log combined
 </VirtualHost>
 EOL
 
