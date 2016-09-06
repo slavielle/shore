@@ -23,30 +23,36 @@ else
 
     if [[ $OUT =~ ^[0-9a-f]+$ ]]; then
 
-      printf "container $OUT started\n\n"
+        printf "container $OUT started\n\n"
 
-      # Persist RT_CONTAINER_ID_STARTED variable
-      echo "RT_CONTAINER_ID_STARTED=\"$OUT\"" > .shore/runtime/RT_CONTAINER_ID_STARTED.var.sh
+        # Persist RT_CONTAINER_ID_STARTED variable
+        echo "RT_CONTAINER_ID_STARTED=\"$OUT\"" > .shore/runtime/RT_CONTAINER_ID_STARTED.var.sh
 
-      # Start services by running the "start" container-side script
-      printf "starting services ...\n\n"
-      docker exec -it $RT_CONTAINER_ID_INITIALIZED /home/$CONF_PROJECT_NAME/.shore/scripts/container/start $@
-      printf "\nstarting services done\n\n"
+        # Start services by running the "start" container-side script
+        printf "starting services ...\n\n"
+        docker exec -it $RT_CONTAINER_ID_INITIALIZED /home/$CONF_PROJECT_NAME/.shore/scripts/container/start $@
+        printf "\nstarting services done\n\n"
 
-      # Display web page URL and open browser
-      if [[ $CONF_PROJECT_DOMAIN_NAME ]]; then
-        WEB_URL="http://$CONF_PROJECT_DOMAIN_NAME"
-      else
-        WEB_URL="http://$CONF_CONTAINER_IP/$CONF_PROJECT_NAME"
-      fi
-      printf "open the web page : $WEB_URL\n\n"
-      if which xdg-open > /dev/null && [ "$CONF_OPEN_BROWSER_ON_START" = true ]; then
-        xdg-open "$WEB_URL" &> /dev/null
-      fi
+        # Display web page URL and open browser
+        if [[ $CONF_PROJECT_DOMAIN_NAME ]]; then
+            WEB_URL="http://$CONF_PROJECT_DOMAIN_NAME"
+        else
+            WEB_URL="http://$CONF_CONTAINER_IP/$CONF_PROJECT_NAME"
+        fi
+        printf "Consult the website at : $WEB_URL\n"
+        if which xdg-open > /dev/null && [ "$CONF_OPEN_BROWSER_ON_START" = true ]; then
+            xdg-open "$WEB_URL" &
+        fi
+        if [[ $CONF_PROJECT_DOMAIN_NAME ]]; then
+            printf "Please make sure you added the following line to your /etc/hosts : \n"
+            printf "$CONF_CONTAINER_IP  $CONF_PROJECT_DOMAIN_NAME\n\n"
+        fi
 
     else
+
       printf "someting went wrong:\n"
       printf "$OUT\n"
+
     fi
   else
     echo "web directory \"$CONF_PROJECT_HTDOCS\" doesn't exist"
