@@ -1,19 +1,24 @@
 #!/bin/bash
 
-# Create the symlink and vhost for project
+# Create the symlink and vhost for project.
 
 . $(dirname "$0")/../../_common.sh
 
 include_files
 
 
-# Create symlink in Apache web directory
+# Check variables.
+[ -z "$CONF_PROJECT_NAME" ] && echo "CONF_PROJECT_NAME is not set" && exit
+[ -z "$CONF_PROJECT_HTDOCS" ] && echo "CONF_PROJECT_HTDOCS is not set" && exit
+
+
+# Create symlink in Apache web directory.
 if [ ! -e "/var/www/html/$CONF_PROJECT_NAME" ]; then
   ln -s "/home/$CONF_PROJECT_NAME/$CONF_PROJECT_HTDOCS" "/var/www/html/$CONF_PROJECT_NAME"  
 fi
 
 
-# Create vhost in /etc/apache2/sites-available
+# Create vhost in /etc/apache2/sites-available.
 cat >/etc/apache2/sites-available/"$CONF_PROJECT_NAME".conf <<EOL
 <Directory /var/www/html/${CONF_PROJECT_NAME}>
     Options Indexes FollowSymLinks
@@ -28,7 +33,7 @@ cat >/etc/apache2/sites-available/"$CONF_PROJECT_NAME".conf <<EOL
 EOL
 
 
-# Create the symlink in /etc/apache2/sites-available
+# Create the symlink in /etc/apache2/sites-available.
 ln -s /etc/apache2/sites-available/"$CONF_PROJECT_NAME".conf /etc/apache2/sites-enabled/"$CONF_PROJECT_NAME".conf
 
 echo "Done"

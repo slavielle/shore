@@ -6,12 +6,19 @@
 
 include_files
 
+
+# Check variables.
+[ -z "$CONF_MYSQL_ROOT_PASSWORD" ] && echo "CONF_MYSQL_ROOT_PASSWORD is not set" && exit
+
+
+# Start MySql.
 if [ -z $(pgrep -l mysqld) ]; then
   echo "MySQL have to be started to perform this hook ... starting"
   service mysql start
   echo ""
 fi
 
+#Change root password.
 mysqladmin -u root password "$CONF_MYSQL_ROOT_PASSWORD"
 
 echo "Done"

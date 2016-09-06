@@ -4,17 +4,27 @@
 
 include_files
 
+
+# Check variables.
+[ -z "$CONF_DRUSH_VERSION" ] && echo "CONF_DRUSH_VERSION is not set" && exit
+
+
+# Install wget if need.
 which wget > /dev/null
 if [ "$?" == "1" ]; then
     echo "Must install wget to fulfill this operation"
     apt-get install -y wget &> /dev/null
 fi
 
+
+# Install drush.
 echo "Install drush version $CONF_DRUSH_VERSION" 
 cd /usr/local/bin
 wget -O drush "https://github.com/drush-ops/drush/releases/download/$CONF_DRUSH_VERSION/drush.phar" &> /dev/null
 chmod +x drush
 
+
+#Execute drush init.
 echo "execute drush init"
 #drush -y init
 

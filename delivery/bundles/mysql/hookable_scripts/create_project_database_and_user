@@ -7,17 +7,26 @@
 include_files
 
 
+# Check variables.
+[ -z "$CONF_MYSQL_ROOT_PASSWORD" ] && echo "CONF_MYSQL_ROOT_PASSWORD is not set" && exit
+[ -z "$CONF_MYSQL_PROJECT_DB_NAME" ] && echo "CONF_MYSQL_PROJECT_DB_NAME is not set" && exit
+[ -z "$CONF_MYSQL_PROJECT_USER_NAME" ] && echo "CONF_MYSQL_PROJECT_USER_NAME is not set" && exit
+[ -z "$CONF_MYSQL_PROJECT_USER_PASSWORD" ] && echo "CONF_MYSQL_PROJECT_USER_PASSWORD is not set" && exit
+
+
+# Start MySql if need.
 if [[ -z $(pgrep mysql) ]]; then
   echo "MySQL have to be started to perform this hook ... starting"
   service mysql start
 fi
 
-
+# Drop existing user.
 echo "--- DROP USER ---"
 QUERY="DROP USER $CONF_MYSQL_PROJECT_USER_NAME@localhost;"
 echo "$QUERY"
 mysql -u root -p"$CONF_MYSQL_ROOT_PASSWORD" -e "$QUERY"
 
+# Drop database and recreate it.
 echo "--- DROP DATABASE AND CREATE NEW ONE ---"
 QUERY="DROP DATABASE IF EXISTS $CONF_MYSQL_PROJECT_DB_NAME; CREATE DATABASE $CONF_MYSQL_PROJECT_DB_NAME DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;GRANT ALL PRIVILEGES ON $CONF_MYSQL_PROJECT_USER_NAME.* TO '$CONF_MYSQL_PROJECT_DB_NAME'@'localhost' IDENTIFIED BY '$CONF_MYSQL_PROJECT_USER_PASSWORD'" # WITH GRANT OPTION;"
 echo "$QUERY"

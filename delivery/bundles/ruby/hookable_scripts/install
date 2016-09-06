@@ -4,24 +4,28 @@
 
 include_files
 
-# Curl Needed
+
+# Install Curl if need.
 which curl > /dev/null
 if [ "$?" == "1" ]; then
     echo "Must install curl to fulfill this operation"
     apt-get install -y curl &> /dev/null
 fi
 
-# Init pgp key
+
+# Init pgp key.
 gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 &> /dev/null
 
-# Install RVM
+
+# Install RVM.
 echo "Install RVM" 
 \curl -sSL https://get.rvm.io | bash -s stable --ruby &> /dev/null
 
 source /usr/local/rvm/scripts/rvm
 echo "source /usr/local/rvm/scripts/rvm" >> ~/.bashrc 
 
-# Install specific ruby version
+
+# Install specific ruby version.
 if [ "$CONF_RUBY_VERSION" ]; then
     echo "install specific ruby version : $CONF_RUBY_VERSION"
     rvm install "$CONF_RUBY_VERSION" &> /dev/null
@@ -29,11 +33,13 @@ else
     rvm install stable &> /dev/null
 fi
 
-# Print out Ruby version
+
+# Print out Ruby version.
 RUBY_VERSION=$(ruby --version)
 echo "Installed Ruby version : $RUBY_VERSION"
 
-# Run a bundler install if required
+
+# Run a bundler install if required.
 if [ "$CONF_RUBY_GEM_INSTALL_PATH" ]; then
 
     cd "/home/$CONF_PROJECT_NAME/$CONF_RUBY_GEM_INSTALL_PATH" &> /dev/null

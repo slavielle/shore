@@ -4,9 +4,13 @@
 
 include_files
 
+
+# Install XDebug.
 echo "Installing XDebug" 
 apt-get install -y php5-xdebug &> /dev/null
 
+
+# Set config.
 echo "Setting up XDebug config"
 CONF=$(cat /etc/php5/apache2/conf.d/20-xdebug.ini)
 cat >/etc/php5/apache2/conf.d/20-xdebug.ini <<EOL

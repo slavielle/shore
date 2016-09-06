@@ -4,22 +4,30 @@
 
 include_files
 
-# Npm installation
+
+# Check variables.
+[ -z "$CONF_NODE_VERSION" ] && echo "CONF_NODE_VERSION is not set" && exit
+
+
+# Npm installation.
 echo "Install npm" 
 apt-get install -y npm &> /dev/null
 
-# n installation
+
+# n installation.
 echo "Install n"
 npm cache clean -f &> /dev/null
 npm install -g n &> /dev/null
 
-# Node installation
+
+# Node installation.
 echo "Install node (version $CONF_NODE_VERSION)"
 n "$CONF_NODE_VERSION" &> /dev/null
 INSTALLED_VERSION=$(node -v)
 echo "node version $INSTALLED_VERSION installed"
 
-# Perform npm install
+
+# Perform npm install.
 if [ "$CONF_NODE_PACKAGE_JSON_DIR" ]; then
     if [ -f "/home/$CONF_PROJECT_NAME/$CONF_NODE_PACKAGE_JSON_DIR/package.json" ]: then
         echo "Perform a \"npm install\" using \"/home/$CONF_PROJECT_NAME/$CONF_NODE_PACKAGE_JSON_DIR/package.json\""

@@ -4,22 +4,36 @@
 
 include_files
 
+
+# Check variables.
+[ -z "$CONF_MYSQL_PROJECT_DB_NAME" ] && echo "CONF_MYSQL_PROJECT_DB_NAME is not set" && exit
+[ -z "$CONF_MYSQL_PROJECT_USER_NAME" ] && echo "CONF_MYSQL_PROJECT_USER_NAME is not set" && exit
+[ -z "$CONF_MYSQL_PROJECT_USER_PASSWORD" ] && echo "CONF_MYSQL_PROJECT_USER_PASSWORD is not set" && exit
+
+
 IMPORT_FILE_PATH="$1/$2"
 FILE_FORMAT_HANDLED=false
 
+#Import file.
 if [ -f $IMPORT_FILE_PATH ]; then
-  if [[ $IMPORT_FILE_PATH =~ \.sql$ ]]; then
-    FILE_FORMAT_HANDLED=true
-    mysql -u "$CONF_MYSQL_PROJECT_USER_NAME" -p"$CONF_MYSQL_PROJECT_USER_PASSWORD" "$CONF_MYSQL_PROJECT_DB_NAME" < "$IMPORT_FILE_PATH"
-    echo "$1/$2 imported"
-fi
+    
+    # Import .sql file.
+    if [[ $IMPORT_FILE_PATH =~ \.sql$ ]]; then
+        FILE_FORMAT_HANDLED=true
+        mysql -u "$CONF_MYSQL_PROJECT_USER_NAME" -p"$CONF_MYSQL_PROJECT_USER_PASSWORD" "$CONF_MYSQL_PROJECT_DB_NAME" < "$IMPORT_FILE_PATH"
+        echo "$1/$2 imported"
+    fi
 
-  if ! $FILE_FORMAT_HANDLED; then
-    echo "Unknown file format: \"$IMPORT_FILE_PATH\". Import failed"
-  fi
+    # @todo other formats (.gz .zip) to be implemented later.
+
+    if ! $FILE_FORMAT_HANDLED; then
+        echo "Unknown file format: \"$IMPORT_FILE_PATH\". Import failed."
+    else
+        echo "File imported."
+    fi
 
 else
-  echo "No such file \"$IMPORT_FILE_PATH\". Import failed"
+  echo "No such file \"$IMPORT_FILE_PATH\". Import failed."
 
 fi
 
