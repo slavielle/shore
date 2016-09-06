@@ -1,0 +1,28 @@
+#!/bin/bash
+
+
+if [ -d .shore ]; then
+
+    # Update scripts
+    rm -r .shore/scripts
+    cp -r "$(dirname "$0")/delivery/scripts" .shore/.
+    echo "\".shore/scripts\" updated"
+
+    # Update bundles
+    for F in "$(dirname "$0")"/delivery/bundles/*; do
+        BUNDLE_NAME=$(basename "$F")
+        if [ -d "$F/hookable_scripts" ]; then
+            rm -r ".shore/bundles/$BUNDLE_NAME/hookable_scripts" &> /dev/null 
+            cp -r "$(dirname "$0")/delivery/bundles/$BUNDLE_NAME/hookable_scripts" ".shore/bundles/$BUNDLE_NAME/."
+            echo "\".shore/bundles/$BUNDLE_NAME/hookable_scripts\" updated"
+        fi
+        if [ -d "$F/host_scripts" ]; then
+            rm -r ".shore/bundles/$BUNDLE_NAME/host_scripts" &> /dev/null
+            cp -r "$(dirname "$0")/delivery/bundles/$BUNDLE_NAME/host_scripts" ".shore/bundles/$BUNDLE_NAME/."
+            echo "\".shore/bundles/$BUNDLE_NAME/host_scripts\" updated"
+        fi
+    done
+    echo "scripts updated"
+else
+    echo ".shore directory not found"
+fi
