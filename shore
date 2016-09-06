@@ -13,7 +13,7 @@ shift
 
 # Walk up directory structure from  where the command had been called in order 
 # to find the .shore directory, except for install command that is a special one
-if [ "$COMMAND" != "install" ]; then
+if [ "$COMMAND" != "install" ] && [ "$COMMAND" != "update_scripts" ]; then
   while [ "$WORKING_DIR_PATH" != "/" ] 
   do
     if [ -d .shore ]; then
@@ -35,7 +35,7 @@ if [ "$WORKING_DIR_PATH" != "/" ]; then
         if [ ${COMMAND:0:1} != "_" ]; then
 
             # Handle the special install command
-            if [ "$COMMAND" == "install" ]; then
+            if [ "$COMMAND" == "install" ] || [ "$COMMAND" == "update_scripts" ]; then
 
                 # "install" command handling
                 "$(dirname "$(readlink -f "$0")")/$COMMAND"
