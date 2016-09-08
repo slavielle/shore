@@ -17,10 +17,13 @@ This way you can easily archive and restore or share your Docker image with coll
 .
 
 ### My goals are
-For a project contributing developer: 
+* For a project contributing developer: 
   - To be able to install shore and learn how to use it at a user level in 10 min tops.
   - To be able to reinstall an existing project from scratch and be ready to crack on with, in 10 min tops
   - No more runtime or build tools versions or compatibility problem: runtime and building tools in the container make your life easier because every developer works with exactly the same environment
+
+* For a lead developper : 
+  - To be able to setup devemopment environment using a build-in profiles and bundles as quickly as effectively.
 
 ## Disclaimer
 * I'm not an experimented developer on bash scriptintg development. My code could certainly be improved. 
