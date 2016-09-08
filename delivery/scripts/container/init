@@ -4,4 +4,13 @@
 
 include_files
 
+# Switch Debian frontend in non-interactive
+DEBIAN_FRONTEND=noninteractive
+export DEBIAN_FRONTEND
+
+# Update repositories 
+echo "apt-get update"
+apt-get update &> /dev/null
+
+# Run init hooks
 run_hook "init" $@

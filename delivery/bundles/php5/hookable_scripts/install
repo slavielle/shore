@@ -1,0 +1,11 @@
+#!/bin/bash
+
+# Create the symlink and vhost for project.
+
+. $(dirname "$0")/../../_common.sh
+
+include_files
+
+# Install PHP5
+echo "Install PHP5"
+apt-get -y install php5 php-pear php5-mysql php5-gd &> /dev/null

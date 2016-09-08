@@ -7,13 +7,14 @@ function include_files(){
 
     # Include bundle settings
     if [ "$BUNDLE_NAME" ] && [ -f ".shore/bundles/$BUNDLE_NAME/settings.sh" ]; then
-        echo "import .shore/bundles/$BUNDLE_NAME/settings.sh"
+        #echo "import .shore/bundles/$BUNDLE_NAME/settings.sh"
         . ".shore/bundles/$BUNDLE_NAME/settings.sh"
     fi
 
+    # Include runtime var
     if test "$(ls -A .shore/runtime)"; then
-      for F in .shore/runtime/*.sh; do
-         . $F
-      done
+        for F in .shore/runtime/*.sh; do
+           . $F
+        done
     fi
 }

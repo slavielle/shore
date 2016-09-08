@@ -1,0 +1,20 @@
+#!/bin/bash
+
+# Create the symlink and vhost for project.
+
+. $(dirname "$0")/../../_common.sh
+
+include_files
+
+# Install Apache
+echo "Install Apache2"
+apt-get -y install apache2 &> /dev/null
+
+# Install apache module
+# @todo To be developped. Use a CONF_ var array for apache modules to install
+
+
+# Activate Apache modules
+# @todo Use a CONF_ var array for apache modules
+echo "Activate Apache module : rewrite"
+a2enmod rewrite &> /dev/null

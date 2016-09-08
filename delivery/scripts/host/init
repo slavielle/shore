@@ -5,10 +5,15 @@
 include_files
 
 if [[ $RT_CONTAINER_ID_INITIALIZED ]]; then
-  echo "container already initialized : $RT_CONTAINER_ID_INITIALIZED"
+  echo "Container already initialized : $RT_CONTAINER_ID_INITIALIZED"
 else
+
+  echo "Pulling image "
+
+  docker pull $CONF_IMAGE_ID
+
   echo ""
-  echo "initializing container using following settings:"
+  echo "Initializing container using following settings:"
   echo ""
 
   # Remove the entrypoint (symlink to a real entrypoint script)

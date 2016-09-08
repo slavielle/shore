@@ -1,0 +1,12 @@
+#!/bin/bash
+
+# Create the symlink and vhost for project.
+
+. $(dirname "$0")/../../_common.sh
+
+include_files
+
+# Install MySQL
+echo "Install MySQL"
+apt-get -y install mysql-server &> /dev/null
+
