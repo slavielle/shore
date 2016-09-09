@@ -12,7 +12,7 @@ else
 
   printf "starting container\n\n"
 
-  #Set container-side start script as entrypoint
+  # Set container-side start script as entrypoint
   rm .shore/scripts/container/entrypoint
   ln -s _start .shore/scripts/container/entrypoint
   
@@ -41,7 +41,7 @@ else
         fi
         printf "Consult the website at : $WEB_URL\n"
         if which xdg-open > /dev/null && [ "$CONF_OPEN_BROWSER_ON_START" = true ]; then
-            xdg-open "$WEB_URL" &
+            xdg-open "$WEB_URL" </dev/null &>/dev/null &
         fi
         if [[ $CONF_PROJECT_DOMAIN_NAME ]]; then
             printf "Please make sure you added the following line to your /etc/hosts : \n"
