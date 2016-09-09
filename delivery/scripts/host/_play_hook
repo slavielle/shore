@@ -1,5 +1,10 @@
 #!/bin/bash
 
+# This script is a part of Shore
+# MIT License
+# Copyright (c) 2016 Sylvain LAVIELLE
+
+
 . .shore/scripts/host/_common.sh
 
 include_files

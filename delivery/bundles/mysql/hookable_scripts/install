@@ -1,5 +1,10 @@
 #!/bin/bash
 
+# This script is a part of Shore
+# MIT License
+# Copyright (c) 2016 Sylvain LAVIELLE
+
+
 # Create the symlink and vhost for project.
 
 . $(dirname "$0")/../../_common.sh

@@ -1,3 +1,9 @@
+
+# This script is a part of Shore
+# MIT License
+# Copyright (c) 2016 Sylvain LAVIELLE
+
+
 function include_files(){
 
     # Include global settings

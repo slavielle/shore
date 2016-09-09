@@ -1,5 +1,9 @@
 #!/bin/bash
 
+# This script is a part of Shore
+# MIT License
+# Copyright (c) 2016 Sylvain LAVIELLE
+
 
 # Init vars
 WORKING_DIR_PATH=$(pwd)

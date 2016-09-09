@@ -1,3 +1,9 @@
+
+# This script is a part of Shore
+# MIT License
+# Copyright (c) 2016 Sylvain LAVIELLE
+
+
 function format_output() {
 
   CODE_IN="\e[49m"
