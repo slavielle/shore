@@ -28,6 +28,7 @@ function format_output() {
 
 
 function include_files(){
+
     . "$(dirname "$0")/../../settings.sh"
 
     for F in "$(dirname "$0")"/../../runtime/*.sh; do
@@ -49,7 +50,12 @@ function run_hook() {
     ORIGIN_CONTAINER_DIR_PATH=${ORIGIN_HOST_DIR_PATH/$RT_HOST_SHARED_DIR_PATH/$CONTAINER_PROJECT_DIR_PATH}
 
     # Loop on script list for the given hook
-    while read HOOK_SCRIPT; do
+    while read HOOK_SCRIPT || [[ -n "$HOOK_SCRIPT" ]]; do
+        
+        # Trim
+        if [[ "$HOOK_SCRIPT" =~ ^[[:space:]]*([^[:space:]].*[^[:space:]])[[:space:]]*$ ]]; then 
+            HOOK_SCRIPT=${BASH_REMATCH[1]}
+        fi
 
         # Test if $HOOK_SCRIPT match the regexp
         if [[ $HOOK_SCRIPT =~ ^([0-9a-z_]+)\.([0-9a-z_]*)$ ]]; then
@@ -60,8 +66,10 @@ function run_hook() {
             echo ""; format_output " > INVOKE $BUNDLE.$FNC" "hook" "\n\n"
             "$(dirname "$0")/../../bundles/$BUNDLE/hookable_scripts/$FNC" $ORIGIN_CONTAINER_DIR_PATH $@
 
-        else
-            echo "not matching $HOOK_SCRIPT"
+        elif [[ $HOOK_SCRIPT != \#* ]] && [ ! -z "$HOOK_SCRIPT" ] ; then
+
+            # Catch unmatching values (blank lines and commented lines are ignored)
+            echo "not matching \"$HOOK_SCRIPT\""
         fi
 
     done <"$(dirname "$0")/../../profiles/$CONF_PROFILE/on_$HOOK_NAME.hook"
