@@ -9,7 +9,7 @@ function format_output() {
         ;;
 
     error)
-      CODE_IN="\e[31m"
+      CODE_IN="\e[41m"
         ;;
 
     warning)
@@ -63,13 +63,13 @@ function run_hook() {
             # Run the hook script and display result
             BUNDLE="${BASH_REMATCH[1]}"
             FNC="${BASH_REMATCH[2]}"
-            echo ""; format_output " > INVOKE $BUNDLE.$FNC" "hook" "\n\n"
+            echo ""; format_output " > INVOKE $BUNDLE.$FNC " "hook" "\n\n"
             "$(dirname "$0")/../../bundles/$BUNDLE/hookable_scripts/$FNC" $ORIGIN_CONTAINER_DIR_PATH $@
 
         elif [[ $HOOK_SCRIPT != \#* ]] && [ ! -z "$HOOK_SCRIPT" ] ; then
 
             # Catch unmatching values (blank lines and commented lines are ignored)
-            echo "not matching \"$HOOK_SCRIPT\""
+            echo ""; format_output " > MISMATCH : \"$HOOK_SCRIPT\" " "error" "\n"
         fi
 
     done <"$(dirname "$0")/../../profiles/$CONF_PROFILE/on_$HOOK_NAME.hook"
