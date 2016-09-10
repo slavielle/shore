@@ -77,16 +77,7 @@ shore installed
 Please edit files in .shore/settings to set setting values
 ```
 
-Now, look into your project directory using a ls -a command : Among your project's files and directories you have now a .shore directory. I advise you to commit this ".shore" directory into git [explanation to provide later]. 
-
-## Yes and what now.
-
-Now we need a docker image to run with on our project container. Making a docker image for our project will not be discussed here. let's get a simple one.
-
-```
-docker pull netelios/shore_starter
-```
-This image is a really simple image based on a debian jessie + Apache, PHP, MySQL. It got all we need for a very first go.
+Now, look into your project directory using a ls -a command : Among your project's files and directories you have now a .shore directory. I advise you to commit this ".shore" directory into git (see why in wiki/FAQ). 
 
 ## Change settings
 
@@ -103,6 +94,15 @@ Set your image ID
 Set your Git repository URL
 Set your project name and your project htdocs
 
+## Init your container
+```
+$ shore init
+```
+
+## Start your container
+```
+$ shore start
+```
 [to be continued]
 
 
