@@ -68,6 +68,7 @@ function run_hook() {
     # Remap host path to container path
     ORIGIN_CONTAINER_DIR_PATH=${ORIGIN_HOST_DIR_PATH/$RT_HOST_SHARED_DIR_PATH/$CONTAINER_PROJECT_DIR_PATH}
 
+    # List enabled bundles
     ENABLED_BUNDLES=()
     ENABLED_BUNDLES_LIST_FILE=$(readlink -f "$(dirname "$0")/../../profiles/$CONF_PROFILE/bundles")
     while read BUNDLE || [[ -n "$BUNDLE" ]]; do
