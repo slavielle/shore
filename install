@@ -30,5 +30,16 @@ else
         mv "$BUNDLE_SETTING_FILES" "$(dirname "$BUNDLE_SETTING_FILES")/settings.sh"
     done
 
-  echo "shore installed"  
+    echo ""
+    echo " ###   #   #    ###    ####    ####"
+    echo "#      #   #   #   #   #   #   #   "
+    echo " ##    #####   #   #   ####    ### "
+    echo "   #   #   #   #   #   #   #   #   "
+    echo "###    #   #    ###    #   #   ####"
+    echo ""
+    echo "installed"
+
+    .shore/scripts/host/_post_install
+
+    echo ""
 fi

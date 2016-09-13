@@ -1,0 +1,34 @@
+#!/bin/bash
+
+# This script is a part of Shore
+# MIT License
+# Copyright (c) 2016 Sylvain LAVIELLE
+
+
+. .shore/scripts/host/_common.sh
+
+include_files
+
+echo ""
+echo "Update following settings files before running \"shore init\" :"
+echo "  - main settings file :"
+echo "    .shore/set1tings"
+echo "  - bundles settings files used for active profile \"$CONF_PROFILE\":"
+
+# list enabled bundles settings file
+while read BUNDLE || [[ -n "$BUNDLE" ]]; do
+
+    # Trim
+    if [[ "$BUNDLE" =~ ^[[:space:]]*([^[:space:]].*[^[:space:]])[[:space:]]*$ ]]; then 
+        BUNDLE=${BASH_REMATCH[1]}
+    fi
+
+    # Add bundle to ENABLED_BUNDLES array if bundle name match
+    if [[ $BUNDLE =~ ^([0-9a-z_]+)$ ]]; then
+        if [ -f .shore/bundles/$BUNDLE/settings.sh ]; then
+            echo "    .shore/bundles/$BUNDLE/settings.sh"
+        fi
+    elif [[ $BUNDLE != \#* ]] && [ ! -z "$BUNDLE" ] ; then
+        echo ""; format_output " > MISMATCH : \"$BUNDLE\" in \".shore/profiles/$CONF_PROFILE/bundles\" " "error" "\n"
+    fi
+done <.shore/profiles/$CONF_PROFILE/bundles
