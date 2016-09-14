@@ -1,0 +1,16 @@
+#!/bin/bash
+
+# This script is a part of Shore
+# MIT License
+# Copyright (c) 2016 Sylvain LAVIELLE
+
+
+. .shore/scripts/host/_common.sh
+
+include_files
+
+echo ""
+echo "Shore is currently configured with the \"$RT_PROFILE\" profile"
+echo "If you want to change it, use command \"shore profile [my_new_profile]\# to do so."
+echo "otherwise follow the next step."
+echo ""
