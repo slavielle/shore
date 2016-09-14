@@ -24,3 +24,31 @@ function include_files(){
         done
     fi
 }
+
+
+function format_output() {
+
+  CODE_IN="\e[49m"
+  CODE_OUT="\033[1m\033[0m"
+
+  case "$2" in
+    step)
+      CODE_IN="\e[44m"
+        ;;
+
+    error)
+      CODE_IN="\e[41m"
+        ;;
+
+    warning)
+      CODE_IN="\e[93m"
+        ;;
+
+    success)
+      CODE_IN="\e[92m"
+        ;;
+  esac
+
+  printf "\033[1m${CODE_IN}$1${CODE_OUT}$3"
+
+}

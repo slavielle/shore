@@ -9,15 +9,14 @@
 
 include_files
 
+echo ""; format_output " > CHANGE PROFILE " "step" "\n"
 echo ""
 echo "Shore is currently configured with the \"$RT_PROFILE\" profile"
-echo "If you want to change it, use command \"shore profile [my_new_profile]\# to do so"
+echo "If you want to change it, use command \"shore profile [my_new_profile]\" to do so"
 echo "using one of the following profile : "
 echo ""
-
 for PROFILE_DIRECTORY in .shore/profiles/* ; do
     echo "  $(basename "$PROFILE_DIRECTORY")"
 done
 echo ""
-echo "otherwise follow the next step."
-echo ""
+echo "Otherwise follow the next step."

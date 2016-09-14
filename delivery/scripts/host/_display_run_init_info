@@ -1,0 +1,14 @@
+#!/bin/bash
+
+# This script is a part of Shore
+# MIT License
+# Copyright (c) 2016 Sylvain LAVIELLE
+
+
+. .shore/scripts/host/_common.sh
+
+include_files
+
+echo ""; format_output " > CREATE YOUR PROJECT CONTAINER " "step" "\n"
+echo ""
+echo "When you're done run the \"shore init\" command to deploy your shore environment"

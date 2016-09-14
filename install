@@ -44,14 +44,12 @@ else
     echo "   #   #   #   #   #   #   #   #   "
     echo "###    #   #    ###    #   #   ####"
     echo ""
-    echo "installed"
+    echo "installed. Please follow next steps:"
 
     # Run post install scripts
     .shore/scripts/host/_display_change_profile_info
     .shore/scripts/host/_display_settings_info
-
-    echo ""
-    echo "When you're done run the \"shore init\" command to deploy your shore environment"
+    .shore/scripts/host/_display_run_init_info
 
     # And we're done
     echo ""

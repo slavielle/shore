@@ -9,6 +9,7 @@
 
 include_files
 
+echo ""; format_output " > UPDATE SETTINGS " "step" "\n"
 echo ""
 echo "Update following settings files before running \"shore init\" :"
 echo "  - main settings file :"
