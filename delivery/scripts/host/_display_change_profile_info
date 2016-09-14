@@ -19,4 +19,4 @@ for PROFILE_DIRECTORY in .shore/profiles/* ; do
     echo "  $(basename "$PROFILE_DIRECTORY")"
 done
 echo ""
-echo "Otherwise follow the next step."
+echo "Otherwise follow the next steps."

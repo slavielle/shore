@@ -12,9 +12,9 @@ include_files
 echo ""
 
 if [ -z "$2" ]; then
-    echo "current profile:"
+    echo "Current profile:"
     echo "  $RT_PROFILE"
-    echo "available profiles:"
+    echo "Available profiles:"
     for PROFILE_DIRECTORY in .shore/profiles/* ; do
         echo "  $(basename "$PROFILE_DIRECTORY")"
     done
@@ -29,11 +29,11 @@ else
 
     if [ FOUND ]; then
         echo "RT_PROFILE=\"$2\"" > ".shore/runtime/RT_PROFILE.var.sh"
-        echo "New profile \"$2\" is set"
+        echo "New profile \"$2\" is set. Please follow next steps:"
         .shore/scripts/host/_display_settings_info
         .shore/scripts/host/_display_run_init_info
     else
-        echo "profile \"$2\" doesn't exist"
+        echo "Profile \"$2\" doesn't exist."
     fi
 fi
 
