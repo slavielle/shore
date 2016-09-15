@@ -2,7 +2,7 @@
 
 ## What is it ?
 
-### A web development environment for little or middle sized projects
+### A runtime environment for web development
 As a web developer developing websites using, among others, Drupal and Symfony, I’m interested in Docker as a local web development environment (in substitution to VM that i found slow).
 
 Docker is a wonderful tool, not that hard to start with but, it could be a bit tricky to use in some case.
