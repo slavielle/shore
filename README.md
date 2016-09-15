@@ -2,15 +2,16 @@
 
 ## What is it ?
 
-### A runtime environment for web development
-As a web developer developing websites using, among others, Drupal and Symfony, I’m interested in Docker as a local web development environment (in substitution to VM that i found slow).
+### A runtime environment for web development build on top of docker
 
-Docker is a wonderful tool, not that hard to start with but, it could be a bit tricky to use in some case.
+As a web developer developing websites using, among others, Drupal and Symfony, I’m interested in Docker as a local runtime environment for projects I'm working on, in substitution to VM that I found slow and weighing.
 
-Shore is an attempt to make an easy to use web development environment on top of Docker for people who like me, work as a developer on little or middle sized website’ projects.
+Docker is a wonderful tool, not that hard to work with but, it could be a bit tricky to use in some case.
 
-Shore is mainly a bunch of bash scripts (host side and container side) and a few tricks around Docker. It uses basically only one container aiming to host: 
-  - Runtime environment tools (such as Apache, PHP, MySQL, etc.) 
+Shore is an attempt to make an easy to use web development environment on top of Docker for people who like me, work as a developer on little or middle sized website projects.
+
+Shore is mainly a bunch of bash scripts (host side and container side) and a few tricks around Docker. It uses basically only one container aiming to run: 
+  - Runtime tools (such as Apache, PHP, MySQL, etc.) 
   - Building tools (such as gulp, sass, Drush, etc.) for a project. 
 
 This way you can easily archive and restore or share your Docker image with colleagues working on the same project, not bothering too much about Docker’s convolutions.
@@ -36,8 +37,7 @@ Anyway, you’re very welcome collaborate the project by forking and send pull r
 * Ubuntu Xenial Xerus
 
 ### as Containers:
-* Ubuntu Trusty
-* Debian Jessie
+* Debian Jessie 
 
 ## Requirements
 * One to the tested host Linux systems. (I didn't test it using boot2Docker on Mac OSX platform to check if shore host scripts could run on it. On Windows, you should run it using a VM with one to the tested host Linux systems installed even if it's a poor solution), 
