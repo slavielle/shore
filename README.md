@@ -15,13 +15,12 @@ Shore is mainly a bunch of bash scripts (host side and container side) and a few
   - Building tools (such as gulp, sass, Drush, etc.) for a project. 
 
 This way you can easily archive and restore or share your Docker image with colleagues working on the same project, not bothering too much about Docker’s convolutions.
-.
 
 ### My goals are
 * For a project contributing developer: 
   - To be able to install shore and learn how to use it at a user level in 10 min tops.
-  - To be able to reinstall an existing project from scratch and be ready to crack on with, in 10 min tops
-  - No more runtime or build tools versions or compatibility problem: runtime and building tools in the container make your life easier because every developer works with exactly the same environment
+  - To be able to reinstall an existing project from scratch and be ready to crack on with, in 10 min tops.
+  - No more runtime or build tools versions or compatibility problem: runtime and building tools in the container make your life easier because every developer works with exactly the same environment.
 
 * For a lead developper : 
   - To be able to setup devemopment environment using a build-in profiles and bundles as quickly as effectively.
@@ -51,7 +50,7 @@ $ docker network create --subnet=172.18.0.0/16 shore_net
 ```
 "shore_net" is the default name I use in shore's settings file. You can change it if you want.
 
-get Shore from git and put the shore directory into your /usr/lib directory
+Get Shore from git and put the shore directory into your /usr/lib directory.
 
 ```
 $ cd /usr/lib
@@ -66,18 +65,15 @@ $ sudo ln -s ../lib/shore/shore shore
 
 # Use it for a project
 
-Go into your project directory. It's must be your git root containing your website's runtime and build scripts and assets. In your project root you must have a directory (generally called "www" or "htdocs" containing a directory exposed to your web server)
-
+Go into your project directory. It's must be your git root containing your website's runtime and build scripts and assets. In your project root you must have a directory (generally called "www" or "htdocs" containing a directory exposed to your web server).
 
 Form your projet directory execute command : 
 
 ```
 $ shore install
-shore installed
-Please edit files in .shore/settings to set setting values
 ```
 
-Now, look into your project directory using a ls -a command : Among your project's files and directories you have now a .shore directory. I advise you to commit this ".shore" directory into git (see why in wiki/FAQ). 
+Now, look into your project directory using a `ls -a` command : Among your project's files and directories you have now a .shore directory. I advise you to commit this ".shore" directory into your project's git repository (see why in wiki/FAQ). 
 
 ## Change settings
 
