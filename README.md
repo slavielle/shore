@@ -10,7 +10,7 @@ Docker is a wonderful tool, not that hard to work with but, it could be a bit tr
 
 Shore is an attempt to make an easy to use web development environment on top of Docker for people who like me, work as a developer on little or middle sized website projects based on existing CMS or Frameworks.
 
-Shore is mainly a bunch of bash scripts (host side and container side) and a few tricks around Docker. It uses basically only one container aiming to run: 
+Shore is mainly a bunch of bash scripts (host side and container side) and a few tricks around Docker I made to make my life easier. It uses basically only one container aiming to run: 
   - Runtime tools (such as Apache, PHP, MySQL, etc.) 
   - Building tools (such as gulp, sass, Drush, etc.) for a project. 
 
@@ -69,6 +69,8 @@ $ sudo ln -s ../lib/shore/shore shore
 
 # Use it for a project
 
+## Step 1 : Install it in a project
+
 Go into your project directory. It's must be your git root containing your website's runtime and build scripts and assets. In your project root you must have a directory (generally called "www" or "htdocs" containing a directory exposed to your web server).
 
 Form your projet directory execute command : 
@@ -79,36 +81,25 @@ $ shore install
 
 Now, look into your project directory using a `ls -a` command : Among your project's files and directories you have now a .shore directory. I advise you to commit this ".shore" directory into your project's git repository (see why in wiki/FAQ). 
 
-## Choose your profile
+## Step 2 : Choose your profile
 
-Depending on the type of project you're working on, you can select a suitable profile. By default, the "default" profile is active. Default profile use a very minial set of bundles 
-
-## Change settings
-
-[project root]/.shore/settings.sh
-
+Depending on the type of project you're working on, you can select a suitable profile. By default, the "default" profile is active. Default profile use a very minial set of bundles : apache2, mysql, php5, xdebug. But it's ok for a first go. If you want to change the profile use foloowing command : 
 ```
-CONF_CONTAINER_IP="172.18.0.2"
-CONF_CONTAINER_NETWORK="shore_net"
-CONF_IMAGE_ID="c531b08d1f3e"
-ROJECT_NAME="shore_test"
-CONF_PROJECT_HTDOCS="www"
+shore profile [my_profile]
 ```
-Set your image ID
-Set your Git repository URL
-Set your project name and your project htdocs
+## Step 3 : Change settings
 
-## Init your container
-```
-$ shore init
-```
+Command `shore install` or `shore profile` give you a list of settings files - depending on what bundle are used by your profile - you have to fiddle with.
 
-## Start your container
-```
-$ shore start
-```
-[to be continued]
+Edit them and change parameters to fit your project.
 
+## Step 4 : Init your container
+with `shore init`
 
+## Step 5 : Start your container
+with `shore start`
+
+# Butter in spinash
+ [to be continued]
 
 
