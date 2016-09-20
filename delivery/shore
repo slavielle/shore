@@ -5,7 +5,10 @@
 # Copyright (c) 2016 Sylvain LAVIELLE
 
 # include core settings
-. .shore/settings.sh
+
+. .shore/scripts/host/_common.sh
+
+include_files
 
 # Get parameters
 ORIGIN_DIR_PATH=$1
@@ -29,7 +32,7 @@ else
             exit
         fi
     done
-    
+
     if [ -f ".shore/profiles/$RT_PROFILE/on_$COMMAND.hook" ]; then
 
         # Direct hook handling
