@@ -8,13 +8,17 @@ As a web developer developing websites using, among others, Drupal and Symfony, 
 
 Docker is a wonderful tool, not that hard to work with but, it could be a bit tricky to use in some case.
 
-Shore is an attempt to make an easy to use web development environment on top of Docker for people who like me, work as a developer on little or middle sized website projects.
+Shore is an attempt to make an easy to use web development environment on top of Docker for people who like me, work as a developer on little or middle sized website projects based on existing CMS or Frameworks.
 
 Shore is mainly a bunch of bash scripts (host side and container side) and a few tricks around Docker. It uses basically only one container aiming to run: 
   - Runtime tools (such as Apache, PHP, MySQL, etc.) 
   - Building tools (such as gulp, sass, Drush, etc.) for a project. 
 
 This way you can easily archive and restore or share your Docker image with colleagues working on the same project, not bothering too much about Docker’s convolutions.
+
+Shore is structured in bundles that you can use from profiles.
+ - Bundle neans a bundle of scripts for one given tool or language : Here's a few bundles you can use in shore : mysql, apache2, php5, composer, drush, node, ruby, etc ...
+ - Profiles gather some bundles and can invoque them through shore commands. To illustrate why profiles are usefull, lets imagine 2 of them such as a drupal 7 one and a symfony 2 one. Both of them may use apache2, mysql, and php5 bundles but when the drupal one would use the drush bundle, the symfony one should use the composer one.
 
 ### My goals are
 * For a project contributing developer: 
@@ -42,7 +46,7 @@ Anyway, you’re very welcome collaborate the project by forking and send pull r
 * One to the tested host Linux systems. (I didn't test it using boot2Docker on Mac OSX platform to check if shore host scripts could run on it. On Windows, you should run it using a VM with one to the tested host Linux systems installed even if it's a poor solution), 
 * Docker 1.12.0 or higher installed (https://get.docker.com/)
 
-## Installing Shore
+## Installing Shore on your computer
 
 Create a Docker custom network bridge if you hadn't already created one
 ```
@@ -74,6 +78,10 @@ $ shore install
 ```
 
 Now, look into your project directory using a `ls -a` command : Among your project's files and directories you have now a .shore directory. I advise you to commit this ".shore" directory into your project's git repository (see why in wiki/FAQ). 
+
+## Choose your profile
+
+Depending on the type of project you're working on, you can select a suitable profile. By default, the "default" profile is active. Default profile use a very minial set of bundles 
 
 ## Change settings
 
