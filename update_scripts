@@ -8,6 +8,8 @@
 if [ -d .shore ]; then
 
     # Update scripts
+    cp "$(dirname "$0")/delivery/shore" .shore/.
+    echo "\".shore/shore\" updated"
     rm -r .shore/scripts
     cp -r "$(dirname "$0")/delivery/scripts" .shore/.
     echo "\".shore/scripts\" updated"
