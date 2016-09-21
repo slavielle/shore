@@ -11,29 +11,36 @@ include_files
 
 echo ""
 
+# No parameter provided : Command just returns infos
 if [ -z "$2" ]; then
     echo "Current profile:"
     echo "  $RT_PROFILE"
+    echo ""
     echo "Available profiles:"
     for PROFILE_DIRECTORY in .shore/profiles/* ; do
         echo "  $(basename "$PROFILE_DIRECTORY")"
     done
 
+# Profile name provided : Command changes the active profile
 else
-    FOUND=false
-    for PROFILE_DIRECTORY in .shore/profiles/* ; do
-        if [ $1 = "$(basename "$PROFILE_DIRECTORY")" ]; then
-            FOUND=true
-        fi
-    done
+    if [ -z "$RT_CONTAINER_ID_INITIALIZED" ]; then
+        FOUND=false
+        for PROFILE_DIRECTORY in .shore/profiles/* ; do
+            if [ $1 = "$(basename "$PROFILE_DIRECTORY")" ]; then
+                FOUND=true
+            fi
+        done
 
-    if [ FOUND ]; then
-        echo "RT_PROFILE=\"$2\"" > ".shore/runtime/RT_PROFILE.var.sh"
-        echo "New profile \"$2\" is set. Please follow next steps:"
-        .shore/scripts/host/_display_settings_info
-        .shore/scripts/host/_display_run_init_info
+        if [ FOUND ]; then
+            echo "RT_PROFILE=\"$2\"" > ".shore/runtime/RT_PROFILE.var.sh"
+            echo "New profile \"$2\" is set. Please follow next steps:"
+            .shore/scripts/host/_display_settings_info
+            .shore/scripts/host/_display_run_init_info
+        else
+            echo "Profile \"$2\" doesn't exist."
+        fi
     else
-        echo "Profile \"$2\" doesn't exist."
+        echo "Impossible to change profile: Shore environment is already initialized."
     fi
 fi
 
