@@ -67,9 +67,9 @@ $ cd /usr/bin
 $ sudo ln -s ../lib/shore/shore shore
 ```
 
-# Use it for a project
+## Use it for a project
 
-## Step 1 : Install it in a project
+### Step 1 : Install it in a project
 
 Go into your project directory. It's must be your git root containing your website's runtime and build scripts and assets. In your project root you must have a directory (generally called "www" or "htdocs" containing a directory exposed to your web server).
 
@@ -81,25 +81,63 @@ $ shore install
 
 Now, look into your project directory using a `ls -a` command : Among your project's files and directories you have now a .shore directory. I advise you to commit this ".shore" directory into your project's git repository (see why in wiki/FAQ). 
 
-## Step 2 : Choose your profile
+### Step 2 : Choose your profile
 
 Depending on the type of project you're working on, you can select a suitable profile. By default, the "default" profile is active. Default profile use a very minial set of bundles : apache2, mysql, php5, xdebug. But it's ok for a first go. If you want to change the profile use foloowing command : 
 ```
 shore profile [my_profile]
 ```
-## Step 3 : Change settings
+### Step 3 : Change settings
 
 Command `shore install` or `shore profile` give you a list of settings files - depending on what bundle are used by your profile - you have to fiddle with.
 
 Edit them and change parameters to fit your project.
 
-## Step 4 : Init your container
+### Step 4 : Init your container
 with `shore init`
 
-## Step 5 : Start your container
+### Step 5 : Start your container
 with `shore start`
 
-# Butter in spinash
- [to be continued]
+### Step 6 : Display your website page
+Every of the previous commands give you hints about what to do next, and If all went right, you should be able to access your website through your Shore environment by now ... Possibly with an error, because ... yes your database was created, but is empty.
+
+## Butter on bread
+
+### My database was created ?
+
+Yes, it should be ... and you should be able to check that using the command line `shore mysql-console -d`
+then the SQL command `SHOW DATABASES;`
+
+The shore mysql-console opens mysql console and log you in using MySql root user.
+
+### Ok How do I import my database ?
+
+You have a command for that ...
+
+First, copy your database dump file somewhere in your project directory. Personally, I always have a [project directory]/tmp directory where I put temporary needed stuffs (this directory is excluded from git of course). So you can put it your MySql dump file here or whatever you want in your project director but not outside the project directory.
+
+then from your project directory root use following command :
+
+`shore mysql-import ./tmp/my_project_database.sql`
+
+Then refresh your project page in your browser ... that should work.
+
+### Something else ?
+
+For a first go we're almost done ... 
+
+If you wand to access your Shore environment (container) using a console, try
+
+`shore bash -b`
+
+if you're done with your shore environment, stop it using :
+
+`shore stop` or `shore stop-all`
+
+Please don't forget to stop your running shore environments before shutting down your computer. there is nothing to do that automatically for the moment and shutting down your computer withour stopping your running shore environments can cause problem (see issue #1).
+
+Further informations ? go to Wiki pages ...
+
 
 
