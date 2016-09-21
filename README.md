@@ -102,7 +102,7 @@ with `shore start`
 ### Step 6 : Display your website page
 Every of the previous commands give you hints about what to do next, and If all went right, you should be able to access your website through your Shore environment by now ... Possibly with an error, because ... yes your database was created, but is empty.
 
-## Butter in spinash
+## Butter on bread
 
 ### My database was created ?
 
@@ -135,7 +135,7 @@ if you're done with your shore environment, stop it using :
 
 `shore stop` or `shore stop-all`
 
-Please dont forget to stop your shore environments before shutting down your computer. there is nothing to do that automatically for the moment and shutting down your computer withour stopping your running shore environments can cause problem (see issue #1).
+Please don't forget to stop your running shore environments before shutting down your computer. there is nothing to do that automatically for the moment and shutting down your computer withour stopping your running shore environments can cause problem (see issue #1).
 
 Further informations ? go to Wiki pages ...
 
