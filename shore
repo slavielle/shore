@@ -38,20 +38,49 @@ if [ "$WORKING_DIR_PATH" != "/" ]; then
         # If command does not start with "_" char
         if [ ${COMMAND:0:1} != "_" ]; then
 
+
             # Handle the special install command
             if [ "$COMMAND" == "install" ] || [ "$COMMAND" == "update_scripts" ]; then
 
                 # "install" command handling
                 "$(dirname "$(readlink -f "$0")")/$COMMAND"
 
+
+            # Handle the special stop-all command
+            elif [[ $COMMAND = "stop-all" ]]; then
+
+                for LINK in /var/tmp/shore/started/*; do
+                    [ -d "$LINK" ] || break
+                    cd "$LINK"
+                    echo "stopping $(realpath $LINK)"
+                    echo ""
+                    ".shore/shore" "$ORIGIN_DIR_PATH" stop $@
+                done
+                rm -f /var/tmp/shore/started/*
+                echo "All shore's environments stopped."
+
+
             # Handle all commands but install
             else
+                    
+                # Remove started container's reference.
+                if [[ $COMMAND = "stop" ]]; then
+                    . .shore/runtime/RT_CONTAINER_ID_STARTED.var.sh
+                    rm /var/tmp/shore/started/"$RT_CONTAINER_ID_STARTED" 2> /dev/null
+                fi
 
                 # Command are processed by the "shore" command located in ".shore" 
                 # directory of the projet directory. Doing this way command 
-                # handling depend on the shore version in your project directory
-        
+                # handling depend on the shore version in your project directory.
                 ".shore/shore" "$ORIGIN_DIR_PATH" $COMMAND $@
+
+                # Register started container's reference.
+                if [[ $COMMAND = "start" ]]; then
+                    . .shore/runtime/RT_CONTAINER_ID_STARTED.var.sh
+                    mkdir -p /var/tmp/shore/started
+                    ln -s "$(pwd)" /var/tmp/shore/started/"$RT_CONTAINER_ID_STARTED"
+                fi
+
             fi
         else
             echo "Command can't start with underscore"
@@ -61,17 +90,10 @@ if [ "$WORKING_DIR_PATH" != "/" ]; then
     else
         echo "Shore: no command provided"
     fi
-  
-
-
-
-
 
 else
   echo "no .shore found on my way up !"
 fi
-
-
 
 cd "$ORIGIN_DIR_PATH"
 
