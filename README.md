@@ -1,18 +1,19 @@
-# shore
+# Shore
 
 ## What is it ?
 
-### A runtime environment for web development build on top of docker
+### A runtime environment for web development builds on top of Docker
 
-As a web developer developing websites using, among others, Drupal and Symfony, I’m interested in Docker as a local runtime environment for projects I'm working on, in substitution to VM that I found slow and weighing.
+As a web developer developing websites using, among others, Drupal and Symfony, I’m interested in Docker as a local runtime environment for projects I'm working on. I previously worked with VM, but found it slow and kind of weighing. Hence, I was looking for something having similar advantages but lightweight and powerful.
 
-Docker is a wonderful tool, not that hard to work with but, it could be a bit tricky to use in some case.
+Docker is a wonderful tool, not that hard to work with and fulfilling completely my former wishes even if it was not really designed for the purpose I wanted to use it. But to be honest, the way I use it, Docker is not really convenient to use daily : You have to fiddle with Docker and/or containerization stuff to find out solutions … that is a tricky part I don’t want to bother with again.
 
-Shore is an attempt to make an easy to use web development environment on top of Docker for people who like me, work as a developer on little or middle sized website projects based on existing CMS or Frameworks.
+Shore is an attempt to make an easy to use web development environment on top of Docker for people who like me, work as a developer on little or middle sized website projects based on existing CMS or Frameworks. It is mainly a bunch of bash scripts (host side and container side) and a few tricks around Docker I made to make my developer life easier. It uses basically only one container aiming to run ...
 
-Shore is mainly a bunch of bash scripts (host side and container side) and a few tricks around Docker I made to make my life easier. It uses basically only one container aiming to run: 
   - Runtime tools (such as Apache, PHP, MySQL, etc.) 
-  - Building tools (such as gulp, sass, Drush, etc.) for a project. 
+  -	Building tools (such as Gulp, Sass, Drush, etc.) 
+
+... for a project.
 
 This way you can easily archive and restore or share your Docker image with colleagues working on the same project, not bothering too much about Docker’s convolutions.
 
