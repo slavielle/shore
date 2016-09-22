@@ -23,24 +23,21 @@ This way you can easily archive and restore or share your Docker image with coll
   - To be able to reinstall an existing project from scratch and be ready to crack on with, in 10 min tops.
   - No more runtime or build tools versions or compatibility problem: runtime and building tools in the container make your life easier because every developer works with exactly the same environment.
 
-* For a lead developper : 
-  - To be able to setup devemopment environment using a build-in profiles and bundles as quickly as effectively.
+* For a lead developer: 
+  - To be able to setup development environment using a build-in profiles and bundles quickly and effectively..
 
 ## Disclaimer
-* I'm not an experimented developer on bash scriptintg development. My code could certainly be improved. 
-* So far I tested it on a very few bunch of systems (as host and container) so; bear with me if some glitches pop up on those untested systems. See "tested systems" section.
+* I'm not an experimented developer on bash script development. My code could certainly be improved. 
+* So far I tested it on a very few bunch of systems (as host and container) so; bear with me if some glitches pop up on untested systems.
 * Docker version I used is: Docker version 1.12.0, build 8eab29e. Let's consider it as a minimal version: If you experiencing a problem with higher Docker versions or if it works fine with lower Docker versions please let me know.
-Anyway, you’re very welcome collaborate the project by forking and send pull request, reporting issues, etc.
+* Whatsoever, you’re very welcome collaborate the project by forking and send pull-requests, reporting issues, etc
 
 ## Tested systems
-### as Hosts:
-* Ubuntu Xenial Xerus
-
-### as Containers:
-* Debian Jessie 
+* As Host: Ubuntu Xenial Xerus
+* As Containers: Debian Jessie 
 
 ## Requirements
-* One to the tested host Linux systems. (I didn't test it using boot2Docker on Mac OSX platform to check if shore host scripts could run on it. On Windows, you should run it using a VM with one to the tested host Linux systems installed even if it's a poor solution), 
+* One to the tested host Linux systems. (I didn't test it using boot2Docker on Mac OSX platform to check if Shore host scripts could run on it. On Windows, you should run it using a VM with one to the tested host Linux systems installed even if it's a poor solution), 
 * Docker 1.12.0 or higher installed (https://get.docker.com/)
 
 ## Installing Shore on your computer
@@ -49,7 +46,7 @@ Create a Docker custom network bridge if you hadn't already created one
 ```
 $ docker network create --subnet=172.18.0.0/16 shore_net
 ```
-"shore_net" is the default name I use in shore's settings file. You can change it if you want.
+"shore_net" is the default name I used in the shore's settings file. You can change it if you want.
 
 Get Shore from git and put the shore directory into your /usr/lib directory.
 
@@ -68,7 +65,7 @@ $ sudo ln -s ../lib/shore/shore shore
 
 ### Step 1 : Install it in a project
 
-Go into your project directory. It's must be your git root containing your website's runtime and build scripts and assets. In your project root you must have a directory (generally called "www" or "htdocs" containing a directory exposed to your web server).
+Go into your project directory. It's must be your git root containing your website's runtime and build scripts and assets. In your project root you must have a directory (generally called "www" or "htdocs" or "public_html" containing a directory exposed to your web server).
 
 Form your projet directory execute command : 
 
