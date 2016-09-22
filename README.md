@@ -121,7 +121,7 @@ Then refresh your project page in your browser ... that should work.
 
 For a first go we're almost done ... 
 
-If you wand to access your Shore environment (container) using a console, try
+If you want to access your Shore environment (container) using a console, try
 
 `shore bash -b`
 
@@ -129,7 +129,7 @@ if you're done with your shore environment, stop it using :
 
 `shore stop` or `shore stop-all`
 
-Please don't forget to stop your running shore environments before shutting down your computer. there is nothing to do that automatically for the moment and shutting down your computer withour stopping your running shore environments can cause problem (see issue #1).
+Please don't forget to stop your running shore environments before shutting down your computer. there is nothing to do that automatically for the moment and shutting down your computer without stopping your running Shore environments can cause problem (see issue #1).
 
 Further informations ? go to Wiki pages ...
 
