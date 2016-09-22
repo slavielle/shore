@@ -17,10 +17,6 @@ Shore is an attempt to make an easy to use web development environment on top of
 
 This way you can easily archive and restore or share your Docker image with colleagues working on the same project, not bothering too much about Docker’s convolutions.
 
-Shore is structured in bundles that you can use from profiles.
- - Bundle neans a bundle of scripts for one given tool or language : Here's a few bundles you can use in shore : mysql, apache2, php5, composer, drush, node, ruby, etc ...
- - Profiles gather some bundles and can invoque them through shore commands. To illustrate why profiles are usefull, lets imagine 2 of them such as a drupal 7 one and a symfony 2 one. Both of them may use apache2, mysql, and php5 bundles but when the drupal one would use the drush bundle, the symfony one should use the composer one.
-
 ### My goals are
 * For a project contributing developer: 
   - To be able to install shore and learn how to use it at a user level in 10 min tops.
