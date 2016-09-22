@@ -6,7 +6,7 @@
 
 As a web developer developing websites using, among others, Drupal and Symfony, I’m interested in Docker as a local runtime environment for projects I'm working on. I previously worked with VM, but found it slow and kind of weighing. Hence, I was looking for something having similar advantages but lightweight and powerful.
 
-Docker is a wonderful tool, not that hard to work with and fulfilling completely my former wishes even if it was not really designed for the purpose I wanted to use it. But to be honest, the way I use it, Docker is not really convenient to use daily : You have to fiddle with Docker and/or containerization stuff to find out solutions … that is a tricky part I don’t want to bother with again.
+Docker is a wonderful tool, not that hard to work with and fulfilling completely my former wishes even if it was not really designed for the purpose I wanted to use it. But to be honest, the way I use it, Docker is not really convenient to use daily : You have to fiddle with Docker and/or containerization stuff to find out solutions … that is a tricky part I don’t want to bother with any more.
 
 Shore is an attempt to make an easy to use web development environment on top of Docker for people who like me, work as a developer on little or middle sized website projects based on existing CMS or Frameworks. It is mainly a bunch of bash scripts (host side and container side) and a few tricks around Docker I made to make my developer life easier. It uses basically only one container aiming to run ...
 
