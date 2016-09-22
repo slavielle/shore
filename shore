@@ -65,7 +65,7 @@ if [ "$WORKING_DIR_PATH" != "/" ]; then
                     
                 # Remove started container's reference.
                 if [[ $COMMAND = "stop" ]]; then
-                    . .shore/runtime/RT_CONTAINER_ID_STARTED.var.sh
+                    . .shore/runtime/RT_CONTAINER_ID_STARTED.var.sh 2> /dev/null
                     rm /var/tmp/shore/started/"$RT_CONTAINER_ID_STARTED" 2> /dev/null
                 fi
 
