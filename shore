@@ -17,7 +17,7 @@ shift
 
 # Walk up directory structure from  where the command had been called in order 
 # to find the .shore directory, except for install command that is a special one
-if [ "$COMMAND" != "install" ] && [ "$COMMAND" != "update_scripts" ]; then
+if [ "$COMMAND" != "install" ] && [ "$COMMAND" != "update_scripts" ] && [ "$COMMAND" != "stop-all" ]; then
   while [ "$WORKING_DIR_PATH" != "/" ] 
   do
     if [ -d .shore ]; then
@@ -40,25 +40,10 @@ if [ "$WORKING_DIR_PATH" != "/" ]; then
 
 
             # Handle the special install command
-            if [ "$COMMAND" == "install" ] || [ "$COMMAND" == "update_scripts" ]; then
+            if [ "$COMMAND" == "install" ] || [ "$COMMAND" == "update_scripts" ] || [ "$COMMAND" == "stop-all" ]; then
 
                 # "install" command handling
-                "$(dirname "$(readlink -f "$0")")/$COMMAND"
-
-
-            # Handle the special stop-all command
-            elif [[ $COMMAND = "stop-all" ]]; then
-
-                for LINK in /var/tmp/shore/started/*; do
-                    [ -d "$LINK" ] || break
-                    cd "$LINK"
-                    echo "stopping $(realpath $LINK)"
-                    echo ""
-                    ".shore/shore" "$ORIGIN_DIR_PATH" stop $@
-                done
-                rm -f /var/tmp/shore/started/*
-                echo "All shore's environments stopped."
-
+                "$(dirname "$(readlink -f "$0")")/$COMMAND" "$ORIGIN_DIR_PATH" $@
 
             # Handle all commands but install
             else
@@ -92,7 +77,7 @@ if [ "$WORKING_DIR_PATH" != "/" ]; then
     fi
 
 else
-  echo "no .shore found on my way up !"
+  echo "No Shore context found. The command you're invoking need to be called from inside a directory where Shore had been installed."
 fi
 
 cd "$ORIGIN_DIR_PATH"

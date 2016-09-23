@@ -1,0 +1,17 @@
+#!/bin/bash
+
+# This script is a part of Shore
+# MIT License
+# Copyright (c) 2016 Sylvain LAVIELLE
+
+ORIGIN_DIR_PATH=$1
+
+for LINK in /var/tmp/shore/started/*; do
+    [ -d "$LINK" ] || break
+    cd "$LINK"
+    echo "stopping $(realpath $LINK)"
+    echo ""
+    ".shore/shore" "$ORIGIN_DIR_PATH" stop $@
+done
+rm -f /var/tmp/shore/started/*
+echo "All shore's environments stopped."
