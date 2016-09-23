@@ -1,0 +1,18 @@
+#!/bin/bash
+
+# This script is a part of Shore
+# MIT License
+# Copyright (c) 2016 Sylvain LAVIELLE
+
+ORIGIN_DIR_PATH=$1
+
+for LINK in /var/tmp/shore/installed/*; do
+    [ -d "$LINK" ] || break
+    cd "$LINK"
+    unset RT_CONTAINER_ID_STARTED
+    . .shore/runtime/RT_CONTAINER_ID_STARTED.var.sh 2> /dev/null
+    
+    [ -z $RT_CONTAINER_ID_STARTED ] && STARTED="no" || STARTED="yes"
+
+    echo "$(realpath $LINK) started:$STARTED"
+done

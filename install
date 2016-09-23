@@ -33,9 +33,13 @@ else
         mv "$BUNDLE_SETTING_FILES" "$(dirname "$BUNDLE_SETTING_FILES")/settings.sh"
     done
 
+    # Create symlink to project directory in "installed" directory
+    mkdir -p /var/tmp/shore/installed
+    ln -s "$(pwd)" /var/tmp/shore/installed/"$(date +"%Y_%m_%d_%H_%M_%S")"
+
     #Create RT_PROFILE variable
     echo "RT_PROFILE=\"default\"" > ".shore/runtime/RT_PROFILE.var.sh"
-    
+
     # Output Shore installed message
     echo ""
     echo " ###   #   #    ###    ####    ####"
@@ -44,7 +48,7 @@ else
     echo "   #   #   #   #   #   #   #   #   "
     echo "###    #   #    ###    #   #   ####"
     echo ""
-    echo "installed. Please follow next steps:"
+    echo "Installed. Please follow next steps:"
 
     # Run post install scripts
     .shore/scripts/host/_display_change_profile_info
