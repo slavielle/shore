@@ -22,23 +22,26 @@ if [ ! -e "/var/www/html/$CONF_PROJECT_NAME" ]; then
   ln -s "/home/$CONF_PROJECT_NAME/$CONF_PROJECT_HTDOCS" "/var/www/html/$CONF_PROJECT_NAME"  
 fi
 
+if [ ! -z "$CONF_PROJECT_DOMAIN_NAME" ]; then
 
-# Create vhost in /etc/apache2/sites-available.
-cat >/etc/apache2/sites-available/"$CONF_PROJECT_NAME".conf <<EOL
-<Directory /var/www/html/${CONF_PROJECT_NAME}>
-    Options Indexes FollowSymLinks
-    AllowOverride All
-</Directory>
-<VirtualHost *:80>
-    ServerName ${CONF_PROJECT_DOMAIN_NAME}
-    DocumentRoot /var/www/html/${CONF_PROJECT_NAME}
-    ErrorLog \${APACHE_LOG_DIR}/error.log
-    CustomLog \${APACHE_LOG_DIR}/access.log combined
-</VirtualHost>
-EOL
+    # Create vhost in /etc/apache2/sites-available.
+    cat >/etc/apache2/sites-available/"$CONF_PROJECT_NAME".conf <<EOL
+    <Directory /var/www/html/${CONF_PROJECT_NAME}>
+        Options Indexes FollowSymLinks
+        AllowOverride All
+    </Directory>
+    <VirtualHost *:80>
+        ServerName ${CONF_PROJECT_DOMAIN_NAME}
+        DocumentRoot /var/www/html/${CONF_PROJECT_NAME}
+        ErrorLog \${APACHE_LOG_DIR}/error.log
+        CustomLog \${APACHE_LOG_DIR}/access.log combined
+    </VirtualHost>
+    EOL
 
 
-# Create the symlink in /etc/apache2/sites-available.
-ln -s /etc/apache2/sites-available/"$CONF_PROJECT_NAME".conf /etc/apache2/sites-enabled/"$CONF_PROJECT_NAME".conf
+    # Create the symlink in /etc/apache2/sites-available.
+    ln -s /etc/apache2/sites-available/"$CONF_PROJECT_NAME".conf /etc/apache2/sites-enabled/"$CONF_PROJECT_NAME".conf
+
+fi
 
 echo "Done"
