@@ -6,4 +6,3 @@ mysql.init_root_user
 mysql.create_project_database_and_user
 drush.install
 xdebug.install
-project.install

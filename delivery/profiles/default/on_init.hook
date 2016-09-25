@@ -5,4 +5,3 @@ apache2.create_symlink_and_vhost
 mysql.init_root_user
 mysql.create_project_database_and_user
 xdebug.install
-project.install
