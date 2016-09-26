@@ -25,7 +25,7 @@ fi
 if [ ! -z "$CONF_PROJECT_DOMAIN_NAME" ]; then
 
     # Create vhost in /etc/apache2/sites-available.
-    cat >/etc/apache2/sites-available/"$CONF_PROJECT_NAME".conf <<EOL
+    cat >/etc/apache2/sites-available/"$CONF_PROJECT_NAME".conf << EOL
     <Directory /var/www/html/${CONF_PROJECT_NAME}>
         Options Indexes FollowSymLinks
         AllowOverride All
@@ -36,8 +36,7 @@ if [ ! -z "$CONF_PROJECT_DOMAIN_NAME" ]; then
         ErrorLog \${APACHE_LOG_DIR}/error.log
         CustomLog \${APACHE_LOG_DIR}/access.log combined
     </VirtualHost>
-    EOL
-
+EOL
 
     # Create the symlink in /etc/apache2/sites-available.
     ln -s /etc/apache2/sites-available/"$CONF_PROJECT_NAME".conf /etc/apache2/sites-enabled/"$CONF_PROJECT_NAME".conf
