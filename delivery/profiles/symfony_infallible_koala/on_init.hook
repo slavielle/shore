@@ -3,6 +3,7 @@ mysql.install
 php5.install
 apache2.create_symlink_and_vhost
 mysql.init_root_user
+mysql.create_root_user_for_host
 mysql.create_project_database_and_user
 xdebug.install
 symfony.chown_to_apache_user

@@ -1,0 +1,32 @@
+#!/bin/bash
+
+# This script is a part of Shore
+# MIT License
+# Copyright (c) 2016 Sylvain LAVIELLE
+
+
+# Set MySQL root pass
+
+. $(dirname "$0")/../../_common.sh
+
+include_files
+
+
+# Check variables.
+[ -z "$CONF_MYSQL_ROOT_PASSWORD" ] && echo "CONF_MYSQL_ROOT_PASSWORD is not set" && exit
+
+
+# Start MySql if need.
+if [[ -z $(pgrep mysql) ]]; then
+  echo "MySQL have to be started to perform this hook ... starting"
+  service mysql start
+fi
+
+# Drop existing project user if any and recreate it.
+echo "Create root user for  $CONF_HOST_IP."
+QUERY="DROP USER root@$CONF_HOST_IP;"
+mysql -u root -p"$CONF_MYSQL_ROOT_PASSWORD" -e "$QUERY"
+QUERY="CREATE USER 'root'@'$CONF_HOST_IP' IDENTIFIED BY '$CONF_MYSQL_ROOT_PASSWORD';"
+mysql -u root -p"$CONF_MYSQL_ROOT_PASSWORD" -e "$QUERY"
+QUERY="GRANT ALL PRIVILEGES ON *.* TO 'root'@'$CONF_HOST_IP';"
+mysql -u root -p"$CONF_MYSQL_ROOT_PASSWORD" -e "$QUERY"
