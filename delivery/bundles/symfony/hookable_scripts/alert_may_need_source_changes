@@ -1,0 +1,31 @@
+#!/bin/bash
+
+# This script is a part of Shore
+# MIT License
+# Copyright (c) 2016 Sylvain LAVIELLE
+
+. $(dirname "$0")/../../_common.sh
+
+include_files
+
+if [ -z "$CONF_SYMFONY_ROOT_DIR" ]; then
+    SYMFONY_ROOT="/home/$CONF_PROJECT_NAME"
+else
+    SYMFONY_ROOT="/home/$CONF_PROJECT_NAME/$CONF_SYMFONY_ROOT_DIR"
+fi
+
+echo "You may need to change your $SYMFONY_ROOT/web/app_dev.php file to allow connection from host."
+echo ""
+read -r -d '' CODE <<- EOM
+// This check prevents access to debug front controllers that are deployed by accident to production servers.
+// Feel free to remove this, extend it, or make something more sophisticated.
+if (isset($_SERVER['HTTP_CLIENT_IP'])
+    || isset($_SERVER['HTTP_X_FORWARDED_FOR'])
+    || !(in_array(@$_SERVER['REMOTE_ADDR'], array('127.0.0.1', '172.18.0.1', 'fe80::1', '::1')) || php_sapi_name() === 'cli-server')
+) {
+    header('HTTP/1.0 403 Forbidden');
+    exit('You are not allowed to access this file. Check '.basename(__FILE__).' for more information.');
+}
+EOM
+
+echo "$CODE"

@@ -1,0 +1,9 @@
+apache2.install
+mysql.install
+php5.install
+apache2.create_symlink_and_vhost
+mysql.init_root_user
+mysql.create_project_database_and_user
+xdebug.install
+symfony.chown_to_apache_user
+symfony.alert_may_need_source_changes

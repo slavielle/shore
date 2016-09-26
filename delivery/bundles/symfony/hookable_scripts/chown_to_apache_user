@@ -1,0 +1,21 @@
+#!/bin/bash
+
+# This script is a part of Shore
+# MIT License
+# Copyright (c) 2016 Sylvain LAVIELLE
+
+. $(dirname "$0")/../../_common.sh
+
+include_files
+
+if [ -z "$CONF_SYMFONY_ROOT_DIR" ]; then
+    SYMFONY_ROOT="/home/$CONF_PROJECT_NAME"
+else
+    SYMFONY_ROOT="/home/$CONF_PROJECT_NAME/$CONF_SYMFONY_ROOT_DIR"
+fi
+
+for CHOWN_DIR in "${CONF_SYMFONY_APACHE_USER_DIRECTORY_LIST[@]}"; do
+    echo "Set user as \"www-data:www-data\" for \"$SYMFONY_ROOT/$CHOWN_DIR\" directory"
+    chown -R www-data:www-data "$SYMFONY_ROOT/$CHOWN_DIR"
+done
+
