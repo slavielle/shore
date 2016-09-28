@@ -9,4 +9,4 @@
 
 include_files
 
-docker exec -it $RT_CONTAINER_ID_INITIALIZED /bin/bash
+docker exec -it $RT_CONTAINER_ID_INITIALIZED /home/$CONF_PROJECT_NAME/.shore/scripts/container/bash $@

@@ -1,0 +1,16 @@
+#!/bin/bash
+
+# This script is a part of Shore
+# MIT License
+# Copyright (c) 2016 Sylvain LAVIELLE
+
+
+. "$(dirname "$0")/_common.sh"
+
+include_files
+
+# Change current directory to project home
+cd /home/$CONF_PROJECT_NAME
+
+# start console
+/bin/bash
