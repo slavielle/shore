@@ -1,0 +1,16 @@
+#!/bin/bash
+
+# This script is a part of Shore
+# MIT License
+# Copyright (c) 2016 Sylvain LAVIELLE
+
+
+# Changes MySQL settings in my.conf file
+
+. $(dirname "$0")/../../_common.sh
+
+include_files
+
+replace /etc/mysql/my.cnf $(dirname "$0")/../settings.mysql_conf.replace
+
+echo "MySQL configuration file udapted at /etc/mysql/my.cnf"

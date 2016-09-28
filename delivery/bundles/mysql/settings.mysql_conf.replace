@@ -1,0 +1,3 @@
+i:bind-address\s*=\s*([0-9]+\.*)+
+o:bind-address = ##[CONF_CONTAINER_IP]##
+

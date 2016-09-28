@@ -3,9 +3,9 @@
 # This script is a part of Shore
 # MIT License
 # Copyright (c) 2016 Sylvain LAVIELLE
+#
+# Create a mysql root user that can be logged in remotely from host.
 
-
-# Set MySQL root pass
 
 . $(dirname "$0")/../../_common.sh
 
@@ -22,8 +22,9 @@ if [[ -z $(pgrep mysql) ]]; then
   service mysql start
 fi
 
+
 # Drop existing project user if any and recreate it.
-echo "Create root user for  $CONF_HOST_IP."
+echo "Create root user for  $CONF_HOST_IP"
 QUERY="DROP USER root@$CONF_HOST_IP;"
 mysql -u root -p"$CONF_MYSQL_ROOT_PASSWORD" -e "$QUERY"
 QUERY="CREATE USER 'root'@'$CONF_HOST_IP' IDENTIFIED BY '$CONF_MYSQL_ROOT_PASSWORD';"
