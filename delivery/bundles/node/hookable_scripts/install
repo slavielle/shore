@@ -36,18 +36,24 @@ npm install -g n &> /dev/null
 echo "Install node (version $CONF_NODE_VERSION)"
 n "$CONF_NODE_VERSION" &> /dev/null
 INSTALLED_VERSION=$(node -v)
-echo "node version $INSTALLED_VERSION installed"
+echo "Installed node version: $INSTALLED_VERSION "
 
+# Global node modules installation
+if [[ $CONF_NODE_INSTALL_GLOBAL ]]; then
+    for MODULE_NAME in $CONF_NODE_INSTALL_GLOBAL; do
+        echo "Install node module \"$MODULE_NAME\" globally"
+        npm install -g "$MODULE_NAME" &> /dev/null
+    done
+fi
 
 # Perform npm install.
 if [ "$CONF_NODE_PACKAGE_JSON_DIR" ]; then
     if [ -f "/home/$CONF_PROJECT_NAME/$CONF_NODE_PACKAGE_JSON_DIR/package.json" ]; then
-        echo "Perform a \"npm install\" using \"/home/$CONF_PROJECT_NAME/$CONF_NODE_PACKAGE_JSON_DIR/package.json\""
+        echo "Perform a \"npm install\" using \"/home/$CONF_PROJECT_NAME/$CONF_NODE_PACKAGE_JSON_DIR/package.json\"."
         cd "/home/$CONF_PROJECT_NAME/$CONF_NODE_PACKAGE_JSON_DIR"
         npm install &> /dev/null
     else
         echo "Can't perform a \"npm install\" using \"/home/$CONF_PROJECT_NAME/$CONF_NODE_PACKAGE_JSON_DIR/package.json\". File not found"
     fi
-else
 fi
 
