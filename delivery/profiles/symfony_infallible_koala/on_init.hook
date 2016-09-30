@@ -7,5 +7,6 @@ mysql.init_root_user
 mysql.create_root_user_for_host
 mysql.create_project_database_and_user
 xdebug.install
+node.install
 symfony.chown_to_apache_user
 symfony.alert_may_need_source_changes
