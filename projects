@@ -6,38 +6,46 @@
 
 ORIGIN_DIR_PATH=$1
 UNINSTALLED_PROJECTS_LIST=""
+NOT_FOUND_PROJECTS_LIST=""
 
 for LINK in /var/tmp/shore/installed/*; do
-    [ -d "$LINK" ] || break
-    cd "$LINK"
+    if [ -d "$LINK" ]; then 
+        cd "$LINK"
 
-    unset RT_CONTAINER_ID_STARTED
-    unset RT_CONTAINER_ID_INITIALIZED
-    unset CONF_PROJECT_DOMAIN_NAME
-    unset CONF_CONTAINER_IP
-    unset CONF_PROJECT_NAME
+        unset RT_CONTAINER_ID_STARTED
+        unset RT_CONTAINER_ID_INITIALIZED
+        unset CONF_PROJECT_DOMAIN_NAME
+        unset CONF_CONTAINER_IP
+        unset CONF_PROJECT_NAME
 
-    . .shore/runtime/RT_CONTAINER_ID_STARTED.var.sh 2> /dev/null
-    . .shore/runtime/RT_CONTAINER_ID_INITIALIZED.var.sh 2> /dev/null
-    . .shore/settings.sh 2> /dev/null
+        . .shore/runtime/RT_CONTAINER_ID_STARTED.var.sh 2> /dev/null
+        . .shore/runtime/RT_CONTAINER_ID_INITIALIZED.var.sh 2> /dev/null
+        . .shore/settings.sh 2> /dev/null
 
-    if [ ! -z $RT_CONTAINER_ID_INITIALIZED ]; then
-        # Display web page URL and open browser
-        [[ $CONF_PROJECT_DOMAIN_NAME ]] && WEB_URL="http://$CONF_PROJECT_DOMAIN_NAME" || WEB_URL="http://$CONF_CONTAINER_IP/$CONF_PROJECT_NAME"
+        if [ ! -z $RT_CONTAINER_ID_INITIALIZED ]; then
+            # Display web page URL and open browser
+            [[ $CONF_PROJECT_DOMAIN_NAME ]] && WEB_URL="http://$CONF_PROJECT_DOMAIN_NAME" || WEB_URL="http://$CONF_CONTAINER_IP/$CONF_PROJECT_NAME"
 
 
-        [ -z $RT_CONTAINER_ID_STARTED ] && STARTED="no" || STARTED="yes"
+            [ -z $RT_CONTAINER_ID_STARTED ] && STARTED="no" || STARTED="yes"
 
-        echo "$CONF_PROJECT_NAME   started=$STARTED   ip=$CONF_CONTAINER_IP   path=$(realpath $LINK)    url=$WEB_URL"
+            echo "$CONF_PROJECT_NAME   started=$STARTED   ip=$CONF_CONTAINER_IP   path=$(realpath $LINK)    url=$WEB_URL"
+        else
+            UNINSTALLED_PROJECTS_LIST=$UNINSTALLED_PROJECTS_LIST$'\n'"$(realpath $LINK)"
+        fi
     else
-        UNINSTALLED_PROJECTS_LIST=$UNINSTALLED_PROJECTS_LIST$'\n'"$(realpath $LINK)"
+        NOT_FOUND_PROJECTS_LIST=$NOT_FOUND_PROJECTS_LIST$'\n'"$(readlink -- "$LINK")" 
     fi
-
 done
 
-if [ ! -z RT_CONTAINER_ID_INITIALIZED ]; then
+if [[ ! -z $UNINSTALLED_PROJECTS_LIST ]]; then
     echo ""
-echo "uninitialized environments at : "
+    echo "uninitialized environments at : "
     echo "$UNINSTALLED_PROJECTS_LIST"
+fi
 
+if [[ ! -z $NOT_FOUND_PROJECTS_LIST ]]; then
+    echo ""
+    echo "unmet environments at : "
+    echo "$NOT_FOUND_PROJECTS_LIST"
 fi
