@@ -33,6 +33,18 @@ else
         mv "$BUNDLE_SETTING_FILES" "$(dirname "$BUNDLE_SETTING_FILES")/settings.sh"
     done
 
+    # Remove any symlink pointing to the current project path (avoid duplicates).
+    # It wouldn't append on normal use but avoid glitches while developing.
+    if [ -d /var/tmp/shore/installed ]; then
+        if test "$(ls -A /var/tmp/shore/installed 2> /dev/null)"; then
+            for F in /var/tmp/shore/installed/*; do
+                if [ "$(readlink -- "$F")" == $(pwd) ]; then
+                    rm $F
+                fi
+            done
+        fi
+    fi
+
     # Create symlink to project directory in "installed" directory
     mkdir -p /var/tmp/shore/installed
     ln -s "$(pwd)" /var/tmp/shore/installed/"$(date +"%Y_%m_%d_%H_%M_%S")"
