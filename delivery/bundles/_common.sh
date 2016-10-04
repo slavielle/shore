@@ -16,7 +16,8 @@ function include_files(){
 
     # Include Runtime variables
     if test "$(ls -A "$(dirname "$0")/../../../runtime")"; then
-        for F in "$(dirname "$0")/../../../runtime/*.sh"; do
+        RUNTIME_PATH=$(realpath "$(dirname "$0")/../../../runtime")
+        for F in "$RUNTIME_PATH"/*; do
             . $F
         done
     fi
@@ -73,4 +74,13 @@ function replace(){
     SOURCE_DATA="$OUTPUT_DATA"
     rm $SOURCE_FILE
     echo "$SOURCE_DATA" > $SOURCE_FILE
+}
+
+function get_log_file_path(){
+    RET="/dev/null"
+    if [ ! -z "$RT_LOG_FILES_NAME_PART_1" ] && [ ! -z "$RT_LOG_FILES_NAME_PART_2" ]  && [ ! -z "$1" ]; then
+        mkdir -p "/home/$CONF_PROJECT_NAME/.shore/logs"
+        RET="/home/$CONF_PROJECT_NAME/.shore/logs/$RT_LOG_FILES_NAME_PART_1$RT_LOG_FILES_NAME_PART_2$1.log"
+    fi
+    echo $RET
 }

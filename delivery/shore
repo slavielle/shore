@@ -16,6 +16,13 @@ COMMAND=$2
 shift 2 
 
 
+# Define log file name RT variables
+RT_LOG_FILES_NAME_PART_1=$(date +"%Y_%m_%d_%H_%M_%S")"-$COMMAND"
+echo "RT_LOG_FILES_NAME_PART_1=\"$RT_LOG_FILES_NAME_PART_1\"" > ".shore/runtime/RT_LOG_FILES_NAME_PART_1.var.sh"
+echo "RT_LOG_FILES_NAME_PART_2=\"\"" > ".shore/runtime/RT_LOG_FILES_NAME_PART_2.var.sh"
+
+
+# Execute
 if [ -f ".shore/scripts/host/$COMMAND" ]; then
 
     # Normal command handling
@@ -46,3 +53,8 @@ else
 
     fi
 fi
+
+
+# Remove log file name RT variables
+rm .shore/runtime/RT_LOG_FILES_NAME_PART_1.var.sh
+rm .shore/runtime/RT_LOG_FILES_NAME_PART_2.var.sh

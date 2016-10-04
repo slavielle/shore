@@ -98,15 +98,26 @@ function run_hook() {
 
         # Test if $HOOK_SCRIPT match the regexp
         if [[ $HOOK_SCRIPT =~ ^([0-9a-z_]+)\.([0-9a-z_]*)$ ]]; then
+
             HOOK_BUNDLE=${BASH_REMATCH[1]}
+
             if array_contains ENABLED_BUNDLES $HOOK_BUNDLE; then
-                # Run the hook script and display result
+
+                # Get the name of the bundle and action to run
                 BUNDLE="${BASH_REMATCH[1]}"
                 FNC="${BASH_REMATCH[2]}"
+
+                # Define the log file part 2 name
+                echo "RT_LOG_FILES_NAME_PART_2=\"-$BUNDLE-$FNC\"" > "$CONTAINER_PROJECT_DIR_PATH/.shore/runtime/RT_LOG_FILES_NAME_PART_2.var.sh"
+
+                # Run the hook script and display result
                 echo ""; format_output " > INVOKE $BUNDLE.$FNC " "hook" "\n\n"
                 "$(dirname "$0")/../../bundles/$BUNDLE/hookable_scripts/$FNC" $ORIGIN_CONTAINER_DIR_PATH $@
+
             else
+
                 echo ""; format_output " > BUNDLE DISABLED FOR: \"$HOOK_SCRIPT\" " "error" "\n"
+
             fi
         elif [[ $HOOK_SCRIPT != \#* ]] && [ ! -z "$HOOK_SCRIPT" ] ; then
 
