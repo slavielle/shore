@@ -36,7 +36,7 @@ npm install -g n &> /dev/null
 echo "Install node (version $CONF_NODE_VERSION)"
 n "$CONF_NODE_VERSION" &> /dev/null
 INSTALLED_VERSION=$(node -v)
-echo "Installed node version: $INSTALLED_VERSION "
+echo "Installed node version: $INSTALLED_VERSION"
 
 # Global node modules installation
 if [[ $CONF_NODE_INSTALL_GLOBAL ]]; then
