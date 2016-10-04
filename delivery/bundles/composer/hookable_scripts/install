@@ -1,0 +1,52 @@
+#!/bin/bash
+
+# This script is a part of Shore
+# MIT License
+# Copyright (c) 2016 Sylvain LAVIELLE
+#
+# Install composer
+
+. $(dirname "$0")/../../_common.sh
+
+include_files
+
+# Install Curl if need.
+which curl > /dev/null
+if [ "$?" == "1" ]; then
+    echo "Must install curl to fulfill this operation"
+    apt-get install -y curl &> /dev/null
+fi
+
+# Get located in var/tmp
+cd /var/tmp
+
+# Get the composer setup and check it using SHA key
+echo "Install Composer"
+php $(dirname "$0")/install.php $CONF_COMPOSER_SHA_KEY &>/dev/null
+
+if [ -f composer-setup.php ];then
+    
+    # Run composer setup
+    php composer-setup.php &>/dev/null
+    rm composer-setup.php &>/dev/null
+    
+    # Move and rename it in order to be able to execute it anywhere
+    mv composer.phar /usr/local/bin/composer &>/dev/null
+fi
+
+# Trace out the composer installed version
+INSTALLED_VERSION=$(composer -V 2>/dev/null)
+echo "Installed composer version: $INSTALLED_VERSION "
+
+# Perform composer install.
+if [ "$CONF_COMPOSER_COMPOSER_JSON_PATH" ]; then
+    if [ -f "/home/$CONF_PROJECT_NAME/$CONF_COMPOSER_COMPOSER_JSON_PATH/composer.json" ]; then
+        echo "Perform a \"composer install\" using \"/home/$CONF_PROJECT_NAME/$CONF_COMPOSER_COMPOSER_JSON_PATH/composer.json\"."
+        cd "/home/$CONF_PROJECT_NAME/$CONF_COMPOSER_COMPOSER_JSON_PATH"
+        composer install &>/dev/null
+    else
+        echo "Can't perform a \"composer install\" using \"/home/$CONF_PROJECT_NAME/$CONF_COMPOSER_COMPOSER_JSON_PATH/composer.json\". File not found"
+    fi
+fi
+
+
