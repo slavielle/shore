@@ -4,7 +4,7 @@ CONF_NODE_VERSION="lts"
 # List of node module to install globally.
 # CONF_NODE_INSTALL_GLOBAL=( "less" )
 
-# Path where the package.json is located. This path is a relative path from your 
-# project directory.
+# Path to where the package.json is located. This path is a relative path from  
+# your project directory.
 #CONF_NODE_PACKAGE_JSON_DIR="path/to/your/dir/containing/node/package/file"
 
