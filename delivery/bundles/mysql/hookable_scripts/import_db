@@ -25,8 +25,11 @@ if [ -f $IMPORT_FILE_PATH ]; then
     # Import .sql file.
     if [[ $IMPORT_FILE_PATH =~ \.sql$ ]]; then
         FILE_FORMAT_HANDLED=true
-        mysql -u "$CONF_MYSQL_PROJECT_USER_NAME" -p"$CONF_MYSQL_PROJECT_USER_PASSWORD" "$CONF_MYSQL_PROJECT_DB_NAME" < "$IMPORT_FILE_PATH"
+        echo $(write_log_start_section "Import database") >> $(get_log_file_path)
+        mysql -u "$CONF_MYSQL_PROJECT_USER_NAME" -p"$CONF_MYSQL_PROJECT_USER_PASSWORD" "$CONF_MYSQL_PROJECT_DB_NAME" < "$IMPORT_FILE_PATH" >>$(get_log_file_path) 2>&1
+        echo $(write_log_end_section "Import database") >> $(get_log_file_path)
         echo "$1/$2 imported"
+        echo "Complete log at $(get_log_file_path)"
     fi
 
     # @todo other formats (.gz .zip) to be implemented later.
@@ -39,7 +42,6 @@ if [ -f $IMPORT_FILE_PATH ]; then
 
 else
   echo "No such file \"$IMPORT_FILE_PATH\". Import failed."
-
 fi
 
 

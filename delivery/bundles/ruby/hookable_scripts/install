@@ -10,21 +10,28 @@
 include_files
 
 
-# Install Curl if need.
+# Install Curl if need
 which curl > /dev/null
 if [ "$?" == "1" ]; then
     echo "Must install curl to fulfill this operation"
-    apt-get install -y curl &> /dev/null
+    echo $(write_log_start_section "Install Curl") >> $(get_log_file_path)
+    apt-get install -y curl >>$(get_log_file_path) 2>&1
+    echo $(write_log_end_section "Install Curl") >> $(get_log_file_path)
 fi
 
 
-# Init pgp key.
-gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 &> /dev/null
+# Init pgp key
+echo $(write_log_start_section "Init pgp key") >> $(get_log_file_path)
+gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 >>$(get_log_file_path) 2>&1
+echo $(write_log_end_section "Init pgp key") >> $(get_log_file_path)
 
 
-# Install RVM.
-echo "Install RVM" 
-\curl -sSL https://get.rvm.io | bash -s stable --ruby &> /dev/null
+
+# Install RVM
+echo "Install RVM"
+echo $(write_log_start_section "Install RVM") >> $(get_log_file_path) 
+\curl -sSL https://get.rvm.io | bash -s stable --ruby >>$(get_log_file_path) 2>&1
+echo $(write_log_end_section "Install RVM") >> $(get_log_file_path)
 
 source /usr/local/rvm/scripts/rvm
 echo "source /usr/local/rvm/scripts/rvm" >> ~/.bashrc 
@@ -33,9 +40,13 @@ echo "source /usr/local/rvm/scripts/rvm" >> ~/.bashrc
 # Install specific ruby version.
 if [ "$CONF_RUBY_VERSION" ]; then
     echo "install specific ruby version : $CONF_RUBY_VERSION"
-    rvm install "$CONF_RUBY_VERSION" &> /dev/null
+    echo $(write_log_start_section "Install Ruby") >> $(get_log_file_path) 
+    rvm install "$CONF_RUBY_VERSION" >>$(get_log_file_path) 2>&1
+    echo $(write_log_end_section "Install Ruby") >> $(get_log_file_path)
 else
-    rvm install stable &> /dev/null
+    echo $(write_log_start_section "Install Ruby") >> $(get_log_file_path) 
+    rvm install stable >>$(get_log_file_path) 2>&1
+    echo $(write_log_end_section "Install Ruby") >> $(get_log_file_path)
 fi
 
 
@@ -51,21 +62,29 @@ if [ "$CONF_RUBY_GEM_INSTALL_PATH" ]; then
 
     # Install gems
     for GEM in ${CONF_RUBY_GEMS[@]}; do
-        echo "Install GEM \"$GEM\"" 
-        gem install "$GEM" &> /dev/null
+        echo "Install GEM \"$GEM\""
+        echo $(write_log_start_section "Install GEM $GEM") >> $(get_log_file_path)
+        gem install "$GEM" >>$(get_log_file_path) 2>&1
+        echo $(write_log_end_section "Install GEM $GEM") >> $(get_log_file_path)
     done
 
     # Run bundler
     if [ "$CONF_RUBY_USE_BUNDLER" ]; then
 
-        if [[ $(gem list bundler -i) ]]; then 
-            gem install bundler &> /dev/null
+        if [[ $(gem list bundler -i) ]]; then
+            echo $(write_log_start_section "Install Bundler") >> $(get_log_file_path)
+            gem install bundler >>$(get_log_file_path) 2>&1
+            echo $(write_log_end_section "Install Bundler") >> $(get_log_file_path)
         fi
 
         echo "Run bundle install on \"/home/$CONF_PROJECT_NAME/$CONF_RUBY_GEM_INSTALL_PATH\" directory"
-        bundle install
+        echo $(write_log_start_section "Run \"bundle install\"") >> $(get_log_file_path)
+        bundle install >>$(get_log_file_path) 2>&1
+        echo $(write_log_end_section "Run \"bundle install\"") >> $(get_log_file_path)
     fi
     
 fi
 
+echo "Complete log at $(get_log_file_path)"
+echo "Done"
 

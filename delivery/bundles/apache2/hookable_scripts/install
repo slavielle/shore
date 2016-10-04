@@ -3,23 +3,35 @@
 # This script is a part of Shore
 # MIT License
 # Copyright (c) 2016 Sylvain LAVIELLE
+#
+# Install Apache, Apache module and activate them
 
-
-# Create the symlink and vhost for project.
 
 . $(dirname "$0")/../../_common.sh
 
 include_files
 
+
 # Install Apache
 echo "Install Apache2"
-apt-get -y install apache2 &> /dev/null
+echo $(write_log_start_section "Install Apache2") >> $(get_log_file_path)
+apt-get -y install apache2 >>$(get_log_file_path) 2>&1
+echo $(write_log_end_section "Install Apache2") >> $(get_log_file_path)
+
 
 # Install apache module
-# @todo To be developped. Use a CONF_ var array for apache modules to install
+# @todo To be developed. Use a CONF_ var array for apache modules to install
+
 
 
 # Activate Apache modules
 # @todo Use a CONF_ var array for apache modules
 echo "Activate Apache module : rewrite"
-a2enmod rewrite &> /dev/null
+echo $(write_log_start_section "Activate Apache module : rewrite") >> $(get_log_file_path)
+a2enmod rewrite >>$(get_log_file_path) 2>&1
+echo $(write_log_end_section "Activate Apache module : rewrite") >> $(get_log_file_path)
+
+
+# End message
+echo "Complete log at $(get_log_file_path)"
+echo "Done"

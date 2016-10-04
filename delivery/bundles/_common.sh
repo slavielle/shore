@@ -78,9 +78,27 @@ function replace(){
 
 function get_log_file_path(){
     RET="/dev/null"
-    if [ ! -z "$RT_LOG_FILES_NAME_PART_1" ] && [ ! -z "$RT_LOG_FILES_NAME_PART_2" ]  && [ ! -z "$1" ]; then
+    if [ ! -z "$RT_LOG_FILES_NAME_PART_1" ] && [ ! -z "$RT_LOG_FILES_NAME_PART_2" ]; then
         mkdir -p "/home/$CONF_PROJECT_NAME/.shore/logs"
-        RET="/home/$CONF_PROJECT_NAME/.shore/logs/$RT_LOG_FILES_NAME_PART_1$RT_LOG_FILES_NAME_PART_2$1.log"
+        RET="/home/$CONF_PROJECT_NAME/.shore/logs/$RT_LOG_FILES_NAME_PART_1$RT_LOG_FILES_NAME_PART_2.log"
     fi
     echo $RET
+}
+
+function write_log_start_section(){
+    if [ ! -z "$1" ]; then
+        echo ""
+        echo ""
+        echo "#>>>>>>>>>> START-SECTION : $1"
+        echo ""
+        echo ""
+    fi
+}
+
+function write_log_end_section(){
+    if [ ! -z "$1" ]; then
+        echo ""
+        echo ""
+        echo "#<<<<<<<<<< END-SECTION : $1"
+    fi
 }

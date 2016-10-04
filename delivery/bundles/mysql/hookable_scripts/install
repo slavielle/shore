@@ -13,5 +13,10 @@ include_files
 
 # Install MySQL
 echo "Install MySQL"
-apt-get -y install mysql-server &> /dev/null
+echo $(write_log_start_section "Install MySQL") >> $(get_log_file_path)
+apt-get -y install mysql-server >>$(get_log_file_path) 2>&1
+echo $(write_log_end_section "Install MySQL") >> $(get_log_file_path)
+
+echo "Complete log at $(get_log_file_path)"
+echo "Done"
 

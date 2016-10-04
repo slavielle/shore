@@ -17,24 +17,32 @@ include_files
 CURL_PATH=$(which curl)
 WGET_PATH=$(which wget)
 if [[ ! $CURL_PATH ]] && [[ ! $WGET_PATH ]]; then
-    apt-get install -y curl &> /dev/null
+    echo $(write_log_start_section "Install Curl") >> $(get_log_file_path)
+    apt-get install -y curl >>$(get_log_file_path) 2>&1
+    echo $(write_log_end_section "Install Curl") >> $(get_log_file_path)
 fi
 
 
 # Npm installation.
-echo "Install npm" 
-apt-get install -y npm &> /dev/null
+echo "Install npm"
+echo $(write_log_start_section "Install npm") >> $(get_log_file_path)
+apt-get install -y npm >>$(get_log_file_path) 2>&1
+echo $(write_log_end_section "Install npm") >> $(get_log_file_path)
 
 
 # n installation.
 echo "Install n"
-npm cache clean -f &> /dev/null
-npm install -g n &> /dev/null
+echo $(write_log_start_section "Install n") >> $(get_log_file_path)
+npm cache clean -f >>$(get_log_file_path) 2>&1
+npm install -g n >>$(get_log_file_path) 2>&1
+echo $(write_log_end_section "Install n") >> $(get_log_file_path)
 
 
 # Node installation.
 echo "Install node (version $CONF_NODE_VERSION)"
-n "$CONF_NODE_VERSION" &> /dev/null
+echo $(write_log_start_section "Install node") >> $(get_log_file_path)
+n "$CONF_NODE_VERSION" >>$(get_log_file_path) 2>&1
+echo $(write_log_end_section "Install node") >> $(get_log_file_path)
 INSTALLED_VERSION=$(node -v)
 echo "Installed node version: $INSTALLED_VERSION"
 
@@ -42,7 +50,9 @@ echo "Installed node version: $INSTALLED_VERSION"
 if [[ $CONF_NODE_INSTALL_GLOBAL ]]; then
     for MODULE_NAME in $CONF_NODE_INSTALL_GLOBAL; do
         echo "Install node module \"$MODULE_NAME\" globally"
-        npm install -g "$MODULE_NAME" &> /dev/null
+        echo $(write_log_start_section "Install node module \"$MODULE_NAME\" globally") >> $(get_log_file_path)
+        npm install -g "$MODULE_NAME" >>$(get_log_file_path) 2>&1
+        echo $(write_log_end_section "Install node module \"$MODULE_NAME\" globally") >> $(get_log_file_path)
     done
 fi
 
@@ -51,9 +61,14 @@ if [ "$CONF_NODE_PACKAGE_JSON_DIR" ]; then
     if [ -f "/home/$CONF_PROJECT_NAME/$CONF_NODE_PACKAGE_JSON_DIR/package.json" ]; then
         echo "Perform a \"npm install\" using \"/home/$CONF_PROJECT_NAME/$CONF_NODE_PACKAGE_JSON_DIR/package.json\"."
         cd "/home/$CONF_PROJECT_NAME/$CONF_NODE_PACKAGE_JSON_DIR"
-        npm install &> /dev/null
+        echo $(write_log_start_section "Perform npm install") >> $(get_log_file_path)
+        npm install >>$(get_log_file_path) 2>&1
+        echo $(write_log_end_section "Perform npm install") >> $(get_log_file_path)
     else
         echo "Can't perform a \"npm install\" using \"/home/$CONF_PROJECT_NAME/$CONF_NODE_PACKAGE_JSON_DIR/package.json\". File not found"
     fi
 fi
+
+echo "Complete log at $(get_log_file_path)"
+echo "Done"
 

@@ -18,12 +18,18 @@ include_files
 
 # Start MySql.
 if [ -z $(pgrep -l mysqld) ]; then
-  echo "MySQL have to be started to perform this hook ... starting"
-  service mysql start
-  echo ""
+    echo "MySQL have to be started to perform this hook ... starting"
+    echo $(write_log_start_section "Starting MySql") >> $(get_log_file_path)
+    service mysql start >>$(get_log_file_path) 2>&1
+    echo $(write_log_end_section "Starting MySql") >> $(get_log_file_path)
+    echo ""
 fi
 
 #Change root password.
-mysqladmin -u root password "$CONF_MYSQL_ROOT_PASSWORD"
+echo $(write_log_start_section "Change root password") >> $(get_log_file_path)
+mysqladmin -u root password "$CONF_MYSQL_ROOT_PASSWORD" >>$(get_log_file_path) 2>&1
+echo $(write_log_end_section "Change root password") >> $(get_log_file_path)
 
+
+echo "Complete log at $(get_log_file_path)"
 echo "Done"

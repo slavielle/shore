@@ -18,18 +18,25 @@ include_files
 which wget > /dev/null
 if [ "$?" == "1" ]; then
     echo "Must install wget to fulfill this operation"
-    apt-get install -y wget &> /dev/null
+    echo $(write_log_start_section "Install wget") >> $(get_log_file_path)
+    apt-get install -y wget >>$(get_log_file_path) 2>&1
+    echo $(write_log_end_section "Install wget") >> $(get_log_file_path)
 fi
 
 
 # Install drush.
 echo "Install drush version $CONF_DRUSH_VERSION" 
 cd /usr/local/bin
-wget -O drush "https://github.com/drush-ops/drush/releases/download/$CONF_DRUSH_VERSION/drush.phar" &> /dev/null
+echo $(write_log_start_section "Install Drush") >> $(get_log_file_path)
+wget -O drush "https://github.com/drush-ops/drush/releases/download/$CONF_DRUSH_VERSION/drush.phar" &> >>$(get_log_file_path) 2>&1
+echo $(write_log_end_section "Install Drush") >> $(get_log_file_path)
+
 chmod +x drush
 
 
 #Execute drush init.
-echo "execute drush init"
+#echo "execute drush init"
 #drush -y init
 
+echo "Complete log at $(get_log_file_path)"
+echo "Done"

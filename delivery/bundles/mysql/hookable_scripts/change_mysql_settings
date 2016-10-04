@@ -11,6 +11,7 @@
 
 include_files
 
+# Replace values in setting
 replace /etc/mysql/my.cnf $(dirname "$0")/../settings.mysql_conf.replace
 
 echo "MySQL configuration file udapted at /etc/mysql/my.cnf"
