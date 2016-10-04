@@ -6,6 +6,8 @@
 
 ORIGIN_DIR_PATH=$1
 
+shift
+
 for LINK in /var/tmp/shore/started/*; do
     [ -d "$LINK" ] || break
     cd "$LINK"
