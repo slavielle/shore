@@ -13,6 +13,10 @@ if [ -d .shore ]; then
     rm -r .shore/scripts
     cp -r "$(dirname "$0")/delivery/scripts" .shore/.
     echo "\".shore/scripts\" updated"
+    cp -r "$(dirname "$0")/delivery/bundles/_common.sh" .shore/bundles/_common.sh
+    echo "\".shore/bundles/_common.sh\" updated"
+
+
 
     # Update bundles
     for F in "$(dirname "$0")"/delivery/bundles/*; do
