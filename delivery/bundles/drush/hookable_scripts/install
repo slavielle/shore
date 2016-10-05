@@ -28,7 +28,7 @@ fi
 echo "Install drush version $CONF_DRUSH_VERSION" 
 cd /usr/local/bin
 echo $(write_log_start_section "Install Drush") >> $(get_log_file_path)
-wget -O drush "https://github.com/drush-ops/drush/releases/download/$CONF_DRUSH_VERSION/drush.phar" &> >>$(get_log_file_path) 2>&1
+wget -O drush "https://github.com/drush-ops/drush/releases/download/$CONF_DRUSH_VERSION/drush.phar" >>$(get_log_file_path) 2>&1
 echo $(write_log_end_section "Install Drush") >> $(get_log_file_path)
 
 chmod +x drush
