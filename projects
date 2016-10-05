@@ -9,7 +9,7 @@ UNINSTALLED_PROJECTS_LIST=""
 NOT_FOUND_PROJECTS_LIST=""
 
 for LINK in /var/tmp/shore/installed/*; do
-    if [ -d "$LINK" ]; then 
+    if [ -d "$LINK" ] && [ -d "$LINK"/.shore ]; then 
         cd "$LINK"
 
         unset RT_CONTAINER_ID_STARTED
