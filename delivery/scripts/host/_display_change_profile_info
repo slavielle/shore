@@ -11,7 +11,7 @@ include_files
 
 echo ""; format_output " > CHANGE PROFILE " "step" "\n"
 echo ""
-echo "Shore is currently configured with the \"$RT_PROFILE\" profile"
+echo "Shore is currently configured with the \"$RT_PROFILE\" profile."
 echo "If you want to change it, use command \"shore profile [my_new_profile]\" to do so."
 echo "Here's the list of available profiles : "
 echo ""
