@@ -1,5 +1,6 @@
 apache2.install
 mysql.install
+mysql.change_mysql_settings
 php5.install
 apache2.create_symlink_and_vhost
 mysql.init_root_user
