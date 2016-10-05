@@ -38,6 +38,7 @@ else
   echo ""
 
   if [ "$PROJECT_DIR" ] && [ "$CONF_CONTAINER_NETWORK" ] && [ "$CONF_PROJECT_NAME" ] && [ "$CONF_CONTAINER_IP" ] && [ "$CONF_IMAGE_ID" ]; then
+    
     # Call the docker run to create the container
     OUT=$(docker run -it -e CONF_MYSQL_ROOT_PASSWORD="$MYSQL_ROOT_PW" -v $PROJECT_DIR:/home/$CONF_PROJECT_NAME --cidfile=".shore/tmp/cid" --net $CONF_CONTAINER_NETWORK --ip $CONF_CONTAINER_IP $CONF_IMAGE_ID /home/$CONF_PROJECT_NAME/.shore/scripts/container/entrypoint 2>&1)
 
