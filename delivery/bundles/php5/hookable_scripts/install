@@ -5,7 +5,7 @@
 # Copyright (c) 2016 Sylvain LAVIELLE
 
 
-# Create the symlink and vhost for project.
+# install php5 and 
 
 . $(dirname "$0")/../../_common.sh
 
@@ -14,8 +14,18 @@ include_files
 # Install PHP5
 echo "Install PHP5"
 echo $(write_log_start_section "Install PHP5") >> $(get_log_file_path)
-apt-get -y install php5 php-pear php5-mysql php5-gd >>$(get_log_file_path) 2>&1
+apt-get -y install php5 >>$(get_log_file_path) 2>&1
 echo $(write_log_end_section "Install PHP5") >> $(get_log_file_path)
+
+# Install PHP5 libs
+if [[ $CONF_PHP5_LIBS ]]; then
+    for LIB in ${CONF_PHP5_LIBS[@]}; do
+        echo "Install PHP5 lib \"$LIB\""
+        echo $(write_log_start_section "Install PHP5 lib \"$LIB\"") >> $(get_log_file_path)
+            apt-get install -y $LIB >>$(get_log_file_path) 2>&1
+        echo $(write_log_end_section "Install PHP5 lib \"$LIB\"") >> $(get_log_file_path)
+    done
+fi
 
 echo "Complete log at $(get_log_file_path)"
 echo "Done"
