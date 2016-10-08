@@ -28,6 +28,7 @@ while [[ $# -gt 0 ]]; do
     shift # past argument or value
 done
 
+# Docker execute
 if [ "$DETACH" = true ]; then
     x-terminal-emulator -e docker exec -it $RT_CONTAINER_ID_INITIALIZED /home/$CONF_PROJECT_NAME/.shore/scripts/container/bash $@
 else
