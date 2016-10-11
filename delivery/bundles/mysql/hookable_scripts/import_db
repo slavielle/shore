@@ -23,7 +23,7 @@ FILE_FORMAT_HANDLED=false
 if [ -f $IMPORT_FILE_PATH ]; then
     
     # Import .sql file.
-    if [[ $IMPORT_FILE_PATH =~ \.sql$ ]]; then
+    if [[ $IMPORT_FILE_PATH =~ \.sql$ ]] || [[ $IMPORT_FILE_PATH =~ \.mysql$ ]]; then
         FILE_FORMAT_HANDLED=true
         echo $(write_log_start_section "Import database") >> $(get_log_file_path)
         mysql -u "$CONF_MYSQL_PROJECT_USER_NAME" -p"$CONF_MYSQL_PROJECT_USER_PASSWORD" "$CONF_MYSQL_PROJECT_DB_NAME" < "$IMPORT_FILE_PATH" >>$(get_log_file_path) 2>&1
