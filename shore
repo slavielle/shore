@@ -43,7 +43,7 @@ if [ "$WORKING_DIR_PATH" != "/" ]; then
             if [ "$COMMAND" == "install" ] || [ "$COMMAND" == "update_scripts" ] || [ "$COMMAND" == "stop-all" ] || [ "$COMMAND" == "projects" ]; then
 
                 # "install" command handling
-                "$(dirname "$(readlink -f "$0")")/$COMMAND" "$ORIGIN_DIR_PATH" $@
+                "$(dirname "$0")/$(dirname "$(readlink "$0")")/$COMMAND" "$ORIGIN_DIR_PATH" $@
 
             # Handle all commands but install
             else
