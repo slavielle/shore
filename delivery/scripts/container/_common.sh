@@ -70,7 +70,7 @@ function run_hook() {
 
     # List enabled bundles
     ENABLED_BUNDLES=()
-    ENABLED_BUNDLES_LIST_FILE=$(readlink -f "$(dirname "$0")/../../profiles/$RT_PROFILE/bundles")
+    ENABLED_BUNDLES_LIST_FILE=$(realpath "$(dirname "$0")/../../profiles/$RT_PROFILE/bundles")
     while read BUNDLE || [[ -n "$BUNDLE" ]]; do
 
         # Trim
@@ -88,7 +88,7 @@ function run_hook() {
 
 
     # Loop on script list for the given hook
-    HOOK_SCRIPT_LIST_FILE=$(readlink -f "$(dirname "$0")/../../profiles/$RT_PROFILE/on_$HOOK_NAME.hook")
+    HOOK_SCRIPT_LIST_FILE=$(realpath "$(dirname "$0")/../../profiles/$RT_PROFILE/on_$HOOK_NAME.hook")
     while read HOOK_SCRIPT || [[ -n "$HOOK_SCRIPT" ]]; do
         
         # Trim
