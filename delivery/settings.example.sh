@@ -10,3 +10,12 @@ CONF_SERVICES_TO_START=("apache2" "mysql")
 #CONF_PROJECT_HTDOCS="www"
 #CONF_PROJECT_INDEX_FILE="index.php"
 
+
+# Ports mapping list.
+# Shore does not need to map ports on linux because Shore gain access to 
+# container using static IP. Unfortunately, on Docker for Mac container IP 
+# addressing is unavailable. 
+# @see https://docs.docker.com/docker-for-mac/networking/#/per-container-ip-addressing-is-not-possible
+# So on Mac we have to map ports. Uncomment following line to do so.
+#CONF_PROJECT_PORTS_MAP=("80:80")
+
