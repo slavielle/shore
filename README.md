@@ -24,21 +24,23 @@ This way you can easily archive and restore or share your Docker image with coll
   - No more runtime or build tools versions or compatibility problem: runtime and building tools in the container make your life easier because every developer works with exactly the same environment.
 
 * For a lead developer: 
-  - To be able to setup development environment using a build-in profiles and bundles quickly and effectively..
+  - To be able to setup development environment using a build-in profiles and bundles quickly and effectively.
+
+## Systems (Host and container)
+* As Host: 
+  - Ubuntu Xenial Xerus. 
+  - MacOS : I'm currently updating host scripts for MacOS and Docker for Mac (see [macos_compatibility branch](https://github.com/slavielle/shore/tree/macos_compatibility)) and testing it on MacOS 10.12.2 (Sierra). Shore would have some limitation on MacOS due to [Docker for mac own network limitations](https://docs.docker.com/docker-for-mac/networking/#/known-limitations-use-cases-and-workarounds) but it would shortly work on MacOS Yosemite 10.10.3 and later.
+* As Containers: Debian Jessie 
+
+## Requirements
+* One of the tested host systems, 
+* Docker 1.12.0 or higher installed (https://get.docker.com/)
 
 ## Disclaimer
 * I'm not an experimented developer on bash script development. My code could certainly be improved. 
 * So far I tested it on a very few bunch of systems (as host and container) so; bear with me if some glitches pop up on untested systems.
 * Docker version I used is: Docker version 1.12.0, build 8eab29e. Let's consider it as a minimal version: If you experiencing a problem with higher Docker versions or if it works fine with lower Docker versions please let me know.
-* Whatsoever, you’re very welcome collaborate the project by forking and send pull-requests, reporting issues, etc
-
-## Tested systems
-* As Host: Ubuntu Xenial Xerus
-* As Containers: Debian Jessie 
-
-## Requirements
-* One to the tested host Linux systems. (I didn't test it using boot2Docker on Mac OSX platform to check if Shore host scripts could run on it. On Windows, you should run it using a VM with one to the tested host Linux systems installed even if it's a poor solution), 
-* Docker 1.12.0 or higher installed (https://get.docker.com/)
+* Whatsoever, you’re very welcome collaborate the project by forking and send pull-requests, reporting issues, test Shore on other host systems such as MacOS pre Yosemite 10.10.3, Windows, and untested linux disttributions.
 
 ## Installing Shore on your computer
 
@@ -129,9 +131,6 @@ if you're done with your shore environment, stop it using :
 
 `shore stop` or `shore stop-all`
 
-Please don't forget to stop your running shore environments before shutting down your computer. there is nothing to do that automatically for the moment and shutting down your computer without stopping your running Shore environments can cause problem (see issue #1).
+Please don't forget to stop your running shore environments before shutting down your computer. there is nothing to do that automatically for the moment and shutting down your computer without stopping your running Shore environments can cause an issue (see issue #1).
 
-Further informations ? go to Wiki pages ...
-
-
-
+Further informations ? go to Wiki pages ... 
