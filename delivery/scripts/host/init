@@ -39,15 +39,22 @@ else
 
   if [ "$PROJECT_DIR" ] && [ "$CONF_CONTAINER_NETWORK" ] && [ "$CONF_PROJECT_NAME" ] && [ "$CONF_CONTAINER_IP" ] && [ "$CONF_IMAGE_ID" ]; then
     
+    # Resolve port mapping option for docker run
+    [ -n "$CONF_PROJECT_OTHER_PORTS_MAP" ] && PROJECT_PORT_MAP=("${CONF_PROJECT_OTHER_PORTS_MAP[@]}") || PROJECT_PORT_MAP=()
+    [ -n "$CONF_PROJECT_HTTP_PORT_MAP" ] && PROJECT_PORT_MAP+=("$CONF_PROJECT_HTTP_PORT_MAP")
+    PORTS_EXPORT_OPTION_STRING=""
+    for ONE_PORT_MAP in "${PROJECT_PORT_MAP[@]}"; do
+        PORTS_EXPORT_OPTION_STRING="$PORTS_EXPORT_OPTION_STRING -p $ONE_PORT_MAP"
+    done
+   
     # Call the docker run to create the container
-    [ -n "$CONF_PROJECT_PORTS_MAP" ] && PORTS_EXPORT_OPTION="-p $CONF_PROJECT_PORTS_MAP" || PORTS_EXPORT_OPTION=""
-    NETWORK_OPTIONS="--net $CONF_CONTAINER_NETWORK --ip $CONF_CONTAINER_IP"
-    OUT=$(docker run -it $PORTS_EXPORT_OPTION -v $PROJECT_DIR:/home/$CONF_PROJECT_NAME --cidfile=".shore/tmp/cid" $NETWORK_OPTIONS $CONF_IMAGE_ID /home/$CONF_PROJECT_NAME/.shore/scripts/container/entrypoint 2>&1)
-
-    # Get the run's container ID
+    OUT=$(docker run -it $PORTS_EXPORT_OPTION_STRING -v $PROJECT_DIR:/home/$CONF_PROJECT_NAME --cidfile=".shore/tmp/cid" --net $CONF_CONTAINER_NETWORK --ip $CONF_CONTAINER_IP $CONF_IMAGE_ID /home/$CONF_PROJECT_NAME/.shore/scripts/container/entrypoint 2>&1)
+    
+    # Get the container ID
     CIDOUT=$(cat ".shore/tmp/cid" 2> /dev/null)
     rm ".shore/tmp/cid" 2> /dev/null
 
+    # When container ID look good
     if [[ $CIDOUT =~ ^[0-9a-f]+$ ]]; then
     
       # Report message on success
@@ -70,6 +77,7 @@ else
       # Stop the container
       docker stop $CIDOUT > /dev/null
 
+    # When container ID looks not good
     else
     
       # Report message on error 

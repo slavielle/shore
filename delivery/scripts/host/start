@@ -50,11 +50,25 @@ else
                 docker exec -it $RT_CONTAINER_ID_INITIALIZED /home/$CONF_PROJECT_NAME/.shore/scripts/container/start $@
                 printf "\nstarting services done\n\n"
 
+                # Resolve http port
+                HTTP_PORT="";
+                if [ -n "$CONF_PROJECT_HTTP_PORT_MAP" ]; then
+                    [[ "$CONF_PROJECT_HTTP_PORT_MAP" =~ ^[0-9]+(:[0-9]+)$ ]] && HTTP_PORT="${BASH_REMATCH[1]}"
+                fi
+                
                 # Resolve web url
                 if [[ $CONF_PROJECT_DOMAIN_NAME ]]; then
-                    WEB_URL="http://$CONF_PROJECT_DOMAIN_NAME"
+                    if [[ "$(uname)" == "Darwin" ]]; then
+                        WEB_URL="http://$CONF_PROJECT_DOMAIN_NAME$HTTP_PORT"
+                    else
+                        WEB_URL="http://$CONF_PROJECT_DOMAIN_NAME"
+                    fi
                 else
-                    WEB_URL="http://$CONF_CONTAINER_IP/$CONF_PROJECT_NAME"
+                    if [[ "$(uname)" == "Darwin" ]]; then
+                        WEB_URL="http://localhost$HTTP_PORT/$CONF_PROJECT_NAME"
+                    else
+                        WEB_URL="http://$CONF_CONTAINER_IP/$CONF_PROJECT_NAME"
+                    fi
                 fi
                 if [[ $CONF_PROJECT_INDEX_FILE ]]; then
                     WEB_URL=$WEB_URL"/$CONF_PROJECT_INDEX_FILE"
@@ -67,7 +81,11 @@ else
                 fi
                 if [[ $CONF_PROJECT_DOMAIN_NAME ]]; then
                     printf "Please make sure you added the following line to your /etc/hosts : \n"
-                    printf "$CONF_CONTAINER_IP\t$CONF_PROJECT_DOMAIN_NAME\n\n"
+                    if [[ "$(uname)" == "Darwin" ]]; then
+                        printf "$CONF_CONTAINER_IP\t$CONF_PROJECT_DOMAIN_NAME\n\n"
+                    else
+                        printf "127.0.0.1\t$CONF_PROJECT_DOMAIN_NAME\n\n"
+                    if
                 fi
 
             else

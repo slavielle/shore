@@ -15,6 +15,7 @@ CONF_SERVICES_TO_START=("apache2" "mysql")
 # allow to gain access to containers. Unfortunately, on Docker for Mac 
 # containers, IP addressing is unavailable. 
 # @see https://docs.docker.com/docker-for-mac/networking/#/per-container-ip-addressing-is-not-possible
-# So on Mac we have to map ports. Uncomment following line to do so.
-#CONF_PROJECT_PORTS_MAP=("80:80")
+# So on Mac we have to map ports. Uncomment following lines to do so.
+#CONF_PROJECT_HTTP_PORT_MAP="80:80"
+#CONF_PROJECT_OTHER_PORTS_MAP=("3306:3306")
 
