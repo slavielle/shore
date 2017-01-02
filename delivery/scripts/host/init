@@ -51,8 +51,13 @@ else
       # Report message on success
       echo "container $CIDOUT initialized"
 
+      # Get current user 
+      # CURRENT_USER=$(whoami)
+      CURRENT_USER=$(stat -c %U .shore)
+    
       # Store runtime variables
       echo "RT_CONTAINER_ID_INITIALIZED=\"$CIDOUT\"" > ".shore/runtime/RT_CONTAINER_ID_INITIALIZED.var.sh"
+      echo "RT_INIT_USER=\"$CURRENT_USER\"" > ".shore/runtime/RT_INIT_USER.var.sh"
       echo "RT_HOST_SHARED_DIR_PATH=\"$PROJECT_DIR\"" > ".shore/runtime/RT_HOST_SHARED_DIR_PATH.var.sh"
 
       # Set container-side "_start" script as entrypoint
