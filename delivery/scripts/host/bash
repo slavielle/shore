@@ -9,10 +9,12 @@
 
 include_files
 
+shift
+
+DETACH=false
+LOG_AS_USER=$(stat -c %U .shore)
 
 # Parse options.
-shift
-DETACH=false
 while [[ $# -gt 0 ]]; do
     case $1 in
 
@@ -21,16 +23,22 @@ while [[ $# -gt 0 ]]; do
             shift # past argument
         ;;
 
+        -r|--root)
+            LOG_AS_USER="root"
+            shift # past argument
+        ;;
+
         *)
+            echo "Unknown option or argument \"$1\""
+            exit 1
             # unknown option
         ;;
     esac
-    shift # past argument or value
 done
 
 # Docker execute
 if [ "$DETACH" = true ]; then
     x-terminal-emulator -e docker exec -it $RT_CONTAINER_ID_INITIALIZED /home/$CONF_PROJECT_NAME/.shore/scripts/container/bash $@
 else
-    docker exec -it $RT_CONTAINER_ID_INITIALIZED /home/$CONF_PROJECT_NAME/.shore/scripts/container/bash $@
+    docker exec -u $LOG_AS_USER -it $RT_CONTAINER_ID_INITIALIZED /home/$CONF_PROJECT_NAME/.shore/scripts/container/bash $@
 fi
