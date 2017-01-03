@@ -85,7 +85,7 @@ else
                         printf "$CONF_CONTAINER_IP\t$CONF_PROJECT_DOMAIN_NAME\n\n"
                     else
                         printf "127.0.0.1\t$CONF_PROJECT_DOMAIN_NAME\n\n"
-                    if
+                    fi
                 fi
 
             else
