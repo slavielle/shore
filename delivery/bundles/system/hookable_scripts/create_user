@@ -11,7 +11,11 @@
 include_files
 
 # Get user id from .shore directory on container side
-USER_ID=$(stat -c '%u' /home/$CONF_PROJECT_NAME/.shore)
+if [[ "$(uname)" == "Darwin" ]]; then
+    USER_ID=$(stat -f '%u' /home/$CONF_PROJECT_NAME/.shore)
+else
+    USER_ID=$(stat -c '%u' /home/$CONF_PROJECT_NAME/.shore)
+fi
 
 # Create the corresponding user form host side to container side.
 useradd -u $USER_ID $RT_INIT_USER
