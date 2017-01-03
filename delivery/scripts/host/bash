@@ -12,11 +12,8 @@ include_files
 shift
 
 DETACH=false
-if [[ "$(uname)" == "Darwin" ]]; then
-    LOG_AS_USER=$(stat -f %Su .shore)
-else
-    LOG_AS_USER=$(stat -c %U .shore)
-fi
+
+LOG_AS_USER="$RT_USER_NAME"
 
 # Parse options.
 while [[ $# -gt 0 ]]; do

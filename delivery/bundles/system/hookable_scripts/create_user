@@ -18,5 +18,13 @@ else
 fi
 
 # Create the corresponding user form host side to container side.
-useradd -u $USER_ID $RT_INIT_USER
+if [[ "$RT_HOST_UNAME" == "Darwin" ]]; then
 
+    # MacOS platform case : Create user without specific ID
+    useradd $RT_INIT_USER
+else
+
+    # Others (Ubuntu tested) Create user container side corresponding to host 
+    # side user
+    useradd -u $USER_ID $RT_INIT_USER
+fi
