@@ -46,7 +46,7 @@ This way you can easily archive and restore or share your Docker image with coll
 
 ### Execute the following command ###
 ```
-curl -s https://gist.githubusercontent.com/slavielle/8b1d358539d7519a33074c17ca0d6e11/raw/c5ebeac4958cafebcfdfba81a7edbf28cdbbf9c7/install | sudo bash
+curl -s https://gist.githubusercontent.com/slavielle/8b1d358539d7519a33074c17ca0d6e11/raw/c3f9515c4381a9083ba3b7cbb076db9fe2ed942d/install | sudo bash
 ```
 Remote installation script is stored [here](https://gist.github.com/slavielle/8b1d358539d7519a33074c17ca0d6e11) as a github gist. sha1 checksum : 1c6b325c0f471e0455a6a5441e16cc5af39704ba 
 
