@@ -44,24 +44,17 @@ This way you can easily archive and restore or share your Docker image with coll
 
 ## Installing Shore on your computer
 
-Create a Docker custom network bridge if you hadn't already created one
+### Execute the following command ###
+```
+curl -s https://gist.githubusercontent.com/slavielle/8b1d358539d7519a33074c17ca0d6e11/raw/c5ebeac4958cafebcfdfba81a7edbf28cdbbf9c7/install | sudo bash
+```
+Remote installation script is stored [here](https://gist.github.com/slavielle/8b1d358539d7519a33074c17ca0d6e11) as a github gist. sha1 checksum : 1c6b325c0f471e0455a6a5441e16cc5af39704ba 
+
+### Create a Docker custom network bridge ###
 ```
 $ docker network create --subnet=172.18.0.0/16 shore_net
 ```
 "shore_net" is the default name I used in the shore's settings file. You can change it if you want.
-
-Get Shore from git and put the shore directory into your /usr/lib directory.
-
-```
-$ cd /usr/lib
-$ git clone git@github.com:slavielle/shore.git
-```
-
-Create a symlink in /usr/bin
-```
-$ cd /usr/bin
-$ sudo ln -s ../lib/shore/shore shore
-```
 
 ## Use it for a project
 
