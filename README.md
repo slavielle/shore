@@ -2,7 +2,7 @@
 
 ## What is it ?
 
-Shore is a single container runtime environment for web development builds on top of Docker. Read more about it in the [wiki pages](https://github.com/slavielle/shore/wiki).
+Shore is a runtime environment for web development builds on top of Docker. Read more about it in the [wiki pages](https://github.com/slavielle/shore/wiki).
 
 ## Systems (Host and container)
 * As Host: 
