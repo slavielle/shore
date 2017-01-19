@@ -2,13 +2,13 @@
 
 ## What is it ?
 
-Shore is a runtime environment for web development builds on top of Docker. Read more about it in the [wiki pages](https://github.com/slavielle/shore/wiki).
+Shore is a runtime environment for web development built on top of Docker. Read more about it in the [wiki pages](https://github.com/slavielle/shore/wiki).
 
 ## Systems (Host and container)
-* As Host: 
-  - Ubuntu Xenial Xerus. 
+* As Host Shore runs on : 
+  - Ubuntu Trusty Tahr and Ubuntu Xenial Xerus and possibly other Linux distributions. 
   - MacOS : I'm currently updating host scripts for MacOS and Docker for Mac (see [macos_compatibility branch](https://github.com/slavielle/shore/tree/macos_compatibility)) and testing it on MacOS 10.12.2 (Sierra). Shore would have some limitation on MacOS due to [Docker for mac own network limitations](https://docs.docker.com/docker-for-mac/networking/#/known-limitations-use-cases-and-workarounds) but it would shortly work on MacOS Yosemite 10.10.3 and later.
-* As Containers: Debian Jessie 
+* As Containers shore uses a Debian Jessie. 
 
 ## Requirements
 * One of the tested host systems, 
