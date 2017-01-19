@@ -50,8 +50,9 @@ curl -s https://gist.githubusercontent.com/slavielle/8b1d358539d7519a33074c17ca0
 ```
 Remote installation script is stored [here](https://gist.github.com/slavielle/8b1d358539d7519a33074c17ca0d6e11) as a github gist. 
 
-sha256 checksum : 5b79aeaa9f0ccab829c8fdbd29f59d5a80984a34155d3981be8b605278912a5a 
-md5 checksum : bae65ed6672a53a3472a1a7e5ef60c73
+install script checking : 
+* sha256 checksum : 5b79aeaa9f0ccab829c8fdbd29f59d5a80984a34155d3981be8b605278912a5a 
+* md5 checksum : bae65ed6672a53a3472a1a7e5ef60c73
 
 ### Create a Docker custom network bridge ###
 ```
