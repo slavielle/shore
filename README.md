@@ -38,7 +38,9 @@ $ docker network create --subnet=172.18.0.0/16 shore_net
 ```
 "shore_net" is the default name I used in the shore's settings file. You can change it if you want.
 
-## Use it for a project
+## project setup
+
+Each time you start a project, you'll to go through several steps
 
 ### Step 1 : Install it in a project
 
@@ -64,14 +66,19 @@ Command `shore install` or `shore profile` give you a list of settings files - d
 
 Edit them and change parameters to fit your project.
 
-### Step 4 : Init your container
-with `shore init`
+### Step 4 : Init your project's shore environment
+Using `shore init`
+This will install any software required by the bundle your project's profile require into your container.
+It may take a while.
 
-### Step 5 : Start your container
-with `shore start`
+Now were done with project setup.
 
-### Step 6 : Display your website page
-Every of the previous commands give you hints about what to do next, and If all went right, you should be able to access your website through your Shore environment by now ... Possibly with an error, because ... yes your database was created, but is empty.
+## Start your container
+using `shore start`
+
+You should be able to access your website through your Shore environment by now ... Possibly with an error, because ... yes your database was possibly created (depending on mysql bundle settings), but is empty.
+
+Start command give you hint about how to access your project using a web browser.
 
 ## Butter on bread
 
