@@ -48,7 +48,10 @@ This way you can easily archive and restore or share your Docker image with coll
 ```
 curl -s https://gist.githubusercontent.com/slavielle/8b1d358539d7519a33074c17ca0d6e11/raw/c3f9515c4381a9083ba3b7cbb076db9fe2ed942d/install | sudo bash
 ```
-Remote installation script is stored [here](https://gist.github.com/slavielle/8b1d358539d7519a33074c17ca0d6e11) as a github gist. sha256 checksum : 5b79aeaa9f0ccab829c8fdbd29f59d5a80984a34155d3981be8b605278912a5a 
+Remote installation script is stored [here](https://gist.github.com/slavielle/8b1d358539d7519a33074c17ca0d6e11) as a github gist. 
+
+sha256 checksum : 5b79aeaa9f0ccab829c8fdbd29f59d5a80984a34155d3981be8b605278912a5a 
+md5 checksum : bae65ed6672a53a3472a1a7e5ef60c73
 
 ### Create a Docker custom network bridge ###
 ```
