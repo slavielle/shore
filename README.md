@@ -38,7 +38,7 @@ $ docker network create --subnet=172.18.0.0/16 shore_net
 ```
 "shore_net" is the default name I used in the shore's settings file. You can change it if you want.
 
-## project setup
+## Project setup
 
 Each time you start a project, you'll to go through several steps
 
