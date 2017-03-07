@@ -69,15 +69,18 @@ if [ "$WORKING_DIR_PATH" != "/" ]; then
             fi
         else
             echo "Command can't start with underscore"
+            exit 1
         fi
 
     #No command specified
     else
         echo "Shore: no command provided"
+        exit 1
     fi
 
 else
   echo "No Shore context found. The command you're invoking need to be called from inside a directory where Shore had been installed."
+  exit 1
 fi
 
 cd "$ORIGIN_DIR_PATH"
