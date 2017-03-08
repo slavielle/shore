@@ -13,4 +13,19 @@ HOOK_NAME=$2
 ORIGIN_DIR_PATH=$1
 shift 2
 
-docker exec -it $RT_CONTAINER_ID_INITIALIZED /home/$CONF_PROJECT_NAME/.shore/scripts/container/_play_hook $ORIGIN_DIR_PATH $HOOK_NAME $@
+# Execute container hook if container ID exists and related container is running.
+if [ -n "${RT_CONTAINER_ID_INITIALIZED}" ]; then
+
+    IS_STARTED=$(docker inspect -f {{.State.Running}} $RT_CONTAINER_ID_INITIALIZED)
+    if [[ $RT_CONTAINER_ID_STARTED ]] && [[ $IS_STARTED = "true" ]]; then
+
+        docker exec -it $RT_CONTAINER_ID_INITIALIZED /home/$CONF_PROJECT_NAME/.shore/scripts/container/_play_hook $ORIGIN_DIR_PATH $HOOK_NAME $@
+    
+    else
+        echo "Can't run command \"$HOOK_NAME\". This command have to be be executed container side and container is not running."
+        exit 1
+    fi
+else
+    echo "Can't run command \"$HOOK_NAME\". This command have to be be executed container side and container is not initialized."
+    exit 1
+fi
