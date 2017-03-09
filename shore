@@ -8,7 +8,8 @@
 # Init vars
 WORKING_DIR_PATH=$(pwd)
 ORIGIN_DIR_PATH=$(pwd)
-
+SHORE_FULL_COMMAND=$0
+SHORE_SHORT_COMMAND=$(basename "$SHORE_FULL_COMMAND")
 
 # Get the command and remove first argument (command) from $@
 COMMAND=$1
@@ -16,8 +17,8 @@ shift
 
 
 # Walk up directory structure from  where the command had been called in order 
-# to find the .shore directory, except for install command that is a special one
-if [ "$COMMAND" != "install" ] && [ "$COMMAND" != "update_scripts" ] && [ "$COMMAND" != "stop-all" ]  && [ "$COMMAND" != "projects" ]; then
+# to find the .shore directory, except for install command that is a special one.
+if [ "$COMMAND" != "install" ] && [ "$COMMAND" != "update_scripts" ] && [ "$COMMAND" != "stop-all" ]  && [ "$COMMAND" != "projects" ] && [ "$COMMAND" != "help" ]; then
   while [ "$WORKING_DIR_PATH" != "/" ] 
   do
     if [ -d .shore ]; then
@@ -32,20 +33,20 @@ fi
 # Invoke command
 if [ "$WORKING_DIR_PATH" != "/" ]; then
 
-    #If command is specified
+    #If command is specified ...
     if [ -n "$COMMAND" ]; then
 
-        # If command does not start with "_" char
+        # If command does not start with "_" char ...
         if [ ${COMMAND:0:1} != "_" ]; then
 
 
-            # Handle the special install command
-            if [ "$COMMAND" == "install" ] || [ "$COMMAND" == "update_scripts" ] || [ "$COMMAND" == "stop-all" ] || [ "$COMMAND" == "projects" ]; then
+            # Handle the special commands that may/shall run without shore context.
+            if [ "$COMMAND" == "install" ] || [ "$COMMAND" == "update_scripts" ] || [ "$COMMAND" == "stop-all" ] || [ "$COMMAND" == "projects" ] || [ "$COMMAND" == "help" ]; then
 
                 # "install" command handling
                 "$(dirname "$0")/$(dirname "$(readlink "$0")")/$COMMAND" "$ORIGIN_DIR_PATH" $@
 
-            # Handle all commands but install
+            # Handle others command that shall run in shore context.
             else
                     
                 # Remove started container's reference.
@@ -79,8 +80,12 @@ if [ "$WORKING_DIR_PATH" != "/" ]; then
     fi
 
 else
-  echo "No Shore context found. The command you're invoking need to be called from inside a directory where Shore had been installed."
-  exit 1
+    if [ -n "$COMMAND" ]; then
+       echo "No Shore context found. The command \"$COMMAND\" you're trying to invoke may need to be called from inside a directory where Shore had been installed."
+       exit 1
+    else
+        echo "Hello from the Shore ! You boat :) should consider asking for help by calling \"$SHORE_SHORT_COMMAND help\" command."
+    fi
 fi
 
 cd "$ORIGIN_DIR_PATH"

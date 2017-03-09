@@ -1,0 +1,7 @@
+Open a console on the current shore environment.
+
+Usage:	shore bash [OPTIONS]
+
+Options:
+  -d    (Detach) : Display console bash in a new terminal.
+  -r    (Root) log in as root user. 

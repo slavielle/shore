@@ -1,0 +1,111 @@
+#!/bin/bash
+
+# This script is a part of Shore
+# MIT License
+# Copyright (c) 2016 Sylvain LAVIELLE
+
+function append_command() {
+    FOUND=0
+    while read -r LINE; do
+        TEST_VALUE="$(echo $LINE|cut -f1 -d:)"
+        if [ "$1" == "$TEST_VALUE" ]; then
+            FOUND=1    
+        fi
+        echo "$LINE"
+    done <<< "$BUNDLE_OUTPUT"
+
+    if [ "$FOUND" -eq 0 ]; then
+        echo "$1:$2:$3"
+    fi
+}
+
+function write_response_item() {
+    COMMAND_NAME="$1"
+    COMMAND_PATH="$2"
+    echo "h-item:$COMMAND_NAME:$COMMAND_PATH"
+}
+
+function write_response_group() {
+    COMMAND_GROUP="$1"
+    echo "h-group:$COMMAND_GROUP"
+}
+
+
+
+. .shore/scripts/host/_common.sh
+
+include_files
+
+SHORE_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+ALL_GLOBAL_COMMANDS=$(find "$SHORE_DIR" -maxdepth 1 -type f -executable | sort)
+BUNDLE_OUTPUT=""
+
+# Scan core context commands.
+while read -r COMMAND_PATH; do
+    COMMAND_NAME=$(basename $COMMAND_PATH)
+    if [ ${COMMAND_NAME:0:1} != "_" ]; then
+        BUNDLE_OUTPUT=$(append_command "$(basename $COMMAND_PATH)" "$COMMAND_PATH" "core")
+    fi
+done <<< "$ALL_GLOBAL_COMMANDS"
+
+# Scan bundle commands.
+for BUNDLE_PATH in .shore/bundles/*;  do
+    if [ -d "$BUNDLE_PATH/host_scripts" ]; then
+        BUNDLE_COMMANDS=$(find "$BUNDLE_PATH/host_scripts" -maxdepth 1 -type f -executable | sort)
+        while read -r COMMAND_PATH; do
+            BUNDLE_OUTPUT=$(append_command "$(basename $COMMAND_PATH)" "$COMMAND_PATH" "bndl")
+        done <<< "$BUNDLE_COMMANDS"
+    fi
+done
+
+#Scan profile hooks.
+if [ -d ".shore/profiles/$RT_PROFILE" ]; then
+    HOOKS_DIR_FILES=$(find ".shore/profiles/$RT_PROFILE" -maxdepth 1 -type f | sort)
+    while read -r HOOKS_DIR_FILE; do
+        HOOKS_DIR_FILE_NAME=$(basename "$HOOKS_DIR_FILE")
+        if [[ "$HOOKS_DIR_FILE_NAME" =~ ^on_([a-z_-]+)\.hook$ ]]; then 
+            COMMAND_NAME=${BASH_REMATCH[1]}
+            BUNDLE_OUTPUT=$(append_command "$COMMAND_NAME" "$HOOKS_DIR_FILE" "hook-profile")
+        fi
+    done <<< "$HOOKS_DIR_FILES"
+fi
+
+#Scan global hooks.
+if [ -d ".shore/hooks" ]; then
+    HOOKS_DIR_FILES=$(find ".shore/hooks" -maxdepth 1 -type f | sort)
+    while read -r HOOKS_DIR_FILE; do
+        HOOKS_DIR_FILE_NAME=$(basename "$HOOKS_DIR_FILE")
+        if [[ "$HOOKS_DIR_FILE_NAME" =~ ^on_([a-z_-]+)\.hook$ ]]; then 
+
+        COMMAND_NAME=${BASH_REMATCH[1]}
+        BUNDLE_OUTPUT=$(append_command "$COMMAND_NAME" "$HOOKS_DIR_FILE" "hook-glob")
+    fi
+
+    done <<< "$HOOKS_DIR_FILES"
+fi
+
+#Sort the all stuff
+BUNDLE_OUTPUT=$(echo "$BUNDLE_OUTPUT" | sort -k1,1)
+
+# Output main in-context commands
+echo "$(write_response_group "Main in-context commands (shore <command>)")"
+while read -r LINE; do
+    TYPE="$(echo $LINE|cut -f3 -d:)"
+    NAME="$(echo $LINE|cut -f1 -d:)"
+    FPATH="$(echo $LINE|cut -f2 -d:)"
+    if [ "$TYPE" == "core" ]; then
+        echo "$(write_response_item "$NAME" "$FPATH")"
+    fi
+done <<< "$BUNDLE_OUTPUT"
+
+# Output other in-context commands
+echo "$(write_response_group "Other in-context commands (shore <command>)")"
+while read -r LINE; do
+    TYPE="$(echo $LINE|cut -f3 -d:)"
+    NAME="$(echo $LINE|cut -f1 -d:)"
+    FPATH="$(echo $LINE|cut -f2 -d:)"
+    if [ "$TYPE" == "bndl" ] || [[ "$TYPE" =~ ^hook-[a-z]+$ ]]; then
+        echo "$(write_response_item "$NAME" "$FPATH")"
+    fi
+done <<< "$BUNDLE_OUTPUT"
+

@@ -1,0 +1,87 @@
+#!/bin/bash
+
+# This script is a part of Shore
+# MIT License
+# Copyright (c) 2016 Sylvain LAVIELLE
+
+function append_help_data() {
+    while read -r LINE; do
+        echo "$LINE"
+    done <<< "$GLOBAL_HELP_DATA"
+    echo "$1"
+}
+
+function format_item() {
+    COMMAND_NAME="$(echo $1|cut -f2 -d:)"
+    COMMAND_PATH="$(echo $1|cut -f3 -d:)"
+    COMMAND_DESC=" <no-desc>"
+    if [ -e "$COMMAND_PATH.help" ]; then
+        COMMAND_DESC=$(cat "$COMMAND_PATH.help" | head -n1)        
+    fi
+    printf "* %-15s $COMMAND_DESC\n" "$COMMAND_NAME"
+
+}
+
+function format_group() {
+    DESC="$(echo $1|cut -f2 -d:)"
+    echo "$(write_group_title "$DESC")"
+}
+
+function write_group_title(){
+    echo " "
+    echo "$1 :"
+    echo " "
+}
+
+
+shift
+
+DISPLAY_COMMAND=$1
+
+SHORE_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+ALL_GLOBAL_EXE=$(find "$SHORE_DIR" -maxdepth 1 -type f -executable | sort)
+GLOBAL_HELP_DATA=""
+
+GLOBAL_HELP_DATA="$(append_help_data "h-group:Global commands (shore <command>)")"
+while read -r COMMAND_PATH; do
+    
+    COMMAND_NAME="$(basename $COMMAND_PATH)"
+    if [[ "$COMMAND_NAME" != "shore" ]]; then
+        GLOBAL_HELP_DATA="$(append_help_data "h-item:$COMMAND_NAME:$COMMAND_PATH")"
+    fi
+
+done <<< "$ALL_GLOBAL_EXE"
+
+if [ -f ".shore/shore" ]; then
+    CONTEXT_HELP_DATA=$(".shore/shore" "$ORIGIN_DIR_PATH" _help $@)
+    if [[ -z $DISPLAY_COMMAND ]]; then     
+        while read -r LINE; do
+            ROW_TYPE="$(echo $LINE|cut -f1 -d:)"
+            if [ "$ROW_TYPE" == "h-group" ]; then
+                echo "$(format_group "$LINE")"
+            elif [ "$ROW_TYPE" == "h-item" ]; then
+                echo "$(format_item "$LINE")"
+            fi
+        done <<< "$GLOBAL_HELP_DATA"$'\n'"$CONTEXT_HELP_DATA"
+    else
+        FOUND=0
+        while read -r LINE; do
+            ROW_TYPE="$(echo $LINE|cut -f1 -d:)"
+            COMMAND_NAME="$(echo $LINE|cut -f2 -d:)"
+            if [ "$ROW_TYPE" == "h-item" ] && [ "$COMMAND_NAME" == "$DISPLAY_COMMAND" ]; then
+                COMMAND_PATH="$(echo $LINE|cut -f3 -d:)"
+                if [ -e "$COMMAND_PATH.help" ]; then
+                    COMMAND_DESC=$(cat "$COMMAND_PATH.help")
+                    echo "$COMMAND_DESC"
+                    FOUND=1
+                    
+                fi
+            fi
+        done <<< "$GLOBAL_HELP_DATA"$'\n'"$CONTEXT_HELP_DATA"
+        if [ "$FOUND" == 0 ]; then
+            echo "not found"
+        fi
+    fi
+else
+    echo "No shore context found. in-context help not available."
+fi

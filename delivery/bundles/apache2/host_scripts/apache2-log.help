@@ -1,0 +1,6 @@
+Display the Apache error log.
+
+Usage:	shore apache2-log [OPTIONS]
+
+Options:
+  -d    (Detach) : Display console bash in a new terminal.

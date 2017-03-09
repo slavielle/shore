@@ -26,29 +26,36 @@ echo "RT_LOG_FILES_NAME_PART_2=\"\"" > ".shore/runtime/RT_LOG_FILES_NAME_PART_2.
 if [ -f ".shore/scripts/host/$COMMAND" ]; then
 
     # Normal command handling
-    echo "run core command : .shore/scripts/host/$COMMAND"
+    if [ ${COMMAND:0:1} != "_" ]; then
+        echo "run core command : .shore/scripts/host/$COMMAND"
+    fi
     ".shore/scripts/host/$COMMAND" "$ORIGIN_DIR_PATH" $@
-
 else
     
-    # Attempt handling command from bundles 
+    # Attempt handling command from bundles.
     for BUNDLE_PATH in .shore/bundles/*;  do
         if [ -f "$BUNDLE_PATH/host_scripts/$COMMAND" ]; then
             echo "run bundle command : $BUNDLE_PATH/host_scripts/$COMMAND"
             "$BUNDLE_PATH/host_scripts/$COMMAND" "$ORIGIN_DIR_PATH" $@
             exit
         fi
-    done
-
+    done 
+    # Attempt handling command using profile hooks.
     if [ -f ".shore/profiles/$RT_PROFILE/on_$COMMAND.hook" ]; then
 
         # Direct hook handling
         echo "Triggering hooks from file .shore/profiles/$RT_PROFILE/on_$COMMAND.hook"
         ".shore/scripts/host/_play_hook" "$ORIGIN_DIR_PATH" $COMMAND $@
+    
+    # Attempt handling command using global hooks.
+    elif [ -f ".shore/hooks/on_$COMMAND.hook" ]; then
 
+        # Direct hook handling
+        echo "Triggering hooks from file .shore/hooks/on_$COMMAND.hook"
+        ".shore/scripts/host/_play_hook" "$ORIGIN_DIR_PATH" $COMMAND $@
+
+    # Command mismatch
     else
-
-        # Command mismatch
         echo "Shore: command \"$COMMAND\" not available"
         exit 1
     fi

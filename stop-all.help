@@ -1,0 +1,3 @@
+Stop all shore environments currently running.
+
+Usage:	shore stop-all

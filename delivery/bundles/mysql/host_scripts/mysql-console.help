@@ -1,0 +1,6 @@
+Display MySQL console (logged as project user).
+
+Usage:	shore mysql-console [OPTIONS]
+
+Options:
+  -d    (Detach) : Display console bash in a new terminal.

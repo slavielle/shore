@@ -1,0 +1,3 @@
+Allow to import MySql dump.
+
+Usage:	shore mysql-import SQL_FILE_PATH
