@@ -1,0 +1,38 @@
+#!/bin/bash
+
+# This script is a part of Shore
+# MIT License
+# Copyright (c) 2016 Sylvain LAVIELLE
+
+
+. $(dirname "$0")/../../_common.sh
+
+include_files
+
+
+# Check variables.
+[ -z "$CONF_MYSQL_PROJECT_DB_NAME" ] && echo "CONF_MYSQL_PROJECT_DB_NAME is not set" && exit
+[ -z "$CONF_MYSQL_PROJECT_USER_NAME" ] && echo "CONF_MYSQL_PROJECT_USER_NAME is not set" && exit
+[ -z "$CONF_MYSQL_PROJECT_USER_PASSWORD" ] && echo "CONF_MYSQL_PROJECT_USER_PASSWORD is not set" && exit
+
+
+if [ -n "$2" ]; then
+    
+    EXPORT_FILE_PATH="$1/$2"
+
+    # Import file.
+    if [ -d $EXPORT_FILE_PATH ]; then
+        echo $(write_log_start_section "Export database") >> $(get_log_file_path)
+        SQL_FILE_NAME="$CONF_MYSQL_PROJECT_DB_NAME""_"$(date +%Y-%m-%d_%H-%M-%S)".sql"
+        mysqldump -u "$CONF_MYSQL_PROJECT_USER_NAME" -p"$CONF_MYSQL_PROJECT_USER_PASSWORD" "$CONF_MYSQL_PROJECT_DB_NAME" > "$EXPORT_FILE_PATH/$SQL_FILE_NAME" 2>$(get_log_file_path)
+        echo $(write_log_end_section "Export database") >> $(get_log_file_path)
+        echo "$EXPORT_FILE_PATH/$SQL_FILE_NAME exported"
+        echo "Complete log at $(get_log_file_path)"
+    else
+        echo "Target directory doesn't exist."
+	exit 1	
+    fi
+else
+    echo "Target directory not defined."
+    exit 1
+fi
