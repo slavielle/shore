@@ -1,3 +1,4 @@
+system.create_user
 apache2.install
 mysql.install
 mysql.change_mysql_settings
