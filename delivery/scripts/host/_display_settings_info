@@ -11,7 +11,7 @@ include_files
 
 echo ""; format_output " > UPDATE SETTINGS " "step" "\n"
 echo ""
-echo "Update following settings files before running \"shore init\" :"
+echo "Update following settings files before running \"shore up\" :"
 echo "  - main settings file :"
 echo "    .shore/settings.sh"
 echo "  - bundles settings files used for active profile \"$RT_PROFILE\":"

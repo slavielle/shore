@@ -17,5 +17,5 @@ export DEBIAN_FRONTEND
 echo "apt-get update"
 apt-get update &> /dev/null
 
-# Run init hooks
-run_hook "init" $@
+# Run up hooks
+run_hook "up" $@

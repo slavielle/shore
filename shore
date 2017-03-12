@@ -17,8 +17,8 @@ shift
 
 
 # Walk up directory structure from  where the command had been called in order 
-# to find the .shore directory, except for install command that is a special one.
-if [ "$COMMAND" != "install" ] && [ "$COMMAND" != "update_scripts" ] && [ "$COMMAND" != "stop-all" ]  && [ "$COMMAND" != "projects" ] && [ "$COMMAND" != "help" ]; then
+# to find the .shore directory, except for a set of global commands.
+if [ "$COMMAND" != "init" ] && [ "$COMMAND" != "update_scripts" ] && [ "$COMMAND" != "stop-all" ]  && [ "$COMMAND" != "projects" ] && [ "$COMMAND" != "help" ]; then
   while [ "$WORKING_DIR_PATH" != "/" ] 
   do
     if [ -d .shore ]; then
@@ -40,10 +40,9 @@ if [ "$WORKING_DIR_PATH" != "/" ]; then
         if [ ${COMMAND:0:1} != "_" ]; then
 
 
-            # Handle the special commands that may/shall run without shore context.
-            if [ "$COMMAND" == "install" ] || [ "$COMMAND" == "update_scripts" ] || [ "$COMMAND" == "stop-all" ] || [ "$COMMAND" == "projects" ] || [ "$COMMAND" == "help" ]; then
+            # Handle the global commands that may/shall run without shore context.
+            if [ "$COMMAND" == "init" ] || [ "$COMMAND" == "update_scripts" ] || [ "$COMMAND" == "stop-all" ] || [ "$COMMAND" == "projects" ] || [ "$COMMAND" == "help" ]; then
 
-                # "install" command handling
                 "$(dirname "$0")/$(dirname "$(readlink "$0")")/$COMMAND" "$ORIGIN_DIR_PATH" $@
 
             # Handle others command that shall run in shore context.
@@ -81,7 +80,7 @@ if [ "$WORKING_DIR_PATH" != "/" ]; then
 
 else
     if [ -n "$COMMAND" ]; then
-       echo "No Shore context found. The command \"$COMMAND\" you're trying to invoke may need to be called from inside a directory where Shore had been installed."
+       echo "No Shore context found. The command \"$COMMAND\" you're trying to invoke may need to be called from inside a directory where Shore had been initialized."
        exit 1
     else
         echo "Hello from the Shore ! You boat :) should consider asking for help by calling \"$SHORE_SHORT_COMMAND help\" command."

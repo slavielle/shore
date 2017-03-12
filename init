@@ -60,7 +60,7 @@ else
     echo "   #   #   #   #   #   #   #   #   "
     echo "###    #   #    ###    #   #   ####"
     echo ""
-    echo "Installed. Please follow next steps:"
+    echo "Initialized. Please follow next steps:"
 
     # Run post install scripts
     .shore/scripts/host/_display_change_profile_info

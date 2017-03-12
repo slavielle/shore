@@ -11,4 +11,4 @@ include_files
 
 echo ""; format_output " > CREATE YOUR PROJECT CONTAINER " "step" "\n"
 echo ""
-echo "Run the \"shore init\" command to create the project container and install bundles."
+echo "Run the \"shore up\" command to create the project container and install bundles."

@@ -24,8 +24,8 @@ else
     # Remove the entrypoint (symlink to a real entrypoint script)
     rm ".shore/scripts/container/entrypoint" 2> /dev/null
 
-    # Set the entrypoint symlink pointing to "init" script
-    ln -s _init ".shore/scripts/container/entrypoint"
+    # Set the entrypoint symlink pointing to "up" script
+    ln -s _up ".shore/scripts/container/entrypoint"
 
     # Set the PROJECT_DIR : project root that will be sared with container
     PROJECT_DIR="$( pwd )"
@@ -83,8 +83,8 @@ else
             # Start the container
             docker start $CIDOUT > /dev/null
 
-            # Execute the container "init" script
-            docker exec -it $CIDOUT /home/$CONF_PROJECT_NAME/.shore/scripts/container/init $@
+            # Execute the container "up" script
+            docker exec -it $CIDOUT /home/$CONF_PROJECT_NAME/.shore/scripts/container/up $@
 
             # Stop the container
             docker stop $CIDOUT > /dev/null

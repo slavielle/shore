@@ -12,7 +12,7 @@ include_files
 
 if [[ ! $RT_CONTAINER_ID_INITIALIZED ]]; then
 
-    echo "Container hadn't been initialized : use \"shore init\" command to do so"
+    echo "Container hadn't been initialized : use \"shore up\" command to do so"
 
 else
     IS_STARTED=$(docker inspect -f {{.State.Running}} $RT_CONTAINER_ID_INITIALIZED)
