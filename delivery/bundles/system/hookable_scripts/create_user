@@ -28,3 +28,6 @@ else
     # side user
     useradd -u $USER_ID $RT_INIT_USER
 fi
+
+echo "\"$RT_INIT_USER\" user created container side."
+echo "Done"
