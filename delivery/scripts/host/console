@@ -38,7 +38,7 @@ while [[ $# -gt 0 ]]; do
 done
 
 # Docker execute
-DOCKER_CMD="docker exec -u $LOG_AS_USER -it $RT_CONTAINER_ID_INITIALIZED /home/$CONF_PROJECT_NAME/.shore/scripts/container/bash $@" 
+DOCKER_CMD="docker exec -u $LOG_AS_USER -it $RT_CONTAINER_ID_INITIALIZED /home/$CONF_PROJECT_NAME/.shore/scripts/container/console $@" 
 if [ "$DETACH" = true ]; then
     DOCKER_CMD="x-terminal-emulator -e $DOCKER_CMD"
 fi
