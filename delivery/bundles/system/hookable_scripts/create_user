@@ -26,7 +26,7 @@ else
 
     # Others (Ubuntu tested) Create user container side corresponding to host 
     # side user
-    useradd -u $USER_ID $RT_INIT_USER
+    useradd -m -u $USER_ID $RT_INIT_USER
 fi
 
 echo "\"$RT_INIT_USER\" user created container side."
