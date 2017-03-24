@@ -1,0 +1,26 @@
+#!/bin/bash
+
+# This script is a part of Shore
+# MIT License
+# Copyright (c) 2016 Sylvain LAVIELLE
+#
+# Install system stuff.
+
+
+. $(dirname "$0")/../../_common.sh
+
+include_files
+
+
+# Install
+
+for SYSTEM_INSTALL in ${CONF_SYSTEM_INSTALL_LIST[@]}; do
+    echo "Install $SYSTEM_INSTALL"
+    echo $(write_log_start_section "Install $SYSTEM_INSTALL") >> $(get_log_file_path)
+    apt-get -y install $SYSTEM_INSTALL >>$(get_log_file_path) 2>&1
+    echo $(write_log_end_section "Install $SYSTEM_INSTALL") >> $(get_log_file_path)
+done
+
+# End message
+echo "Complete log at $(get_log_file_path)"
+echo "Done"
