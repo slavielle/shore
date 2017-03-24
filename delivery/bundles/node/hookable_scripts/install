@@ -46,9 +46,10 @@ echo $(write_log_end_section "Install node") >> $(get_log_file_path)
 INSTALLED_VERSION=$(node -v)
 echo "Installed node version: $INSTALLED_VERSION"
 
-# Global node modules installation
+
+# Global node modules installation.
 if [[ $CONF_NODE_INSTALL_GLOBAL ]]; then
-    for MODULE_NAME in $CONF_NODE_INSTALL_GLOBAL; do
+    for MODULE_NAME in ${CONF_NODE_INSTALL_GLOBAL[@]}; do
         echo "Install node module \"$MODULE_NAME\" globally"
         echo $(write_log_start_section "Install node module \"$MODULE_NAME\" globally") >> $(get_log_file_path)
         npm install -g "$MODULE_NAME" >>$(get_log_file_path) 2>&1
@@ -56,7 +57,8 @@ if [[ $CONF_NODE_INSTALL_GLOBAL ]]; then
     done
 fi
 
-# Perform npm install.
+
+# Execute "npm install" if need.
 if [ "$CONF_NODE_PACKAGE_JSON_DIR" ]; then
     if [ -f "/home/$CONF_PROJECT_NAME/$CONF_NODE_PACKAGE_JSON_DIR/package.json" ]; then
         echo "Perform a \"npm install\" using \"/home/$CONF_PROJECT_NAME/$CONF_NODE_PACKAGE_JSON_DIR/package.json\"."
