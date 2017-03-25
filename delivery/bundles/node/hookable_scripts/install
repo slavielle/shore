@@ -60,14 +60,14 @@ fi
 
 # Execute "npm install" if need.
 if [ "$CONF_NODE_PACKAGE_JSON_DIR" ]; then
-    if [ -f "/home/$CONF_PROJECT_NAME/$CONF_NODE_PACKAGE_JSON_DIR/package.json" ]; then
-        echo "Perform a \"npm install\" using \"/home/$CONF_PROJECT_NAME/$CONF_NODE_PACKAGE_JSON_DIR/package.json\"."
-        cd "/home/$CONF_PROJECT_NAME/$CONF_NODE_PACKAGE_JSON_DIR"
+    if [ -f "$CONF_PROJECT_CONTAINER_SIDE_PATH/$CONF_NODE_PACKAGE_JSON_DIR/package.json" ]; then
+        echo "Perform a \"npm install\" using \"$CONF_PROJECT_CONTAINER_SIDE_PATH/$CONF_NODE_PACKAGE_JSON_DIR/package.json\"."
+        cd "$CONF_PROJECT_CONTAINER_SIDE_PATH/$CONF_NODE_PACKAGE_JSON_DIR"
         echo $(write_log_start_section "Perform npm install") >> $(get_log_file_path)
         npm install >>$(get_log_file_path) 2>&1
         echo $(write_log_end_section "Perform npm install") >> $(get_log_file_path)
     else
-        echo "Can't perform a \"npm install\" using \"/home/$CONF_PROJECT_NAME/$CONF_NODE_PACKAGE_JSON_DIR/package.json\". File not found"
+        echo "Can't perform a \"npm install\" using \"$CONF_PROJECT_CONTAINER_SIDE_PATH/$CONF_NODE_PACKAGE_JSON_DIR/package.json\". File not found"
     fi
 fi
 

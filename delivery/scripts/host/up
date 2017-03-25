@@ -48,7 +48,7 @@ else
         done
 
         # Call the docker run to create the container
-        OUT=$(docker run -it $PORTS_EXPORT_OPTION_STRING -v $PROJECT_DIR:/home/$CONF_PROJECT_NAME --cidfile=".shore/tmp/cid" --net $CONF_CONTAINER_NETWORK --ip $CONF_CONTAINER_IP $CONF_IMAGE_ID /home/$CONF_PROJECT_NAME/.shore/scripts/container/entrypoint 2>&1)
+        OUT=$(docker run -it $PORTS_EXPORT_OPTION_STRING -v $PROJECT_DIR:$CONF_PROJECT_CONTAINER_SIDE_PATH --cidfile=".shore/tmp/cid" --net $CONF_CONTAINER_NETWORK --ip $CONF_CONTAINER_IP $CONF_IMAGE_ID $CONF_PROJECT_CONTAINER_SIDE_PATH/.shore/scripts/container/entrypoint 2>&1)
 
         # Get the container ID
         CIDOUT=$(cat ".shore/tmp/cid" 2> /dev/null)
@@ -84,7 +84,7 @@ else
             docker start $CIDOUT > /dev/null
 
             # Execute the container "up" script
-            docker exec -it $CIDOUT /home/$CONF_PROJECT_NAME/.shore/scripts/container/up $@
+            docker exec -it $CIDOUT $CONF_PROJECT_CONTAINER_SIDE_PATH/.shore/scripts/container/up $@
 
             # Stop the container
             docker stop $CIDOUT > /dev/null

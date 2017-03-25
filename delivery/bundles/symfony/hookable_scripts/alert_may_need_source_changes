@@ -9,9 +9,9 @@
 include_files
 
 if [ -z "$CONF_SYMFONY_ROOT_DIR" ]; then
-    SYMFONY_ROOT="/home/$CONF_PROJECT_NAME"
+    SYMFONY_ROOT="$CONF_PROJECT_CONTAINER_SIDE_PATH"
 else
-    SYMFONY_ROOT="/home/$CONF_PROJECT_NAME/$CONF_SYMFONY_ROOT_DIR"
+    SYMFONY_ROOT="$CONF_PROJECT_CONTAINER_SIDE_PATH/$CONF_SYMFONY_ROOT_DIR"
 fi
 
 echo "You may need to change your $SYMFONY_ROOT/web/app_dev.php file to allow connection from host."

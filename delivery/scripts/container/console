@@ -10,7 +10,7 @@
 include_files
 
 # Change current directory to project home
-cd /home/$CONF_PROJECT_NAME
+cd $CONF_PROJECT_CONTAINER_SIDE_PATH
 
 # start console
 /bin/bash

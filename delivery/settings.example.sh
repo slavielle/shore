@@ -5,10 +5,13 @@ CONF_IMAGE_ID="debian:jessie"
 CONF_OPEN_BROWSER_ON_START=true
 CONF_SERVICES_TO_START=("apache2" "mysql")
 
-#CONF_PROJECT_NAME="shore_test"
+CONF_PROJECT_NAME="shore_test"
 #CONF_PROJECT_DOMAIN_NAME="shore-test.local"
-#CONF_PROJECT_HTDOCS="www"
+CONF_PROJECT_HTDOCS="www"
 #CONF_PROJECT_INDEX_FILE="index.php"
+CONF_PROJECT_CONTAINER_SIDE_PATH="/var/shore"
+
+
 
 # Ports mapping list.
 # Shore does not require to map ports on Linux because Shore use static IP to 

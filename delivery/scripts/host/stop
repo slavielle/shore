@@ -21,7 +21,7 @@ if [[ $# = 1 ]]; then
 
             # Stop services by running the "stop" container-side script
             echo "Stopping services : "
-            docker exec -it $RT_CONTAINER_ID_STARTED /home/$CONF_PROJECT_NAME/.shore/scripts/container/stop $@
+            docker exec -it $RT_CONTAINER_ID_STARTED $CONF_PROJECT_CONTAINER_SIDE_PATH/.shore/scripts/container/stop $@
 
             # Stop container itself
             echo "Stopping container"

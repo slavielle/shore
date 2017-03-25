@@ -19,7 +19,7 @@ include_files
 
 # Create symlink in Apache web directory.
 if [ ! -e "/var/www/html/$CONF_PROJECT_NAME" ]; then
-  ln -s "/home/$CONF_PROJECT_NAME/$CONF_PROJECT_HTDOCS" "/var/www/html/$CONF_PROJECT_NAME"  
+  ln -s "$CONF_PROJECT_CONTAINER_SIDE_PATH/$CONF_PROJECT_HTDOCS" "/var/www/html/$CONF_PROJECT_NAME"  
 fi
 
 if [ ! -z "$CONF_PROJECT_DOMAIN_NAME" ]; then

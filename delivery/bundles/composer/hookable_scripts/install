@@ -49,14 +49,14 @@ echo "Installed composer version: $INSTALLED_VERSION "
 
 # Perform composer install.
 if [ "$CONF_COMPOSER_COMPOSER_JSON_PATH" ]; then
-    if [ -f "/home/$CONF_PROJECT_NAME/$CONF_COMPOSER_COMPOSER_JSON_PATH/composer.json" ]; then
-        echo "Perform a \"composer install\" using \"/home/$CONF_PROJECT_NAME/$CONF_COMPOSER_COMPOSER_JSON_PATH/composer.json\"."
-        cd "/home/$CONF_PROJECT_NAME/$CONF_COMPOSER_COMPOSER_JSON_PATH"
+    if [ -f "$CONF_PROJECT_CONTAINER_SIDE_PATH/$CONF_COMPOSER_COMPOSER_JSON_PATH/composer.json" ]; then
+        echo "Perform a \"composer install\" using \"$CONF_PROJECT_CONTAINER_SIDE_PATH/$CONF_COMPOSER_COMPOSER_JSON_PATH/composer.json\"."
+        cd "$CONF_PROJECT_CONTAINER_SIDE_PATH/$CONF_COMPOSER_COMPOSER_JSON_PATH"
         echo $(write_log_start_section "Run \"composer install\"") >> $(get_log_file_path)
         composer install >>$(get_log_file_path) 2>&1
         echo $(write_log_end_section "Run \"composer install\"") >> $(get_log_file_path)
     else
-        echo "Can't perform a \"composer install\" using \"/home/$CONF_PROJECT_NAME/$CONF_COMPOSER_COMPOSER_JSON_PATH/composer.json\". File not found"
+        echo "Can't perform a \"composer install\" using \"$CONF_PROJECT_CONTAINER_SIDE_PATH/$CONF_COMPOSER_COMPOSER_JSON_PATH/composer.json\". File not found"
     fi
 fi
 

@@ -58,7 +58,7 @@ echo "Installed Ruby version : $RUBY_VERSION"
 # Run a bundler install if required.
 if [ "$CONF_RUBY_GEM_INSTALL_PATH" ]; then
 
-    cd "/home/$CONF_PROJECT_NAME/$CONF_RUBY_GEM_INSTALL_PATH" &> /dev/null
+    cd "$CONF_PROJECT_CONTAINER_SIDE_PATH/$CONF_RUBY_GEM_INSTALL_PATH" &> /dev/null
 
     # Install gems
     for GEM in ${CONF_RUBY_GEMS[@]}; do
@@ -77,7 +77,7 @@ if [ "$CONF_RUBY_GEM_INSTALL_PATH" ]; then
             echo $(write_log_end_section "Install Bundler") >> $(get_log_file_path)
         fi
 
-        echo "Run bundle install on \"/home/$CONF_PROJECT_NAME/$CONF_RUBY_GEM_INSTALL_PATH\" directory"
+        echo "Run bundle install on \"$CONF_PROJECT_CONTAINER_SIDE_PATH/$CONF_RUBY_GEM_INSTALL_PATH\" directory"
         echo $(write_log_start_section "Run \"bundle install\"") >> $(get_log_file_path)
         bundle install >>$(get_log_file_path) 2>&1
         echo $(write_log_end_section "Run \"bundle install\"") >> $(get_log_file_path)

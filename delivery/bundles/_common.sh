@@ -79,8 +79,8 @@ function replace(){
 function get_log_file_path(){
     RET="/dev/null"
     if [ ! -z "$RT_LOG_FILES_NAME_PART_1" ] && [ ! -z "$RT_LOG_FILES_NAME_PART_2" ]; then
-        mkdir -p "/home/$CONF_PROJECT_NAME/.shore/logs"
-        RET="/home/$CONF_PROJECT_NAME/.shore/logs/$RT_LOG_FILES_NAME_PART_1$RT_LOG_FILES_NAME_PART_2.log"
+        mkdir -p "$CONF_PROJECT_CONTAINER_SIDE_PATH/.shore/logs"
+        RET="$CONF_PROJECT_CONTAINER_SIDE_PATH/.shore/logs/$RT_LOG_FILES_NAME_PART_1$RT_LOG_FILES_NAME_PART_2.log"
     fi
     echo $RET
 }

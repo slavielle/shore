@@ -12,9 +12,9 @@ include_files
 
 # Get user id from .shore directory on container side
 if [[ "$(uname)" == "Darwin" ]]; then
-    USER_ID=$(stat -f '%u' /home/$CONF_PROJECT_NAME/.shore)
+    USER_ID=$(stat -f '%u' $CONF_PROJECT_CONTAINER_SIDE_PATH/.shore)
 else
-    USER_ID=$(stat -c '%u' /home/$CONF_PROJECT_NAME/.shore)
+    USER_ID=$(stat -c '%u' $CONF_PROJECT_CONTAINER_SIDE_PATH/.shore)
 fi
 
 # Create the corresponding user form host side to container side.
