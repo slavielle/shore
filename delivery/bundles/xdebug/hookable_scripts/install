@@ -16,19 +16,19 @@ echo $(write_log_start_section "Installing XDebug") >> $(get_log_file_path)
 apt-get install -y php5-xdebug >>$(get_log_file_path) 2>&1
 echo $(write_log_end_section "Installing XDebug") >> $(get_log_file_path)
 
+# Get additional xdebug conf options from setting file.
+echo "Setting up XDebug config"
+APPEND_CONF=""
+for CONF_LINE in ${CONF_XDEBUG_INSTALL_LIST[@]}; do
+    APPEND_CONF="$APPEND_CONF$CONF_LINE"$'\n'
+done
 
 # Set config.
-echo "Setting up XDebug config"
 CONF=$(cat /etc/php5/apache2/conf.d/20-xdebug.ini)
 cat >/etc/php5/apache2/conf.d/20-xdebug.ini <<EOL
 $CONF
-xdebug.remote_enable=1
-xdebug.remote_handler=dbgp
-xdebug.remote_mode=req
-xdebug.remote_host=$CONF_HOST_IP
-xdebug.remote_port=9000
+$APPEND_CONF
 EOL
-
 
 echo "Complete log at $(get_log_file_path)"
 echo "Done"

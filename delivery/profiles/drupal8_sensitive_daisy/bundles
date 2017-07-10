@@ -1,0 +1,10 @@
+system
+apache2
+mysql
+php5
+drush
+composer
+drupal_console
+xdebug
+node
+project

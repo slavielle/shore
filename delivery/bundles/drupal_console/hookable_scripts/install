@@ -1,0 +1,34 @@
+#!/bin/bash
+
+# This script is a part of Shore
+# MIT License
+# Copyright (c) 2016 Sylvain LAVIELLE
+#
+# Install Drupal Console.
+# see: https://drupalconsole.com/articles/how-to-install-drupal-console
+
+
+. $(dirname "$0")/../../_common.sh
+
+include_files
+
+function install_drupal_console () {
+    cd /var/tmp
+    curl https://drupalconsole.com/installer -L -o drupal.phar
+    mv drupal.phar /usr/local/bin/drupal
+    chmod +x /usr/local/bin/drupal
+}
+
+# Install
+echo "Install Drupal Console"
+echo $(write_log_start_section "Install Drupal Console") >> $(get_log_file_path)
+
+install_drupal_console >> $(get_log_file_path) 2>&1
+
+echo $(write_log_end_section "Install Drupal Console") >> $(get_log_file_path)
+
+
+# End message
+echo "Complete log at $(get_log_file_path)"
+echo "Done"
+

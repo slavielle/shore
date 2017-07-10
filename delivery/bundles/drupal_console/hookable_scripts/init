@@ -1,0 +1,23 @@
+#!/bin/bash
+
+# This script is a part of Shore
+# MIT License
+# Copyright (c) 2016 Sylvain LAVIELLE
+#
+# Install Drupal Console.
+# see: https://drupalconsole.com/articles/how-to-install-drupal-console
+
+
+. $(dirname "$0")/../../_common.sh
+
+include_files
+
+drupal init
+
+echo "" >> /home/$RT_INIT_USER/.bashrc
+echo "# Drupal console" >> /home/$RT_INIT_USER/.bashrc
+echo "source \"\$HOME/.console/console.rc\" 2>/dev/null" >> /home/$RT_INIT_USER/.bashrc
+
+
+
+
