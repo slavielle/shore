@@ -45,7 +45,7 @@ fi
 
 # Drop existing project user if any and recreate it.
 echo $(write_log_start_section "Drop project users") >> $(get_log_file_path)
-execute_sql "DROP USER $CONF_MYSQL_PROJECT_USER_NAME@$CONF_CONTAINER_IP;"
+execute_sql "DROP USER $CONF_MYSQL_PROJECT_USER_NAME@$RT_CONTAINER_IP;"
 execute_sql "DROP USER $CONF_MYSQL_PROJECT_USER_NAME@localhost;"
 mysql -u root -p"$CONF_MYSQL_ROOT_PASSWORD" -e "$MYSQL_CMD" #>>$(get_log_file_path) 2>&1
 
@@ -59,7 +59,7 @@ execute_sql "DROP DATABASE IF EXISTS $CONF_MYSQL_PROJECT_DB_NAME;"
 execute_sql "CREATE DATABASE $CONF_MYSQL_PROJECT_DB_NAME DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;"
 echo $(write_log_end_section "Drop and recreate project database") >> $(get_log_file_path)
 echo $(write_log_start_section "Create project users") >> $(get_log_file_path)
-execute_sql "GRANT ALL PRIVILEGES ON $CONF_MYSQL_PROJECT_USER_NAME.* TO $CONF_MYSQL_PROJECT_DB_NAME@'$CONF_CONTAINER_IP' IDENTIFIED BY '$CONF_MYSQL_PROJECT_USER_PASSWORD'"
+execute_sql "GRANT ALL PRIVILEGES ON $CONF_MYSQL_PROJECT_USER_NAME.* TO $CONF_MYSQL_PROJECT_DB_NAME@'$RT_CONTAINER_IP' IDENTIFIED BY '$CONF_MYSQL_PROJECT_USER_PASSWORD'"
 execute_sql "GRANT ALL PRIVILEGES ON $CONF_MYSQL_PROJECT_USER_NAME.* TO $CONF_MYSQL_PROJECT_DB_NAME@'localhost' IDENTIFIED BY '$CONF_MYSQL_PROJECT_USER_PASSWORD'"
 echo $(write_log_end_section "Create project users") >> $(get_log_file_path)
 

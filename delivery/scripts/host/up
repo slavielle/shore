@@ -13,6 +13,12 @@ if [[ $RT_CONTAINER_ID_INITIALIZED ]]; then
     echo "Container already initialized : $RT_CONTAINER_ID_INITIALIZED"
 else
 
+    # Test if runtime function containing container IP and docker bridge are set.
+    # If not user must input them.
+    if [ -z "$RT_CONTAINER_NETWORK" ] || [ -z "$RT_CONTAINER_IP" ]; then
+        define_network_settings
+    fi
+
     echo "Pulling image "
 
     docker pull $CONF_IMAGE_ID
@@ -27,17 +33,17 @@ else
     # Set the entrypoint symlink pointing to "up" script
     ln -s _up ".shore/scripts/container/entrypoint"
 
-    # Set the PROJECT_DIR : project root that will be sared with container
+    # Set the PROJECT_DIR : project root that will be shared with container
     PROJECT_DIR="$( pwd )"
 
     printf "  > project directory: "; if [ "$PROJECT_DIR" ]; then printf "$PROJECT_DIR\n"; else printf "<not-set>\n"; fi
-    printf "  > network: "; if [ "$CONF_CONTAINER_NETWORK" ]; then printf "$CONF_CONTAINER_NETWORK\n"; else printf "<not-set>\n"; fi
+    printf "  > network: "; if [ "$RT_CONTAINER_NETWORK" ]; then printf "$RT_CONTAINER_NETWORK\n"; else printf "<not-set>\n"; fi
     printf "  > project name: "; if [ "$CONF_PROJECT_NAME" ]; then printf "$CONF_PROJECT_NAME\n"; else printf "<not-set>\n"; fi
-    printf "  > container IP: "; if [ "$CONF_CONTAINER_IP" ]; then printf "$CONF_CONTAINER_IP\n"; else printf "<not-set>\n"; fi
+    printf "  > container IP: "; if [ "$RT_CONTAINER_IP" ]; then printf "$RT_CONTAINER_IP\n"; else printf "<not-set>\n"; fi
     printf "  > image ID: "; if [ "$CONF_IMAGE_ID" ]; then printf "$CONF_IMAGE_ID\n"; else printf "<not-set>\n"; fi
     echo ""
 
-    if [ "$PROJECT_DIR" ] && [ "$CONF_CONTAINER_NETWORK" ] && [ "$CONF_PROJECT_NAME" ] && [ "$CONF_CONTAINER_IP" ] && [ "$CONF_IMAGE_ID" ]; then
+    if [ "$PROJECT_DIR" ] && [ "$CONF_PROJECT_NAME" ] && [ "$CONF_IMAGE_ID" ]; then
 
         # Resolve port mapping option for docker run
         [ -n "$CONF_PROJECT_OTHER_PORTS_MAP" ] && PROJECT_PORT_MAP=("${CONF_PROJECT_OTHER_PORTS_MAP[@]}") || PROJECT_PORT_MAP=()
@@ -48,7 +54,7 @@ else
         done
 
         # Call the docker run to create the container
-        OUT=$(docker run -it $PORTS_EXPORT_OPTION_STRING -v $PROJECT_DIR:$CONF_PROJECT_CONTAINER_SIDE_PATH --cidfile=".shore/tmp/cid" --net $CONF_CONTAINER_NETWORK --ip $CONF_CONTAINER_IP $CONF_IMAGE_ID $CONF_PROJECT_CONTAINER_SIDE_PATH/.shore/scripts/container/entrypoint 2>&1)
+        OUT=$(docker run -it $PORTS_EXPORT_OPTION_STRING -v $PROJECT_DIR:$CONF_PROJECT_CONTAINER_SIDE_PATH --cidfile=".shore/tmp/cid" --net $RT_CONTAINER_NETWORK --ip $RT_CONTAINER_IP $CONF_IMAGE_ID $CONF_PROJECT_CONTAINER_SIDE_PATH/.shore/scripts/container/entrypoint 2>&1)
 
         # Get the container ID
         CIDOUT=$(cat ".shore/tmp/cid" 2> /dev/null)

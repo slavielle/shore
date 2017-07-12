@@ -24,13 +24,13 @@ fi
 
 
 # Drop existing project user if any and recreate it.
-echo "Create root user for  $CONF_HOST_IP"
+echo "Create root user for  $RT_HOST_IP"
 echo $(write_log_start_section "Create root user") >> $(get_log_file_path)
-QUERY="DROP USER root@$CONF_HOST_IP;"
+QUERY="DROP USER root@$RT_HOST_IP;"
 mysql -u root -p"$CONF_MYSQL_ROOT_PASSWORD" -e "$QUERY" >>$(get_log_file_path) 2>&1
-QUERY="CREATE USER 'root'@'$CONF_HOST_IP' IDENTIFIED BY '$CONF_MYSQL_ROOT_PASSWORD';"
+QUERY="CREATE USER 'root'@'$RT_HOST_IP' IDENTIFIED BY '$CONF_MYSQL_ROOT_PASSWORD';"
 mysql -u root -p"$CONF_MYSQL_ROOT_PASSWORD" -e "$QUERY" >>$(get_log_file_path) 2>&1
-QUERY="GRANT ALL PRIVILEGES ON *.* TO 'root'@'$CONF_HOST_IP';"
+QUERY="GRANT ALL PRIVILEGES ON *.* TO 'root'@'$RT_HOST_IP';"
 mysql -u root -p"$CONF_MYSQL_ROOT_PASSWORD" -e "$QUERY" >>$(get_log_file_path) 2>&1
 echo $(write_log_end_section "Create root user") >> $(get_log_file_path)
 

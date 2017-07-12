@@ -1,15 +1,3 @@
-# Docker bridge name.
-CONF_CONTAINER_NETWORK="shore_net"
-
-# Container IP in the Docker bridge range.
-# Its advised to define a new one for each of your local projets. This way, you
-# would be able to run them together.
-CONF_CONTAINER_IP="172.18.0.2"
-
-# Host ip in the Docker bridge network.
-# Change it carefully.
-CONF_HOST_IP="172.18.0.1"
-
 # Docker source image to use.
 # Change this is not advised. Change it carefully.
 # Mandatory

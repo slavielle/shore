@@ -67,7 +67,7 @@ else
                     if [[ "$(uname)" == "Darwin" ]]; then
                         WEB_URL="http://localhost$HTTP_PORT/$CONF_PROJECT_NAME"
                     else
-                        WEB_URL="http://$CONF_CONTAINER_IP/$CONF_PROJECT_NAME"
+                        WEB_URL="http://$RT_CONTAINER_IP/$CONF_PROJECT_NAME"
                     fi
                 fi
                 if [[ $CONF_PROJECT_INDEX_FILE ]]; then
@@ -82,9 +82,9 @@ else
                 if [[ $CONF_PROJECT_DOMAIN_NAME ]]; then
                     printf "Please make sure you added the following line to your /etc/hosts : \n"
                     if [[ "$(uname)" == "Darwin" ]]; then
-                        printf "$CONF_CONTAINER_IP\t$CONF_PROJECT_DOMAIN_NAME\n\n"
-                    else
                         printf "127.0.0.1\t$CONF_PROJECT_DOMAIN_NAME\n\n"
+                    else
+                        printf "$RT_CONTAINER_IP\t$CONF_PROJECT_DOMAIN_NAME\n\n"
                     fi
                 fi
 

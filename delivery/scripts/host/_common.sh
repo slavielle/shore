@@ -52,3 +52,45 @@ function format_output() {
   printf "\033[1m${CODE_IN}$1${CODE_OUT}$3"
 
 }
+
+function define_network_settings() {
+
+    local INPUT_CONTAINER_NETWORK
+
+    read -p "Enter Shore bridge network [shore_net]: " INPUT_CONTAINER_NETWORK
+    if [ -z "$INPUT_CONTAINER_NETWORK" ]; then
+        INPUT_CONTAINER_NETWORK="shore_net"
+    fi
+
+    save_runtime_var "RT_CONTAINER_NETWORK" "$INPUT_CONTAINER_NETWORK"
+    save_runtime_var "RT_HOST_IP" $(input_ip "Enter host IP [172.18.0.1]" "172.18.0.1")
+    save_runtime_var "RT_CONTAINER_IP" $(input_ip "Enter container IP")
+
+}
+
+function save_runtime_var() {
+    local VAR_NAME="$1"
+    local VAR_VALUE="$2"
+    echo "$VAR_NAME=\"$VAR_VALUE\"" > .shore/runtime/$VAR_NAME.var.sh
+
+    eval $VAR_NAME="$VAR_VALUE"
+}
+
+function input_ip() {
+    local INPUT
+    local MESSAGE="$1"
+    local DEFAULT_VALUE="$2"
+
+    while :; do
+        read -p "$MESSAGE: " INPUT
+        if [ -z "$INPUT" ]; then
+            INPUT="$DEFAULT_VALUE"
+        fi
+        if [[ $INPUT =~ ^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$ ]]; then
+            break
+        else
+            echo "Value does not fit. Please try again" >&2
+        fi
+    done
+    echo "$INPUT"
+}
