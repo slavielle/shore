@@ -1,0 +1,16 @@
+CONF_PHP71_LIBS=()
+
+# Activates or add php libs required by your project.
+CONF_PHP71_LIBS+=("php7.1-opcache")
+CONF_PHP71_LIBS+=("libapache2-mod-php7.1")
+CONF_PHP71_LIBS+=("php7.1-mysql")
+CONF_PHP71_LIBS+=("php7.1-curl")
+CONF_PHP71_LIBS+=("php7.1-json")
+CONF_PHP71_LIBS+=("php7.1-gd")
+CONF_PHP71_LIBS+=("php7.1-mcrypt")
+CONF_PHP71_LIBS+=("php7.1-intl")
+CONF_PHP71_LIBS+=("php7.1-mbstring")
+CONF_PHP71_LIBS+=("php7.1-xml")
+CONF_PHP71_LIBS+=("php7.1-zip")
+CONF_PHP71_LIBS+=("php7.1-fpm")
+CONF_PHP71_LIBS+=("php7.1-readline")
