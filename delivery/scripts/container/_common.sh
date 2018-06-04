@@ -60,7 +60,6 @@ array_contains () {
     return $IN
 }
 
-
 function run_hook() {
 
     HOOK_NAME="$1"
@@ -73,8 +72,9 @@ function run_hook() {
     ORIGIN_CONTAINER_DIR_PATH=${ORIGIN_HOST_DIR_PATH/$RT_HOST_SHARED_DIR_PATH/$CONTAINER_PROJECT_DIR_PATH}
 
     # List enabled bundles
-    ENABLED_BUNDLES=()
+    ENABLED_BUNDLES=("system") #system enabled by default
     ENABLED_BUNDLES_LIST_FILE=$(realpath "$(dirname "$0")/../../profiles/$RT_PROFILE/bundles")
+
     while read BUNDLE || [[ -n "$BUNDLE" ]]; do
 
         # Trim

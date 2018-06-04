@@ -24,11 +24,13 @@ while read BUNDLE || [[ -n "$BUNDLE" ]]; do
         BUNDLE=${BASH_REMATCH[1]}
     fi
 
-    # Add bundle to ENABLED_BUNDLES array if bundle name match
+    # Print bundle settings file if bundle name match
     if [[ $BUNDLE =~ ^([0-9a-z_]+)$ ]]; then
         if [ -f .shore/bundles/$BUNDLE/settings.sh ]; then
             echo "    .shore/bundles/$BUNDLE/settings.sh"
         fi
+
+    # Raise an error if not matching and line does not start with a comment char ('#')
     elif [[ $BUNDLE != \#* ]] && [ ! -z "$BUNDLE" ] ; then
         echo ""; format_output " > MISMATCH : \"$BUNDLE\" in \".shore/profiles/$RT_PROFILE/bundles\" " "error" "\n"
     fi
