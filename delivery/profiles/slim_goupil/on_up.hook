@@ -1,0 +1,5 @@
+system.install
+system.create_user
+apache2.install
+apache2.create_symlink_and_vhost
+project.install

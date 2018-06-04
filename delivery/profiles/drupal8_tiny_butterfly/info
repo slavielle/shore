@@ -1,0 +1,2 @@
+This profile is a more evoluted one for drupal 7 projects. It implements a LAMP environment + Drush, node, and Ruby Bundle in order to be able to use node based tools such as Grunt, Gulp and Ruby based tools such as Sass and possibly Compass in your project theme.
+This bundle may need you to implement the build script in the project bundle to perform your project build actions.
