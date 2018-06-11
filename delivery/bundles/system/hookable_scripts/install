@@ -12,14 +12,58 @@
 include_files
 
 
+# Collect requirements
+
+ENABLED_BUNDLES=()
+ENABLED_BUNDLES_LIST_FILE=$(realpath "$(dirname "$0")/../../../profiles/$RT_PROFILE/bundles")
+NL=$'\n'
+declare -A REQUIREMENTS_ARRAY
+
+while read BUNDLE || [[ -n "$BUNDLE" ]]; do
+    # Trim
+    if [[ "$BUNDLE" =~ ^[[:space:]]*([^[:space:]].*[^[:space:]])[[:space:]]*$ ]]; then
+        BUNDLE=${BASH_REMATCH[1]}
+    fi
+
+    # Add bundle to ENABLED_BUNDLES array if bundle name match
+    if [[ $BUNDLE =~ ^([0-9a-z_]+)$ ]]; then
+        ENABLED_BUNDLES+=("$BUNDLE")
+    elif [[ $BUNDLE != \#* ]] && [ ! -z "$BUNDLE" ] ; then
+        echo ""; format_output " > MISMATCH : \"$BUNDLE\" in \"$ENABLED_BUNDLES_LIST_FILE\" " "error" "\n"
+    fi
+done <"$ENABLED_BUNDLES_LIST_FILE"
+for ENABLED_BUNDLE in "${ENABLED_BUNDLES[@]}"; do
+    BUNDLE_DIR_PATH=$(realpath "$(dirname "$0")/../../$ENABLED_BUNDLE")
+    BUNDLE_REQUIREMENTS_FILE_PATH="$BUNDLE_DIR_PATH/requirements"
+    if [ -f "$BUNDLE_REQUIREMENTS_FILE_PATH" ]; then
+        while read REQUIREMENT || [[ -n "$REQUIREMENT" ]]; do
+            REQUIREMENTS_ARRAY[$REQUIREMENT]="${REQUIREMENTS_ARRAY[$REQUIREMENT]} $NL- $ENABLED_BUNDLE"
+
+        done <"$BUNDLE_REQUIREMENTS_FILE_PATH"
+    else
+        echo "File not found!"
+    fi
+done
+
+for SYSTEM_REQUIREMENTS in ${CONF_SYSTEM_INSTALL_LIST[@]}; do
+    REQUIREMENTS_ARRAY[$SYSTEM_REQUIREMENTS]="${REQUIREMENTS_ARRAY[$SYSTEM_REQUIREMENTS]} $NL- system"
+done
+
+for REQUIREMENT in "${!REQUIREMENTS_ARRAY[@]}"; do
+    echo "Install $REQUIREMENT required by: ${REQUIREMENTS_ARRAY[$REQUIREMENT]}"
+    echo $(write_log_start_section "Install $REQUIREMENT") >> $(get_log_file_path)
+    apt-get -y install $REQUIREMENT >>$(get_log_file_path) 2>&1
+    echo $(write_log_end_section "Install $REQUIREMENT") >> $(get_log_file_path)
+done
+
 # Install
 
-for SYSTEM_INSTALL in ${CONF_SYSTEM_INSTALL_LIST[@]}; do
-    echo "Install $SYSTEM_INSTALL"
-    echo $(write_log_start_section "Install $SYSTEM_INSTALL") >> $(get_log_file_path)
-    apt-get -y install $SYSTEM_INSTALL >>$(get_log_file_path) 2>&1
-    echo $(write_log_end_section "Install $SYSTEM_INSTALL") >> $(get_log_file_path)
-done
+# for SYSTEM_INSTALL in ${CONF_SYSTEM_INSTALL_LIST[@]}; do
+#     echo "Install $SYSTEM_INSTALL"
+#     echo $(write_log_start_section "Install $SYSTEM_INSTALL") >> $(get_log_file_path)
+#     apt-get -y install $SYSTEM_INSTALL >>$(get_log_file_path) 2>&1
+#     echo $(write_log_end_section "Install $SYSTEM_INSTALL") >> $(get_log_file_path)
+# done
 
 # End message
 echo "Complete log at $(get_log_file_path)"

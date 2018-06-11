@@ -10,14 +10,14 @@
 include_files
 
 
-# Install Curl if need
-which curl > /dev/null
-if [ "$?" == "1" ]; then
-    echo "Must install curl to fulfill this operation"
-    echo $(write_log_start_section "Install Curl") >> $(get_log_file_path)
-    apt-get install -y curl >>$(get_log_file_path) 2>&1
-    echo $(write_log_end_section "Install Curl") >> $(get_log_file_path)
-fi
+# # Install Curl if need
+# which curl > /dev/null
+# if [ "$?" == "1" ]; then
+#     echo "Must install curl to fulfill this operation"
+#     echo $(write_log_start_section "Install Curl") >> $(get_log_file_path)
+#     apt-get install -y curl >>$(get_log_file_path) 2>&1
+#     echo $(write_log_end_section "Install Curl") >> $(get_log_file_path)
+# fi
 
 
 # Init pgp key

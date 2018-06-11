@@ -14,14 +14,14 @@ include_files
 [ -z "$CONF_DRUSH_VERSION" ] && echo "CONF_DRUSH_VERSION is not set" && exit
 
 
-# Install wget if need.
-which wget > /dev/null
-if [ "$?" == "1" ]; then
-    echo "Must install wget to fulfill this operation"
-    echo $(write_log_start_section "Install wget") >> $(get_log_file_path)
-    apt-get install -y wget >>$(get_log_file_path) 2>&1
-    echo $(write_log_end_section "Install wget") >> $(get_log_file_path)
-fi
+# # Install wget if need.
+# which wget > /dev/null
+# if [ "$?" == "1" ]; then
+#     echo "Must install wget to fulfill this operation"
+#     echo $(write_log_start_section "Install wget") >> $(get_log_file_path)
+#     apt-get install -y wget >>$(get_log_file_path) 2>&1
+#     echo $(write_log_end_section "Install wget") >> $(get_log_file_path)
+# fi
 
 
 # Install drush.
