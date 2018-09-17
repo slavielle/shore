@@ -9,19 +9,9 @@
 
 include_files
 
-
 # Check variables.
 [ -z "$CONF_NODE_VERSION" ] && echo "CONF_NODE_VERSION is not set" && exit 1
 [ -z "$CONF_NODE_NODE_REPO_URL" ] && echo "$CONF_NODE_NODE_REPO_URL is not set" && exit 1
-
-# # curl or wget requiered
-# CURL_PATH=$(which curl)
-# WGET_PATH=$(which wget)
-# if [[ ! $CURL_PATH ]] && [[ ! $WGET_PATH ]]; then
-#     echo $(write_log_start_section "Install Curl") >> $(get_log_file_path)
-#     apt-get install -y curl >>$(get_log_file_path) 2>&1
-#     echo $(write_log_end_section "Install Curl") >> $(get_log_file_path)
-# fi
 
 # Declare suitable node repository
 curl -sL "$CONF_NODE_NODE_REPO_URL" | sudo -E bash - >>$(get_log_file_path) 2>&1
@@ -29,9 +19,8 @@ curl -sL "$CONF_NODE_NODE_REPO_URL" | sudo -E bash - >>$(get_log_file_path) 2>&1
 # Npm installation.
 echo "Install npm"
 echo $(write_log_start_section "Install npm") >> $(get_log_file_path)
-apt-get install -y npm >>$(get_log_file_path) 2>&1
+apt-get install -y nodejs >>$(get_log_file_path) 2>&1
 echo $(write_log_end_section "Install npm") >> $(get_log_file_path)
-
 
 # n installation.
 echo "Install n"
@@ -40,7 +29,6 @@ npm cache clean -f >>$(get_log_file_path) 2>&1
 npm install -g n >>$(get_log_file_path) 2>&1
 echo $(write_log_end_section "Install n") >> $(get_log_file_path)
 
-
 # Node installation.
 echo "Install node (version $CONF_NODE_VERSION)"
 echo $(write_log_start_section "Install node") >> $(get_log_file_path)
@@ -48,7 +36,6 @@ n "$CONF_NODE_VERSION" >>$(get_log_file_path) 2>&1
 echo $(write_log_end_section "Install node") >> $(get_log_file_path)
 INSTALLED_VERSION=$(node -v)
 echo "Installed node version: $INSTALLED_VERSION"
-
 
 # Global node modules installation.
 if [[ $CONF_NODE_INSTALL_GLOBAL ]]; then
@@ -59,7 +46,6 @@ if [[ $CONF_NODE_INSTALL_GLOBAL ]]; then
         echo $(write_log_end_section "Install node module \"$MODULE_NAME\" globally") >> $(get_log_file_path)
     done
 fi
-
 
 # Execute "npm install" if need.
 if [ "$CONF_NODE_PACKAGE_JSON_DIR" ]; then
