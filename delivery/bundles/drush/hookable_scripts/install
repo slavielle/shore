@@ -11,7 +11,7 @@ include_files
 
 
 # Check variables.
-[ -z "$CONF_DRUSH_VERSION" ] && echo "CONF_DRUSH_VERSION is not set" && exit
+
 
 
 # # Install wget if need.
@@ -23,12 +23,19 @@ include_files
 #     echo $(write_log_end_section "Install wget") >> $(get_log_file_path)
 # fi
 
+if [ -n "$CONF_DRUSH_VERSION" ]; then
+    DRUSH_PHAR_URL="https://github.com/drush-ops/drush/releases/download/$CONF_DRUSH_VERSION/drush.phar"
+elif [ -n "CONF_DRUSH_LAUNCHER_VERSION" ]; then
+    DRUSH_PHAR_URL="https://github.com/drush-ops/drush-launcher/releases/download/$CONF_DRUSH_LAUNCHER_VERSION/drush.phar"
+else
+    echo "No drush or drush launcher version defined" && exit 1
+fi
 
-# Install drush.
+# Install drush globally or drush-launcher
 echo "Install drush version $CONF_DRUSH_VERSION" 
 cd /usr/local/bin
 echo $(write_log_start_section "Install Drush") >> $(get_log_file_path)
-wget -O drush "https://github.com/drush-ops/drush/releases/download/$CONF_DRUSH_VERSION/drush.phar" >>$(get_log_file_path) 2>&1
+wget -O drush "$DRUSH_PHAR_URL" >>$(get_log_file_path) 2>&1
 echo $(write_log_end_section "Install Drush") >> $(get_log_file_path)
 
 chmod +x drush
