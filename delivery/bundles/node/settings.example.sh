@@ -1,5 +1,6 @@
 # Node version to provide to the n command. See https://github.com/tj/n .
 CONF_NODE_VERSION="lts"
+CONF_NODE_NODE_REPO_URL="https://deb.nodesource.com/setup_8.x"
 
 # Activates(uncomment) or add node modules to install globally for your project.
 CONF_NODE_INSTALL_GLOBAL=()

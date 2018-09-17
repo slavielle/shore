@@ -11,17 +11,20 @@ include_files
 
 
 # Check variables.
-[ -z "$CONF_NODE_VERSION" ] && echo "CONF_NODE_VERSION is not set" && exit
+[ -z "$CONF_NODE_VERSION" ] && echo "CONF_NODE_VERSION is not set" && exit 1
+[ -z "$CONF_NODE_NODE_REPO_URL" ] && echo "$CONF_NODE_NODE_REPO_URL is not set" && exit 1
 
-# curl or wget requiered
-CURL_PATH=$(which curl)
-WGET_PATH=$(which wget)
-if [[ ! $CURL_PATH ]] && [[ ! $WGET_PATH ]]; then
-    echo $(write_log_start_section "Install Curl") >> $(get_log_file_path)
-    apt-get install -y curl >>$(get_log_file_path) 2>&1
-    echo $(write_log_end_section "Install Curl") >> $(get_log_file_path)
-fi
+# # curl or wget requiered
+# CURL_PATH=$(which curl)
+# WGET_PATH=$(which wget)
+# if [[ ! $CURL_PATH ]] && [[ ! $WGET_PATH ]]; then
+#     echo $(write_log_start_section "Install Curl") >> $(get_log_file_path)
+#     apt-get install -y curl >>$(get_log_file_path) 2>&1
+#     echo $(write_log_end_section "Install Curl") >> $(get_log_file_path)
+# fi
 
+# Declare suitable node repository
+curl -sL "$CONF_NODE_NODE_REPO_URL" | sudo -E bash - >>$(get_log_file_path) 2>&1
 
 # Npm installation.
 echo "Install npm"
