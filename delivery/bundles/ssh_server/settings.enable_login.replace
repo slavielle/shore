@@ -1,0 +1,3 @@
+i:PermitRootLogin\s+without-password
+o:PermitRootLogin yes
+

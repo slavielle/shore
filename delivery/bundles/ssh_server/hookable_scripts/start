@@ -1,0 +1,12 @@
+#!/bin/bash
+
+# This script is a part of Shore
+# MIT License
+# Copyright (c) 2016 Sylvain LAVIELLE
+
+
+. $(dirname "$0")/../../_common.sh
+
+include_files
+
+service ssh start

@@ -1,0 +1,15 @@
+#!/bin/bash
+
+# This script is a part of Shore
+# MIT License
+# Copyright (c) 2016 Sylvain LAVIELLE
+
+
+. $(dirname "$0")/../../_common.sh
+
+include_files
+
+# Replace values in sshd_config
+replace /etc/ssh/sshd_config $(dirname "$0")/../settings.enable_login.replace
+
+echo "SSH server config updated at /etc/ssh/sshd_config"
