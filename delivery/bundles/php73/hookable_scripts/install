@@ -1,0 +1,37 @@
+#!/bin/bash
+
+# This script is a part of Shore
+# MIT License
+# Copyright (c) 2016 Sylvain LAVIELLE
+
+
+# install php7.3 and modules
+
+. $(dirname "$0")/../../_common.sh
+
+include_files
+
+# Install PHP7.3
+echo "Install PHP7.3"
+echo $(write_log_start_section "Install PHP7.3") >> $(get_log_file_path)
+
+# record Ondřej Surý repository
+wget -O /etc/apt/trusted.gpg.d/php.gpg https://packages.sury.org/php/apt.gpg 2>&1
+echo "deb https://packages.sury.org/php/ $(lsb_release -sc) main" > /etc/apt/sources.list.d/php.list 2>&1
+apt-get update 2>&1
+
+apt-get -y install php7.3 >>$(get_log_file_path) 2>&1
+echo $(write_log_end_section "Install PHP7.3") >> $(get_log_file_path)
+
+# Install PHP7.3 libs
+if [[ $CONF_PHP71_LIBS ]]; then
+    for LIB in ${CONF_PHP71_LIBS[@]}; do
+        echo "Install PHP7.3 lib \"$LIB\""
+        echo $(write_log_start_section "Install PHP7.3 lib \"$LIB\"") >> $(get_log_file_path)
+            apt-get install -y $LIB >>$(get_log_file_path) 2>&1
+        echo $(write_log_end_section "Install PHP7.3 lib \"$LIB\"") >> $(get_log_file_path)
+    done
+fi
+
+echo "Complete log at $(get_log_file_path)"
+echo "Done"
