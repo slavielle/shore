@@ -3,7 +3,7 @@ system.create_user
 apache2.install
 mysql.install
 mysql.change_mysql_settings
-php71.install
+php73.install
 apache2.create_symlink_and_vhost
 mysql.init_root_user
 mysql.create_root_user_for_host

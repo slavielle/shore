@@ -1,5 +1,7 @@
 system.install
 system.create_user
+system.reset_passwords
 apache2.install
 apache2.create_symlink_and_vhost
+ssh_server.install
 project.install

@@ -1,6 +1,6 @@
 apache2
 mysql
-php71
+php73
 drush
 composer
 drupal_console
