@@ -85,6 +85,11 @@ function get_log_file_path(){
     echo $RET
 }
 
+function get_runtime_dir_path(){
+    RUNTIME_PATH=$(realpath "$(dirname "$0")/../../../runtime")
+    echo "$RUNTIME_PATH"
+}
+
 function write_log_start_section(){
     if [ ! -z "$1" ]; then
         echo ""
