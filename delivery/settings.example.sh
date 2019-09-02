@@ -15,7 +15,7 @@ CONF_PROJECT_NAME="shore_test"
 
 # Define your project local domain name.
 # Not mandatory.
-# CONF_PROJECT_DOMAIN_NAME="shore-test.local"
+#CONF_PROJECT_DOMAIN_NAME="shore-test.local"
 
 # Webserver entry point. 
 # Mandatory.
@@ -30,11 +30,14 @@ CONF_PROJECT_HTDOCS="www"
 CONF_PROJECT_CONTAINER_SIDE_PATH="/var/shore"
 
 # Ports mapping list.
-# Shore does not require to map ports on Linux because Shore use static IP to 
-# allow to gain access to containers. Unfortunately, on Docker for Mac 
-# containers, IP addressing is unavailable. 
+# Shore does not require to map ports on Linux because it use static IP to
+# allow to gain access to the containers. Unfortunately on Docker for Mac,
+# access containers using IP addressing is unavailable.
 # @see https://docs.docker.com/docker-for-mac/networking/#/per-container-ip-addressing-is-not-possible
 # So on Mac we have to map ports. Uncomment following lines to do so.
+# format: "hostPort:containerPort"
 #CONF_PROJECT_HTTP_PORT_MAP="80:80"
 #CONF_PROJECT_OTHER_PORTS_MAP=("3306:3306")
+CONF_PROJECT_OTHER_PORTS_MAP=("222:22")
+
 
